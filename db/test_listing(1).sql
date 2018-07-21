@@ -699,29 +699,6 @@ CREATE TABLE `transactions` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` int(11) NOT NULL DEFAULT '4',
-  `email` varchar(254) NOT NULL,
-  `username` varchar(30) NOT NULL DEFAULT '',
-  `password_hash` char(60) DEFAULT NULL,
-  `reset_hash` varchar(40) DEFAULT NULL,
-  `last_login` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `last_ip` varchar(45) NOT NULL DEFAULT '',
-  `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `reset_by` int(10) DEFAULT NULL,
-  `banned` tinyint(1) NOT NULL DEFAULT '0',
-  `ban_message` varchar(255) DEFAULT NULL,
-  `display_name` varchar(255) DEFAULT '',
-  `display_name_changed` date DEFAULT NULL,
-  `mobile_number` varchar(20) DEFAULT NULL,
-  `timezone` varchar(40) NOT NULL DEFAULT 'UM6',
-  `language` varchar(20) NOT NULL DEFAULT 'english',
-  `active` tinyint(1) NOT NULL DEFAULT '0',
-  `activate_hash` varchar(40) NOT NULL DEFAULT '',
-  `force_password_reset` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

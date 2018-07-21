@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2018 at 06:57 PM
+-- Generation Time: Jul 21, 2018 at 05:55 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -33,6 +33,31 @@ CREATE TABLE `activities` (
   `module_name` varchar(255) NOT NULL,
   `created_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted` enum('0','1') NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_users`
+--
+
+CREATE TABLE `admin_users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` int(11) NOT NULL DEFAULT '4',
+  `email` varchar(254) NOT NULL,
+  `user_password` varchar(60) DEFAULT NULL,
+  `reset_token` varchar(40) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT '',
+  `middle_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `mobile_number` varchar(20) DEFAULT NULL,
+  `user_timezone` varchar(40) NOT NULL DEFAULT '',
+  `user_language` varchar(20) NOT NULL DEFAULT 'en',
+  `status` int(1) NOT NULL DEFAULT '0',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -100,6 +125,31 @@ CREATE TABLE `banner_locations` (
   `updated_on` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `members`
+--
+
+CREATE TABLE `members` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` int(11) NOT NULL DEFAULT '4',
+  `email` varchar(254) NOT NULL,
+  `user_password` varchar(60) DEFAULT NULL,
+  `reset_token` varchar(40) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT '',
+  `middle_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `mobile_number` varchar(20) DEFAULT NULL,
+  `user_timezone` varchar(40) NOT NULL DEFAULT '',
+  `user_language` varchar(20) NOT NULL DEFAULT 'en',
+  `status` int(1) NOT NULL DEFAULT '0',
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indexes for dumped tables
 --
@@ -109,6 +159,12 @@ CREATE TABLE `banner_locations` (
 --
 ALTER TABLE `activities`
   ADD PRIMARY KEY (`activity_id`);
+
+--
+-- Indexes for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `banner_categories`
@@ -131,6 +187,11 @@ ALTER TABLE `banner_locations`
 --
 ALTER TABLE `activities`
   MODIFY `activity_id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `banner_categories`
 --
