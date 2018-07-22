@@ -30,54 +30,91 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-body">
-						<h4 class="card-title">Categories</h4>
+						<h4 class="card-title" style="float: left">Categories</h4>
+						<a id="deselect-all" class="btn btn-info" href="#" style="float: right">Add Category</a>
 						<div class="table-responsive">
 							<table id="category"
-								class="display nowrap table table-hover table-striped table-bordered"
+								class="display nowrap table table-striped table-bordered"
 								cellspacing="0" width="100%">
 								<thead>
 									<tr>
 										<th>Name</th>
-										<th>Position</th>
-										<th>Office</th>
-										<th>Age</th>
-										<th>Start date</th>
-										<th>Salary</th>
+										<th>Parent</th>
+										<th>Status</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td>Tiger Nixon</td>
 										<td>System Architect</td>
-										<td>Edinburgh</td>
-										<td>61</td>
-										<td>2011/04/25</td>
-										<td>$320,800</td>
+										<td>
+										<input type="checkbox" value="1" class="js-switch" data-color="#00b55a" data-secondary-color="#e20417" data-size="small" />
+										</td>
+										<td class="footable-editing">
+										<div
+												class="btn-group btn-group-xs" role="group">
+												<button type="button"
+													class="btn btn-secondary footable-edit">
+													<span class="fas fa-pencil-alt" aria-hidden="true"></span>
+												</button>
+												<button type="button"
+													class="btn btn-secondary footable-delete">
+													<span class="fas fa-trash-alt" aria-hidden="true"></span>
+												</button>
+											</div></td>
 									</tr>
-									 <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ashton Cox</td>
-                                                <td>Junior Technical Author</td>
-                                                <td>San Francisco</td>
-                                                <td>66</td>
-                                                <td>2009/01/12</td>
-                                                <td>$86,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cedric Kelly</td>
-                                                <td>Senior Javascript Developer</td>
-                                                <td>Edinburgh</td>
-                                                <td>22</td>
-                                                <td>2012/03/29</td>
-                                                <td>$433,060</td>
-                                            </tr>
+									<tr>
+										<td>Garrett Winters</td>
+										<td>Accountant</td>
+										<td><span class="label label-table label-inverse">Disabled</span></td>
+										<td class="footable-editing footable-last-visible"
+											style="display: table-cell;"><div
+												class="btn-group btn-group-xs" role="group">
+												<button type="button"
+													class="btn btn-secondary footable-edit">
+													<span class="fas fa-pencil-alt" aria-hidden="true"></span>
+												</button>
+												<button type="button"
+													class="btn btn-secondary footable-delete">
+													<span class="fas fa-trash-alt" aria-hidden="true"></span>
+												</button>
+											</div></td>
+									</tr>
+									<tr>
+										<td>Ashton Cox</td>
+										<td>San Francisco</td>
+										<td><span class="label label-table label-inverse">Disabled</span></td>
+										<td class="footable-editing footable-last-visible"
+											style="display: table-cell;"><div
+												class="btn-group btn-group-xs" role="group">
+												<button type="button"
+													class="btn btn-secondary footable-edit">
+													<span class="fas fa-pencil-alt" aria-hidden="true"></span>
+												</button>
+												<button type="button"
+													class="btn btn-secondary footable-delete">
+													<span class="fas fa-trash-alt" aria-hidden="true"></span>
+												</button>
+											</div></td>
+									</tr>
+									<tr>
+										<td>Cedric Kelly</td>
+										<td>Senior Javascript Developer</td>
+										<td><span class="label label-table label-inverse">Disabled</span></td>
+										<td class="footable-editing footable-last-visible"
+											style="display: table-cell;"><div
+												class="btn-group btn-group-xs" role="group">
+												<button type="button"
+													class="btn btn-secondary footable-edit">
+													<span class="fas fa-pencil-alt" aria-hidden="true"></span>
+												</button>
+												<button type="button"
+													class="btn btn-secondary footable-delete">
+													<span class="fas fa-trash-alt" aria-hidden="true"></span>
+												</button>
+											</div></td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
