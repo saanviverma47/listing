@@ -37,6 +37,3 @@
     <script src="<?= base_url('assets/js/custom.min.js') ?>"></script>
     
     <script src="<?= base_url('assets/assets/plugins/styleswitcher/jQuery.style.switcher.js') ?>"></script>
-</body>
-
-</html>

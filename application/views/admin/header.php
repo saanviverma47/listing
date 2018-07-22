@@ -11,6 +11,7 @@
     <title>Listing</title>
     <!-- Bootstrap Core CSS -->
 	<link href="<?= base_url('assets/assets/plugins/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet">
+	<link href="<?= base_url('assets/assets/plugins/datatables/media/css/dataTables.bootstrap4.css') ?>" rel="stylesheet">
     <!-- chartist CSS -->
 	<link href="<?= base_url('assets/assets/plugins/chartist-js/dist/chartist.min.css') ?>" rel="stylesheet">
 	<link href="<?= base_url('assets/assets/plugins/chartist-js/dist/chartist-init.css') ?>" rel="stylesheet">

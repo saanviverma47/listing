@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @extends CI_Controller
  */
-class Dashboard extends CI_Controller {
+class Category extends CI_Controller {
 
 	/**
 	 * __construct function.
@@ -15,25 +15,21 @@ class Dashboard extends CI_Controller {
 	 * @return void
 	 */
 	public function __construct() {
-		
 		parent::__construct();
 		$this->load->library(array('session'));
 		$this->load->helper(array('url'));
-		//$this->load->model('admin/user_model'); create dashboard modal
-		
 	}
 	
-	
 	public function index() {
-		// create the data object
-		$data = new stdClass();
-
 		if($this->session->userdata('admin') && $this->session->userdata('email')){
+			// create the data object
+			$data = new stdClass();
 			 // do something when exist
 			$this->load->view('admin/header');
 			$this->load->view('admin/nav');
-			//$this->load->view('admin/dashboard/index', $data);
+			$this->load->view('admin/category/index');
 			$this->load->view('admin/footer');
+			$this->load->view('admin/category/category_footer');
 			$this->load->view('admin/footer_close');
 		}else{
 			// do something when doesn't exist

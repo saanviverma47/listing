@@ -25,7 +25,7 @@ class User extends CI_Controller {
 	
 	
 	public function index() {
-		if($this->session->userdata('email')){
+		if($this->session->userdata('admin') && $this->session->userdata('email')){
 			 // do something when exist
 			 redirect('/admin/dashboard');
 		}else{
@@ -114,12 +114,13 @@ class User extends CI_Controller {
 				$user_id = $this->user_model->get_user_id_from_username($email);
 				$user    = $this->user_model->get_user($user_id);
 				// set session user datas
+				$_SESSION['admin']      = (bool)true;
 				$_SESSION['user_id']      = (int)$user->id;
 				$_SESSION['email']     = (string)$user->email;
 				$_SESSION['logged_in']    = (bool)true;
 				$_SESSION['first_name']    =	(string)$user->first_name;
 				$_SESSION['last_name']    =	(string)$user->last_name;
-				
+
 				// user login ok
 				redirect('/admin/dashboard');
 				
