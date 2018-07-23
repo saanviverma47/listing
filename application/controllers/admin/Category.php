@@ -53,5 +53,16 @@ class Category extends CI_Controller {
 	public function update(){
 		
 	}
+	
+	public function add(){
+		$data = new stdClass();
+		$data->categories_combo = $this->category_model->getCategoryCombo(0);
+		$this->load->view('admin/header');
+		$this->load->view('admin/nav');
+		$this->load->view('admin/category/add', $data);
+		$this->load->view('admin/footer');
+		$this->load->view('admin/category/category_footer');
+		$this->load->view('admin/footer_close');
+	}
 
 }

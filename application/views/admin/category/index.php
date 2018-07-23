@@ -31,7 +31,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title" style="float: left">Categories</h4>
-						<a id="deselect-all" class="btn btn-info" href="#"
+						<a id="deselect-all" class="btn btn-info" href="/admin/category/add"
 							style="float: right">Add Category</a>
 						<div class="table-responsive bt-switch">
 							<table id="category"
@@ -55,7 +55,7 @@
 											data-on-text="Active" checked data-size="mini" onclick="javascript:toggleOffByInput()"
 											data-on-color="success" data-off-color="danger" class="status" /></td>
 										<td class="footable-editing">
-											<a  href="?id=<?=$category->id;?>"
+											<a  href="?id=edit<?=$category->id;?>"
 												class="footable-edit">
 												<span class="fas fa-pencil-alt" aria-hidden="true"></span>
 											</a>&nbsp;

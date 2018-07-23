@@ -30,14 +30,22 @@ class Category_model extends CI_Model {
 	 * 
 	 */
 	public function getAll() {
-		/*$this->db->select('*');
-		$this->db->from("categories");
-		$this->db->where(array('categories.status !=' => 2));
-		$query = $this->db->get();
-		return $query->result();*/
 		$query = $this->db->query('SELECT c1.id as id, c1.name category, c2.name as parent, c1.status as status from categories c1 LEFT OUTER JOIN categories c2 ON c1.parent_id = c2.id');
 		return $query->result();
 	}
 	
+	public function getCategoryCombo($id=0) {
+		static $class = array();
+		static $times = 0;
+		$times++;
+		$query = $this->db->query("SELECT id, name FROM categories WHERE `parent_id` ='".$id."'");
+		foreach ($query->result() as $row)
+		{
+			$class[$row->id] = str_repeat("-   ",$times-1)."->".$row->name;
+			$this->getCategoryCombo($row->id);
+		}
+		$times--;
+		return $class;
+	}
 	
 }
