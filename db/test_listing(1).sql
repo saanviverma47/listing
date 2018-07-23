@@ -1,6 +1,6 @@
 ############## common for all table ##############################
 
-ALTER TABLE `banner_locations` ADD `status` INT(1) NOT NULL DEFAULT '0' AFTER `	country_id`, ADD `created_by` INT NOT NULL AFTER `status`, ADD `modified_by` INT NOT NULL AFTER `created_by`, ADD `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `modified_by`, ADD `updated_on` TIMESTAMP on update CURRENT_TIMESTAMP NULL AFTER `created_on`;
+ALTER TABLE `categories` ADD `status` INT(1) NOT NULL DEFAULT '0' AFTER `meta_description`, ADD `created_by` INT NOT NULL AFTER `status`, ADD `modified_by` INT NOT NULL AFTER `created_by`, ADD `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `modified_by`, ADD `updated_on` TIMESTAMP on update CURRENT_TIMESTAMP NULL AFTER `created_on`;
 
 ###################################################################
 
@@ -47,27 +47,6 @@ CREATE TABLE `business_queries` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   `posted_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
-
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `parent_id` int(11) NOT NULL,
-  `order` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(100) NOT NULL,
-  `slug` varchar(100) NOT NULL,
-  `description` text,
-  `meta_title` varchar(100) DEFAULT NULL,
-  `meta_keywords` varchar(250) DEFAULT NULL,
-  `meta_description` text,
-  `counts` int(11) NOT NULL DEFAULT '0',
-  `hits` int(11) NOT NULL DEFAULT '0',
-  `active` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

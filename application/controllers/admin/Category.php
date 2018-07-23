@@ -18,16 +18,18 @@ class Category extends CI_Controller {
 		parent::__construct();
 		$this->load->library(array('session'));
 		$this->load->helper(array('url'));
+		$this->load->model('admin/category_model');
 	}
 	
 	public function index() {
 		if($this->session->userdata('admin') && $this->session->userdata('email')){
 			// create the data object
 			$data = new stdClass();
-			 // do something when exist
+			$data->categories = $this->category_model->getAll();
+			
 			$this->load->view('admin/header');
 			$this->load->view('admin/nav');
-			$this->load->view('admin/category/index');
+			$this->load->view('admin/category/index', $data);
 			$this->load->view('admin/footer');
 			$this->load->view('admin/category/category_footer');
 			$this->load->view('admin/footer_close');
@@ -35,6 +37,20 @@ class Category extends CI_Controller {
 			// do something when doesn't exist
 			redirect('/admin/login');
 		}
+	}
+	
+	/**
+	 * will use to get all the category
+	 */
+	public function getAll(){
+		$result = $this->category_model->getAll();
+	}
+	
+	public function save(){
+		
+	}
+	
+	public function update(){
 		
 	}
 

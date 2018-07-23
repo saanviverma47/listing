@@ -1,18 +1,30 @@
 
 <!-- end - This is for export functionality only -->
 <script	src="<?= base_url('assets/assets/plugins/datatables/datatables.min.js')?>"></script>
-<script src="<?= base_url('assets/assets/plugins/switchery/dist/switchery.min.js')?>"></script>
-<script	src="<?= base_url('assets/assets/plugins/styleswitcher/jQuery.style.switcher.js')?>"></script>
+<script	src="<?= base_url('assets/assets/plugins/bootstrap-switch/bootstrap-switch.min.js')?>"></script>
 <script>
-var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-$('.js-switch').each(function() {  new Switchery($(this)[0], $(this).data()); });
 $('#category').DataTable({ dom: 'Bfrtip'});
-$(".switchery").on({
-  click: function() {
-	  var isChecked = $(this).val();
-	   alert(isChecked);
-	}
+
+$(".bt-switch input[type='checkbox']").bootstrapSwitch();
+var radioswitch = function() {
+    var bt = function() {
+        $(".radio-switch").on("switch-change", function() {
+           alert("hello"); 
+        });
+    };
+    return {
+        init: function() {
+            bt()
+        }
+    }
+}();
+$(document).ready(function() {
+    radioswitch.init();
 });
+function toggleOffByInput() {
+	alert("hello");
+   // $('#toggle-trigger').prop('checked', false).change()
+}
 </script>
 
 <!-- ============================================================== -->

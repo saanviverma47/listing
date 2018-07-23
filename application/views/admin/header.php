@@ -23,7 +23,12 @@
 	<link href="<?= base_url('assets/css/style.css') ?>" rel="stylesheet">
     <!-- You can change the theme colors from here -->
 	<link href="<?= base_url('assets/css/colors/blue.css') ?>" rel="stylesheet">
-	<link href="<?= base_url('assets/assets/plugins/switchery/dist/switchery.min.css') ?>" rel="stylesheet" />
+	<link href="<?= base_url('assets/assets/plugins/bootstrap-switch/bootstrap-switch.min.css') ?>" rel="stylesheet" />
+	<style type="text/css">
+	.card-body {
+		color: #000;
+	}
+	</style>
     </head>
 
 <body class="fix-header fix-sidebar card-no-border logo-center">

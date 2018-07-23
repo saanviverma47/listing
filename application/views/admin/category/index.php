@@ -31,8 +31,9 @@
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title" style="float: left">Categories</h4>
-						<a id="deselect-all" class="btn btn-info" href="#" style="float: right">Add Category</a>
-						<div class="table-responsive">
+						<a id="deselect-all" class="btn btn-info" href="#"
+							style="float: right">Add Category</a>
+						<div class="table-responsive bt-switch">
 							<table id="category"
 								class="display nowrap table table-striped table-bordered"
 								cellspacing="0" width="100%">
@@ -45,76 +46,26 @@
 									</tr>
 								</thead>
 								<tbody>
+								<?php foreach ($categories as $category): ?>
 									<tr>
-										<td>Tiger Nixon</td>
-										<td>System Architect</td>
+										<td><?=$category->category;?></td>
+										<td><?=$category->parent;?></td>
 										<td>
-										<input type="checkbox" value="1" class="js-switch" data-color="#00b55a" data-secondary-color="#e20417" data-size="small" />
-										</td>
+										<input type="checkbox" 	data-toggle="toggle"  checked="true" data-off-text="Inactive"
+											data-on-text="Active" checked data-size="mini" onclick="javascript:toggleOffByInput()"
+											data-on-color="success" data-off-color="danger" class="status" /></td>
 										<td class="footable-editing">
-										<div
-												class="btn-group btn-group-xs" role="group">
-												<button type="button"
-													class="btn btn-secondary footable-edit">
-													<span class="fas fa-pencil-alt" aria-hidden="true"></span>
-												</button>
-												<button type="button"
-													class="btn btn-secondary footable-delete">
-													<span class="fas fa-trash-alt" aria-hidden="true"></span>
-												</button>
-											</div></td>
+											<a  href="?id=<?=$category->id;?>"
+												class="footable-edit">
+												<span class="fas fa-pencil-alt" aria-hidden="true"></span>
+											</a>&nbsp;
+											<a  href="?id=<?=$category->id;?>"
+												class="footable-delete">
+												<span class="fas fa-trash-alt" aria-hidden="true"></span>
+											</a>
+										</td>
 									</tr>
-									<tr>
-										<td>Garrett Winters</td>
-										<td>Accountant</td>
-										<td><span class="label label-table label-inverse">Disabled</span></td>
-										<td class="footable-editing footable-last-visible"
-											style="display: table-cell;"><div
-												class="btn-group btn-group-xs" role="group">
-												<button type="button"
-													class="btn btn-secondary footable-edit">
-													<span class="fas fa-pencil-alt" aria-hidden="true"></span>
-												</button>
-												<button type="button"
-													class="btn btn-secondary footable-delete">
-													<span class="fas fa-trash-alt" aria-hidden="true"></span>
-												</button>
-											</div></td>
-									</tr>
-									<tr>
-										<td>Ashton Cox</td>
-										<td>San Francisco</td>
-										<td><span class="label label-table label-inverse">Disabled</span></td>
-										<td class="footable-editing footable-last-visible"
-											style="display: table-cell;"><div
-												class="btn-group btn-group-xs" role="group">
-												<button type="button"
-													class="btn btn-secondary footable-edit">
-													<span class="fas fa-pencil-alt" aria-hidden="true"></span>
-												</button>
-												<button type="button"
-													class="btn btn-secondary footable-delete">
-													<span class="fas fa-trash-alt" aria-hidden="true"></span>
-												</button>
-											</div></td>
-									</tr>
-									<tr>
-										<td>Cedric Kelly</td>
-										<td>Senior Javascript Developer</td>
-										<td><span class="label label-table label-inverse">Disabled</span></td>
-										<td class="footable-editing footable-last-visible"
-											style="display: table-cell;"><div
-												class="btn-group btn-group-xs" role="group">
-												<button type="button"
-													class="btn btn-secondary footable-edit">
-													<span class="fas fa-pencil-alt" aria-hidden="true"></span>
-												</button>
-												<button type="button"
-													class="btn btn-secondary footable-delete">
-													<span class="fas fa-trash-alt" aria-hidden="true"></span>
-												</button>
-											</div></td>
-									</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
