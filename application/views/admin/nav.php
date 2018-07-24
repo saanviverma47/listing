@@ -11,7 +11,10 @@
                         <li>
                             <a class="has-arrow" href="/admin/dashboard/" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
                         </li>
-                    
+						<li><a class="has-arrow " href="/admin/category" aria-expanded="false"><i
+								class="mdi mdi-bullseye"></i><span class="hide-menu">Category</span>
+						</a>
+						</li>
 						<li>
                             <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Settings</span></a>
                             <ul aria-expanded="false" class="collapse">
