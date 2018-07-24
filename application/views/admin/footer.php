@@ -16,7 +16,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="<?= base_url('assets/assets/plugins/jquery/jquery.min.js') ?>"></script>
+    
     <!-- Bootstrap tether Core JavaScript -->
     <script src="<?= base_url('assets/assets/plugins/popper/popper.min.js') ?>"></script>
     <script src="<?= base_url('assets/assets/plugins/bootstrap/js/bootstrap.min.js') ?>"></script>
@@ -37,3 +37,9 @@
     <script src="<?= base_url('assets/js/custom.min.js') ?>"></script>
     
     <script src="<?= base_url('assets/assets/plugins/styleswitcher/jQuery.style.switcher.js') ?>"></script>
+
+	
+
+</body>
+
+</html>

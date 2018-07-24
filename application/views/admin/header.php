@@ -11,7 +11,6 @@
     <title>Listing</title>
     <!-- Bootstrap Core CSS -->
 	<link href="<?= base_url('assets/assets/plugins/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet">
-	<link href="<?= base_url('assets/assets/plugins/datatables/media/css/dataTables.bootstrap4.css') ?>" rel="stylesheet">
     <!-- chartist CSS -->
 	<link href="<?= base_url('assets/assets/plugins/chartist-js/dist/chartist.min.css') ?>" rel="stylesheet">
 	<link href="<?= base_url('assets/assets/plugins/chartist-js/dist/chartist-init.css') ?>" rel="stylesheet">
@@ -23,12 +22,7 @@
 	<link href="<?= base_url('assets/css/style.css') ?>" rel="stylesheet">
     <!-- You can change the theme colors from here -->
 	<link href="<?= base_url('assets/css/colors/blue.css') ?>" rel="stylesheet">
-	<link href="<?= base_url('assets/assets/plugins/bootstrap-switch/bootstrap-switch.min.css') ?>" rel="stylesheet" />
-	<style type="text/css">
-	.card-body {
-		color: #000;
-	}
-	</style>
+	<script src="<?= base_url('assets/assets/plugins/jquery/jquery.min.js') ?>"></script>
     </head>
 
 <body class="fix-header fix-sidebar card-no-border logo-center">
