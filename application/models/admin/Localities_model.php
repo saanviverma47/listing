@@ -21,5 +21,15 @@ class Localities_model extends CI_Model {
 		
 	}
 
+	public function get_localities_by_cities($cityID=null){
+		$this->db->select('*');
+		$this->db->from("localities");
+		if($cityID != 0) {
+			$this->db->where(array('city_id' => $cityID));
+		}
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	
 }

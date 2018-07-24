@@ -98,8 +98,9 @@ class Location extends CI_Controller {
 		if($this->session->userdata('email')){
 
 			//Get all country
-			$data->countries = $this->country_model->get_all_countries();
-			$_SESSION['city_id']      = $stateID;
+			$data->localities = $this->localities_model->get_localities_by_cities($cityID);
+			$data->cityName = $this->cities_model->get_city_by_id($cityID);
+			$_SESSION['city_id']      = $cityID;
 			 // do something when exist
 			$this->load->view('admin/header');
 			$this->load->view('admin/nav');

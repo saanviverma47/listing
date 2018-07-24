@@ -63,7 +63,7 @@
                                                 <td><?=$index+1?></td>
                                                 <td><?=$cities->name?></td>
                                                 <td>
-													<a href="locality"><button type="button" class="btn waves-effect waves-light btn-rounded btn-xs btn-success">View Locality</button></a>
+													<a href="/admin/location/locality/<?=$cities->id?>"><button type="button" class="btn waves-effect waves-light btn-rounded btn-xs btn-success">View Locality</button></a>
 												</td>
                                                 <td><input type="checkbox" class='changeStatus' <?=$cities->status == 1?'checked':''?> data-size="mini" /></td>
                                             </tr>

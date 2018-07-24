@@ -13,7 +13,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/admin/location/">Locations</a></li>
 							<li class="breadcrumb-item"><a href="/admin/location/states/<?=$_SESSION['country_id']?>">States</a></li>
-							<li class="breadcrumb-item"><a href="/admin/location/states/<?=$_SESSION['state_id']?>">Cities</a></li>
+							<li class="breadcrumb-item"><a href="/admin/location/cities/<?=$_SESSION['state_id']?>">Cities</a></li>
                             <li class="breadcrumb-item active">Locality</li>
                         </ol>
                     </div>
@@ -35,15 +35,20 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Locality</h4>
-								
+								<div class='col-md-12'>
+									<div class='col-md-6 pull-left' style="float:left;padding-left:0px;">
+										<h4 class="card-title">Locality of <?=$cityName?></h4>
+									</div>
+									<div class='col-md-6 pull-right' style="float:right;">
+										<a id="deselect-all" style="float:right; color:#fff;" class="btn btn-info">Add Locality</a>
+									</div>
+								</div>
                                 <div class="table m-t-40">
                                     <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>Sr. No.</th>
                                                 <th>Name</th>
-                                                <th>Code</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -51,20 +56,18 @@
                                             <tr>
                                                 <th>Sr. No.</th>
                                                 <th>Name</th>
-                                                <th>Code</th>
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
 										<?php 
-											if(!empty($countries)){
-												foreach($countries as $index=>$countries):
+											if(!empty($localities)){
+												foreach($localities as $index=>$localities):
 										?>
                                             <tr>
                                                 <td><?=$index+1?></td>
-                                                <td><?=$countries->name?></td>
-                                                <td><?=$countries->iso?></td>
-                                                <td><input type="checkbox" class='changeStatus' <?=$countries->status == 1?'checked':''?> data-size="mini" /></td>
+                                                <td><?=$localities->name?></td>
+                                                <td><input type="checkbox" class='changeStatus' <?=$localities->status == 1?'checked':''?> data-size="mini" /></td>
                                             </tr>
                                         <?php 
 												endforeach;
