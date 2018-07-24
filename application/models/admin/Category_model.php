@@ -20,6 +20,11 @@ class Category_model extends CI_Model {
 	}
 	
 	public function save($data) {
+		return $this->db->insert('categories', $data);
+	}
+	
+	public function update($data) {
+		return $this->db->query($data); 
 	}
 	
 	/**
@@ -34,6 +39,10 @@ class Category_model extends CI_Model {
 		return $query->result();
 	}
 	
+	/**
+	 * will use this to get nested object of category
+	 * @param unknown_type $id
+	 */
 	public function getCategoryCombo($id=0) {
 		static $class = array();
 		static $times = 0;
@@ -46,6 +55,15 @@ class Category_model extends CI_Model {
 		}
 		$times--;
 		return $class;
+	}
+	
+	/**
+	 * get single category object form db
+	 * @param unknown_type $id
+	 */
+	public function getCategoryById($id) {
+		$query = $this->db->query("SELECT * FROM categories WHERE `id` ='".$id."'");
+		return $query->first_row();
 	}
 	
 }

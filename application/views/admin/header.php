@@ -23,6 +23,11 @@
     <!-- You can change the theme colors from here -->
 	<link href="<?= base_url('assets/css/colors/blue.css') ?>" rel="stylesheet">
 	<script src="<?= base_url('assets/assets/plugins/jquery/jquery.min.js') ?>"></script>
+	<style>
+	body{
+		color: #000;
+	}
+	</style>
     </head>
 
 <body class="fix-header fix-sidebar card-no-border logo-center">
@@ -69,12 +74,13 @@
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?= base_url('assets/assets/images/users/1.jpg') ?>" alt="user" class="profile-pic" /></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Welcome <?=$_SESSION['first_name']?>
+                            </a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img" style='width: 45px;'><img src="<?= base_url('assets/assets/images/users/1.jpg') ?>" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?=$_SESSION['first_name']?></h4>
                                                 <p class="text-muted" style='font-size:10px;'><?=$_SESSION['email']?></p>
