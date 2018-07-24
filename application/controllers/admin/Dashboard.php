@@ -34,7 +34,6 @@ class Dashboard extends CI_Controller {
 			$this->load->view('admin/nav');
 			//$this->load->view('admin/dashboard/index', $data);
 			$this->load->view('admin/footer');
-			$this->load->view('admin/footer_close');
 		}else{
 			// do something when doesn't exist
 			redirect('/admin/login');
