@@ -1,292 +1,401 @@
-<?php
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2015, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (http://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 1.0.0
- * @filesource
- */
-
-/*
- *---------------------------------------------------------------
- * APPLICATION ENVIRONMENT
- *---------------------------------------------------------------
- *
- * You can load different configurations depending on your
- * current environment. Setting the environment also influences
- * things like logging and error reporting.
- *
- * This can be set to anything, but default usage is:
- *
- *     development
- *     testing
- *     production
- *
- * NOTE: If you change these, also change the error_reporting() code below
- */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-
-/*
- *---------------------------------------------------------------
- * ERROR REPORTING
- *---------------------------------------------------------------
- *
- * Different environments will require different levels of error reporting.
- * By default development will show errors but testing and live will hide them.
- */
-switch (ENVIRONMENT)
-{
-	case 'development':
-		error_reporting(-1);
-		ini_set('display_errors', 1);
-	break;
-
-	case 'testing':
-	case 'production':
-		ini_set('display_errors', 0);
-		if (version_compare(PHP_VERSION, '5.3', '>='))
-		{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-		}
-		else
-		{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
-		}
-	break;
-
-	default:
-		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-		echo 'The application environment is not set correctly.';
-		exit(1); // EXIT_ERROR
-}
-
-/*
- *---------------------------------------------------------------
- * SYSTEM FOLDER NAME
- *---------------------------------------------------------------
- *
- * This variable must contain the name of your "system" folder.
- * Include the path if the folder is not in the same directory
- * as this file.
- */
-	$system_path = 'system';
-
-/*
- *---------------------------------------------------------------
- * APPLICATION FOLDER NAME
- *---------------------------------------------------------------
- *
- * If you want this front controller to use a different "application"
- * folder than the default one you can set its name here. The folder
- * can also be renamed or relocated anywhere on your server. If
- * you do, use a full server path. For more info please see the user guide:
- * http://codeigniter.com/user_guide/general/managing_apps.html
- *
- * NO TRAILING SLASH!
- */
-	$application_folder = 'application';
-
-/*
- *---------------------------------------------------------------
- * VIEW FOLDER NAME
- *---------------------------------------------------------------
- *
- * If you want to move the view folder out of the application
- * folder set the path to the folder here. The folder can be renamed
- * and relocated anywhere on your server. If blank, it will default
- * to the standard location inside your application folder. If you
- * do move this, use the full server path to this folder.
- *
- * NO TRAILING SLASH!
- */
-	$view_folder = '';
-
-
-/*
- * --------------------------------------------------------------------
- * DEFAULT CONTROLLER
- * --------------------------------------------------------------------
- *
- * Normally you will set your default controller in the routes.php file.
- * You can, however, force a custom routing by hard-coding a
- * specific controller class/function here. For most applications, you
- * WILL NOT set your routing here, but it's an option for those
- * special instances where you might want to override the standard
- * routing in a specific front controller that shares a common CI installation.
- *
- * IMPORTANT: If you set the routing here, NO OTHER controller will be
- * callable. In essence, this preference limits your application to ONE
- * specific controller. Leave the function name blank if you need
- * to call functions dynamically via the URI.
- *
- * Un-comment the $routing array below to use this feature
- */
-	// The directory name, relative to the "controllers" folder.  Leave blank
-	// if your controller is not in a sub-folder within the "controllers" folder
-	// $routing['directory'] = '';
-
-	// The controller class file name.  Example:  mycontroller
-	// $routing['controller'] = '';
-
-	// The controller function you wish to be called.
-	// $routing['function']	= '';
-
-
-/*
- * -------------------------------------------------------------------
- *  CUSTOM CONFIG VALUES
- * -------------------------------------------------------------------
- *
- * The $assign_to_config array below will be passed dynamically to the
- * config class when initialized. This allows you to set custom config
- * items or override any default config values found in the config.php file.
- * This can be handy as it permits you to share one application between
- * multiple front controller files, with each file containing different
- * config values.
- *
- * Un-comment the $assign_to_config array below to use this feature
- */
-	// $assign_to_config['name_of_config_item'] = 'value of config item';
-
-
-
-// --------------------------------------------------------------------
-// END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
-// --------------------------------------------------------------------
-
-/*
- * ---------------------------------------------------------------
- *  Resolve the system path for increased reliability
- * ---------------------------------------------------------------
- */
-
-	// Set the current directory correctly for CLI requests
-	if (defined('STDIN'))
-	{
-		chdir(dirname(__FILE__));
-	}
-
-	if (($_temp = realpath($system_path)) !== FALSE)
-	{
-		$system_path = $_temp.'/';
-	}
-	else
-	{
-		// Ensure there's a trailing slash
-		$system_path = rtrim($system_path, '/').'/';
-	}
-
-	// Is the system path correct?
-	if ( ! is_dir($system_path))
-	{
-		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-		echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
-		exit(3); // EXIT_CONFIG
-	}
-
-/*
- * -------------------------------------------------------------------
- *  Now that we know the path, set the main path constants
- * -------------------------------------------------------------------
- */
-	// The name of THIS file
-	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
-
-	// Path to the system folder
-	define('BASEPATH', str_replace('\\', '/', $system_path));
-
-	// Path to the front controller (this file)
-	define('FCPATH', dirname(__FILE__).'/');
-
-	// Name of the "system folder"
-	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
-
-	// The path to the "application" folder
-	if (is_dir($application_folder))
-	{
-		if (($_temp = realpath($application_folder)) !== FALSE)
-		{
-			$application_folder = $_temp;
-		}
-
-		define('APPPATH', $application_folder.DIRECTORY_SEPARATOR);
-	}
-	else
-	{
-		if ( ! is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR))
-		{
-			header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-			echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.SELF;
-			exit(3); // EXIT_CONFIG
-		}
-
-		define('APPPATH', BASEPATH.$application_folder.DIRECTORY_SEPARATOR);
-	}
-
-	// The path to the "views" folder
-	if ( ! is_dir($view_folder))
-	{
-		if ( ! empty($view_folder) && is_dir(APPPATH.$view_folder.DIRECTORY_SEPARATOR))
-		{
-			$view_folder = APPPATH.$view_folder;
-		}
-		elseif ( ! is_dir(APPPATH.'views'.DIRECTORY_SEPARATOR))
-		{
-			header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-			echo 'Your view folder path does not appear to be set correctly. Please open the following file and correct this: '.SELF;
-			exit(3); // EXIT_CONFIG
-		}
-		else
-		{
-			$view_folder = APPPATH.'views';
-		}
-	}
-
-	if (($_temp = realpath($view_folder)) !== FALSE)
-	{
-		$view_folder = $_temp.DIRECTORY_SEPARATOR;
-	}
-	else
-	{
-		$view_folder = rtrim($view_folder, '/\\').DIRECTORY_SEPARATOR;
-	}
-
-	define('VIEWPATH', $view_folder);
-
-/*
- * --------------------------------------------------------------------
- * LOAD THE BOOTSTRAP FILE
- * --------------------------------------------------------------------
- *
- * And away we go...
- */
-require_once BASEPATH.'core/CodeIgniter.php';
+<?php include_once 'includes/header.php' ?>
+	<section id="background1" class="dir1-home-head">
+		<div class="container dir-ho-t-sp">
+			<div class="row">
+				<div class="dir-hr1">
+					<div class="dir-ho-t-tit dir-ho-t-tit-2">
+						<h1>Connect with the right Service Experts</h1> 
+						<p>Find B2B & B2C businesses contact addresses, phone numbers,<br> user ratings and reviews.</p>
+					</div>
+						<form class="tourz-search-form">
+							<div class="input-field">
+								<input type="text" id="select-city" class="autocomplete">
+								<label for="select-city">Enter city</label>
+							</div>
+							<div class="input-field">
+								<input type="text" id="select-search" class="autocomplete">
+								<label for="select-search" class="search-hotel-type">Search your services like hotel, resorts, events and more</label>
+							</div>
+							<div class="input-field">
+								<input type="submit" value="search" class="waves-effect waves-light tourz-sear-btn"> </div>
+						</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--FIND YOUR SERVICE-->
+	<section class="cat-v2-hom com-padd mar-bot-red-m30">
+		<div class="container">
+			<div class="row">
+				<div class="com-title">
+					<h2>Find your <span>Services</span></h2>
+					<p>Explore some of the best business from around the world from our partners and friends.</p>
+				</div>
+				<div class="cat-v2-hom-list">
+					<ul>
+						<li>
+							<a href="#"><img src="images/icon/hcat1.png" alt=""> Hospitals</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat2.png" alt=""> Hotel & Resort</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat3.png" alt=""> Events</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat4.png" alt=""> Wedding Halls</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat5.png" alt=""> Shops</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat6.png" alt=""> Fitness & Gym</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat7.png" alt=""> Sports</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat8.png" alt=""> Education</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat9.png" alt=""> Electricals</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat10.png" alt=""> Automobiles</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat11.png" alt=""> Real Estates</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat12.png" alt=""> Import & Export</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat13.png" alt=""> Interior Design</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat14.png" alt=""> Software Solutions</a>
+						</li>
+						<li>
+							<a href="#"><img src="images/icon/hcat15.png" alt=""> Yoga Training</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--EXPLORE CITY LISTING-->
+	<section class="com-padd com-padd-redu-top">
+		<div class="container">
+			<div class="row">
+				<div class="com-title">
+					<h2>Explore your <span>City Listings</span></h2>
+					<p>Explore some of the best business from around the world from our partners and friends.</p>
+				</div>
+				<div class="col-md-6">
+					<a href="list-lead.php">
+						<div class="list-mig-like-com">
+							<div class="list-mig-lc-img"> <img src="images/listing/home.jpg" alt="" /> </div>
+							<div class="list-mig-lc-con">
+								<div class="list-rat-ch list-room-rati"> <span>4.0</span> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </div>
+								<h5>United States</h5>
+								<p>21 Cities . 2045 Listings . 3648 Users</p>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a href="list-lead.php">
+						<div class="list-mig-like-com">
+							<div class="list-mig-lc-img"> <img src="images/listing/home2.jpg" alt="" /> </div>
+							<div class="list-mig-lc-con list-mig-lc-con2">
+								<h5>United Kingdom</h5>
+								<p>18 Cities . 1454 Listings</p>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a href="list-lead.php">
+						<div class="list-mig-like-com">
+							<div class="list-mig-lc-img"> <img src="images/listing/home3.jpg" alt="" /> </div>
+							<div class="list-mig-lc-con list-mig-lc-con2">
+								<h5>Australia</h5>
+								<p>14 Cities . 1895 Listings</p>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a href="list-lead.php">
+						<div class="list-mig-like-com">
+							<div class="list-mig-lc-img"> <img src="images/listing/home4.jpg" alt="" /> </div>
+							<div class="list-mig-lc-con list-mig-lc-con2">
+								<h5>Germany</h5>
+								<p>12 Cities . 1260 Listings</p>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a href="list-lead.php">
+						<div class="list-mig-like-com">
+							<div class="list-mig-lc-img"> <img src="images/listing/home1.jpg" alt="" /> </div>
+							<div class="list-mig-lc-con list-mig-lc-con2">
+								<h5>India</h5>
+								<p>24 Cities . 4152 Listings</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--ADD BUSINESS-->
+	<section class="com-padd home-dis">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2><span>30% Off</span> Promote Your Business with us <a href="price.php">Add My Business</a></h2> </div>
+			</div>
+		</div>
+	</section>
+	<!--BEST THINGS-->
+	<section class="com-padd com-padd-redu-bot1">
+		<div class="container dir-hom-pre-tit">
+			<div class="row">
+				<div class="com-title">
+					<h2>Top Trendings for <span>your City</span></h2>
+					<p>Explore some of the best tips from around the world from our partners and friends.</p>
+				</div>
+				<div class="col-md-6">
+					<div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> <img src="images/services/tr1.jpg" alt="" /> </div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="automobile-listing-details.php"><h3>Import Motor America</h3></a>
+								<h4>Express Avenue Mall, Santa Monica</h4>
+								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
+										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
+										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
+										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> <img src="images/services/tr2.jpg" alt="" /> </div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="property-listing-details.php"><h3>Luxury Property</h3></a>
+								<h4>Express Avenue Mall, New York</h4>
+								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
+										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
+										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
+										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> <img src="images/services/tr3.jpg" alt="" /> </div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="shop-listing-details.php"><h3>Spicy Supermarket Shop</h3></a>
+								<h4>Express Avenue Mall, Chicago</h4>
+								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
+										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
+										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
+										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> <img src="images/services/s4.jpeg" alt="" /> </div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Packers and Movers</h3></a>
+								<h4>Express Avenue Mall, Toronto</h4>
+								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
+										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
+										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
+										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> <img src="images/services/s5.jpeg" alt="" /> </div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Tour and Travels</h3></a>
+								<h4>Express Avenue Mall, Los Angeles</h4>
+								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
+										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
+										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
+										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> <img src="images/services/s6.jpeg" alt="" /> </div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Andru Modular Kitchen</h3></a>
+								<h4>Express Avenue Mall, San Diego</h4>
+								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
+										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
+										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
+										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> <img src="images/services/s7.jpeg" alt="" /> </div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Rute Skin Care & Treatment</h3></a>
+								<h4>Express Avenue Mall, Toronto</h4>
+								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
+										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
+										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
+										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop mar-bot-red-0">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> <img src="images/services/s8.jpg" alt="" /> </div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Health and Fitness</h3></a>
+								<h4>Express Avenue Mall, San Diego</h4>
+								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
+										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
+										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
+										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--CREATE FREE ACCOUNT-->
+	<section class="com-padd sec-bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="com-title">
+					<h2>Create a free <span>Account</span></h2>
+					<p>Explore some of the best tips from around the world from our partners and friends.</p>
+				</div>
+				<div class="col-md-6">
+					<div class="hom-cre-acc-left">
+						<h3>A few reasons you’ll love Online <span>Business Directory</span></h3>
+						<p>5 Benefits of Listing Your Business to a Local Online Directory</p>
+						<ul>
+							<li> <img src="images/icon/7.png" alt="">
+								<div>
+									<h5>Enhancing Your Business</h5>
+									<p>Imagine you have made your presence online through a local online directory, but your competitors have..</p>
+								</div>
+							</li>
+							<li> <img src="images/icon/5.png" alt="">
+								<div>
+									<h5>Advertising Your Business</h5>
+									<p>Advertising your business to area specific has many advantages. For local businessmen, it is an opportunity..</p>
+								</div>
+							</li>
+							<li> <img src="images/icon/6.png" alt="">
+								<div>
+									<h5>Develop Brand Image</h5>
+									<p>Your local business too needs brand management and image making. As you know the local market..</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="hom-cre-acc-left hom-cre-acc-right">
+						<form>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="acc-name" type="text" class="validate">
+									<label for="acc-name">Name</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="acc-mob" type="number" class="validate">
+									<label for="acc-mob">Mobile</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="acc-mail" type="email" class="validate">
+									<label for="acc-mail">Email</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="acc-pass" type="password" class="validate">
+									<label for="acc-pass">Password</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12 hom-cr-acc-check">
+									<input type="checkbox" id="test5" />
+									<label for="test5">By signing up, you agree to the Terms and Conditions and Privacy Policy. You also agree to receive product-related emails.</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12"> <a class="waves-effect waves-light btn-large full-btn" href="#!">Submit Now</a> </div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php include_once 'includes/footer.php' ?>
