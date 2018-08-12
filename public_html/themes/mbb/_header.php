@@ -25,14 +25,14 @@
     <meta name="keywords" content="<?php echo isset($page_keywords) ? $page_keywords : settings_item('site.meta_keywords'); ?>">
     <meta name="author" content="<?php echo settings_item('site.meta_title'); ?>">
 	<!-- FAV ICON(BROWSER TAB ICON) -->
-	<link rel="shortcut icon" href="<?php echo Template::theme_url("images/fav.ico")?> type="image/x-icon">
+	<link rel="shortcut icon" href="<?php echo Template::theme_url("images/fav.ico")?>" type="image/x-icon">
 	<!-- GOOGLE FONT -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins%7CQuicksand:500,700" rel="stylesheet">
 	<!-- FONTAWESOME ICONS -->
 	<link rel="stylesheet" href="<?php echo Template::theme_url("css/font-awesome.min.css")?>">
 	<!-- ALL CSS FILES -->
 	<link href="<?php echo Template::theme_url("css/materialize.css")?>" rel="stylesheet">
-	<link href="<?php echo Template::theme_url("css/style.css")?> rel="stylesheet">
+	<link href="<?php echo Template::theme_url("css/style.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
 	<link href="<?php echo site_url("css/responsive.css")?>" rel="stylesheet">

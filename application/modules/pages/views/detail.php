@@ -1,17 +1,5 @@
 <?php
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 ?>
 <!-- main row -->
 <div class="row">
