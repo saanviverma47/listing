@@ -18,24 +18,12 @@
 									<div class="col-sm-4 col-md-6">
 										<h4><?php echo lang('footer_navigation');?></h4>
 										<ul class="two-columns">
-										<?php foreach($menu_links as $menu_link):?>
-										<?php if(($menu_link->location == 'footer') && ($menu_link->parent_id == 0)):?>
-										<li><a
-											href="<?php echo site_url("/pages/" .$menu_link->slug);?>"><?php echo $menu_link->sub_page;?>
-										</a>
-											<ul>
-											<?php foreach($menu_links as $sub_menu):?>
-											<?php if(($sub_menu->location == 'footer') && ($sub_menu->parent_id == $menu_link->id)):?>
-												<li><a
-													href="<?php echo site_url("/pages/" .$sub_menu->slug);?>"><?php echo $sub_menu->sub_page;?>
-												</a></li>
-												<?php endif;?>
-												<?php endforeach;?>
-											</ul></li>
-											<?php endif;?>
-											<?php endforeach;?>
-										<li><a href="<?php echo site_url('contact');?>"><?php echo lang('label_contact_us');?>
-										</a></li>
+											<li><a href="aboutus.php">About Us</a> </li>
+											<li><a href="register.php">Register</a> </li>
+											<li><a href="/members/add_business" >Add Listing</a> </li>
+											<li><a href="login">Sign In</a> </li>
+											<li><a href="contactus.php" >Contact Us</a> </li>
+										</ul>
 										</ul>
 									</div>
 									<?php endif;?>
@@ -95,7 +83,7 @@
 	<!--COPY RIGHTS-->
 	<section class="copy">
 		<div class="container">
-			<p><?php echo lang('footer_copyright');?> <?php echo settings_item('site.title')?></p>
+			<p>Copyright &copy; 2018 MBB </p>
 		</div>
 	</section>
 	<!--QUOTS POPUP-->

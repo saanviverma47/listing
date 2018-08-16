@@ -71,7 +71,10 @@ Route::any('resend_activation', 'users/resend_activation');
 
 
 $route = Route::map($route);
-
+$route['aboutus.php']			= 'common/about';
+$route['register.php']			= 'common/register';
+$route['login.php']				= 'common/login';
+$route['contactus.php']			= 'common/contact';
 $route['pages/(:any)']			= 'pages/detail/$1';
 $route['contact']				= 'pages/contact';
 $route['contactQuery']			= 'pages/contact_query';
