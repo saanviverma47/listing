@@ -1,17 +1,4 @@
 <?php if (! defined ( 'BASEPATH' ))exit ( 'No direct script access allowed' );
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 class Members extends Front_Controller {	
 	/**
 	 * Constructor

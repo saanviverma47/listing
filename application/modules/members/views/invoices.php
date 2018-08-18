@@ -1,16 +1,4 @@
 <?php
- 
-|| ###################################################################### ||
-|| # mbb - Business Directory Script							    # ||
-|| # Copyright (C) 2014 mbb. All Rights Reserved.				    # ||
-|| # ----------------------------------------------------------------   # ||
-|| # This file is owned and copyrighted by mbb.com. Your license    # ||
-|| # confers  no  title  or ownership in the Script and is not a sale   # ||
-|| # of any rights to the Software. This file may not be redistributed  # ||
-|| # in whole or significant part.									    # ||
-|| # --------------- COPYRIGHTED COMMERCIAL SOFTWARE ---------------    # ||
-|| # http://www.mbb.com | http://www.mbb.com/license.html 	    # ||
-|| ###################################################################### ||
 
 $num_columns	= 7;
 $can_delete	= $this->auth->restrict();

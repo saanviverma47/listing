@@ -1,18 +1,3 @@
- <?php 
-  
-  
- || # mbb - Business Directory Script							    # ||
- || # Copyright (C) 2014 mbb. All Rights Reserved.				    # ||
-  
-  
-  
-  
- || # in whole or significant part.									    # ||
-  
- || # 	    # ||
-  
- 
- ?>
     <div class="row">
         <div class="col-xs-12">
     		<div class="invoice-title">

@@ -1,20 +1,5 @@
 <?php
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
 $validation_errors = validation_errors();
-
 if ($validation_errors) :
 ?>
 <div class="alert alert-block alert-error fade in">
