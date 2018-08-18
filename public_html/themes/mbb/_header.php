@@ -1,15 +1,15 @@
 <?php
 	// get last selected theme from user
-    //Assets::add_js( array('bootstrap.min.js', 'selectize.min.js', 'theme-switcher.js', 'metisMenu.js', 'jquery.cookie.js', 'bootstrap-typeahead.min.js', 'jquery.redirect.js', 'custom.js') );
+    Assets::add_js( array('bootstrap.min.js', 'selectize.min.js', 'theme-switcher.js', 'metisMenu.js', 'jquery.cookie.js', 'bootstrap-typeahead.min.js', 'jquery.redirect.js', 'custom.js') );
     if((settings_item('adv.search_blocks') == 2) || (settings_item('adv.search_blocks') == 3 )) {
     	Assets::add_js('ontype_location_search.js');
     } else {
     	Assets::add_js('default_search.js');
     }
-   // Assets::add_css( array('bootstrap.min.css', 'font-awesome.min.css', 'selectize.bootstrap3.css', 'famfamfam-flags.css', 'layout.css', 'yellow_theme.css'));
+	Assets::add_css( array('bootstrap.min.css', 'font-awesome.min.css', 'selectize.bootstrap3.css', 'famfamfam-flags.css', 'layout.css', 'yellow_theme.css'));
     $inline = '$(".nav-tabs a:first").tab("show")';
 
-	//  Assets::add_js( $inline, 'inline' );
+	Assets::add_js( $inline, 'inline' );
     // this condition is used to load the different page for home and other
 	if($_SERVER['REQUEST_URI'] != "/" && $_SERVER['REQUEST_URI'] != "/index.php"){
 ?>
