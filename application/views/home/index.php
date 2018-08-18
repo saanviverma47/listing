@@ -1,5 +1,5 @@
 <!--HOME PROJECTS-->
-	<section class="proj mar-bot-red-m30">
+	<section class="proj mar-bot-red-m30" style='display:none;'>
 		<div class="container">
 			<div class="row">
 				<!--HOME PROJECTS: 1-->
@@ -40,102 +40,30 @@
 				<div class="dir-hli">
 					<ul>
 						<!--=====LISTINGS======-->
+						<?php $counter = 1;?>
+						<?php if($categories):?>
+						<?php foreach($categories as $category):?>  	  	
+						<?php  if($category->parent_id == 0): ?>
+						<?php $counter++; if($counter >= 14){
+							continue;
+						}?>
 						<li class="col-md-3 col-sm-6">
 							<a href="list.php">
 								<div class="dir-hli-5">
 									<div class="dir-hli-1">
 										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
-										<div class="dir-hli-4"> </div> <img src="<?php echo Template::theme_url("images/services/15.jpg")?>" alt=""> </div>
+										<div class="dir-hli-4"> </div> 
+										<a href="<?php echo site_url('category/' .$category->slug .'-'. $category->id);?>">
+										<img src="<?php echo Template::theme_url("images/services/15.jpg")?>" alt=""></a> </div>
 									<div class="dir-hli-2">
-										<h4>Hotels & Resorts <span class="dir-ho-cat">Show All (940)</span></h4> </div>
+										<h4 style='font-size:12px;'><?php echo $category->name .' ('.$category->counts.')'; ?> </h4> </div>
 								</div>
 							</a>
 						</li>
-						<!--=====LISTINGS======-->
-						<li class="col-md-3 col-sm-6">
-							<a href="list-grid.php">
-								<div class="dir-hli-5">
-									<div class="dir-hli-1">
-										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
-										<div class="dir-hli-4"> </div> <img src="<?php echo Template::theme_url("images/services/13.jpg")?>" alt=""> </div>
-									<div class="dir-hli-2">
-										<h4>Hospitals <span class="dir-ho-cat">Show All (174)</span></h4> </div>
-								</div>
-							</a>
-						</li>
-						<!--=====LISTINGS======-->
-						<li class="col-md-3 col-sm-6">
-							<a href="list.php">
-								<div class="dir-hli-5">
-									<div class="dir-hli-1">
-										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
-										<div class="dir-hli-4"> </div> <img src="<?php echo Template::theme_url("images/services/9.jpg")?>" alt=""> </div>
-									<div class="dir-hli-2">
-										<h4>Transportation <span class="dir-ho-cat">Show All (624)</span></h4> </div>
-								</div>
-							</a>
-						</li>
-						<!--=====LISTINGS======-->
-						<li class="col-md-3 col-sm-6">
-							<a href="list-grid.php">
-								<div class="dir-hli-5">
-									<div class="dir-hli-1">
-										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
-										<div class="dir-hli-4"> </div> <img src="<?php echo Template::theme_url("images/services/12.jpeg")?>" alt=""> </div>
-									<div class="dir-hli-2">
-										<h4>Property <span class="dir-ho-cat">Show All (960)</span></h4> </div>
-								</div>
-							</a>
-						</li>
-						<!--=====LISTINGS======-->
-						<li class="col-md-3 col-sm-6">
-							<a href="list.php">
-								<div class="dir-hli-5">
-									<div class="dir-hli-1">
-										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
-										<div class="dir-hli-4"> </div> <img src="<?php echo Template::theme_url("images/services/2.jpeg")?>" alt=""> </div>
-									<div class="dir-hli-2">
-										<h4>Automobilers <span class="dir-ho-cat">Show All (745)</span></h4> </div>
-								</div>
-							</a>
-						</li>
-						<!--=====LISTINGS======-->
-						<li class="col-md-3 col-sm-6">
-							<a href="list-grid.php">
-								<div class="dir-hli-5">
-									<div class="dir-hli-1">
-										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
-										<div class="dir-hli-4"> </div> <img src="<?php echo Template::theme_url("images/services/6.jpeg")?>" alt=""> </div>
-									<div class="dir-hli-2">
-										<h4>Electricals <span class="dir-ho-cat">Show All (865)</span></h4> </div>
-								</div>
-							</a>
-						</li>
-						<!--=====LISTINGS======-->
-						<li class="col-md-3 col-sm-6">
-							<a href="list.php">
-								<div class="dir-hli-5">
-									<div class="dir-hli-1">
-										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
-										<div class="dir-hli-4"> </div> <img src="<?php echo Template::theme_url("images/services/16.jpeg")?>" alt=""> </div>
-									<div class="dir-hli-2">
-										<h4>Education <span class="dir-ho-cat">Show All (935)</span></h4> </div>
-								</div>
-							</a>
-						</li>
-						<!--=====LISTINGS======-->
-						<li class="col-md-3 col-sm-6">
-							<a href="list-grid.php">
-								<div class="dir-hli-5">
-									<div class="dir-hli-1">
-										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
-										<div class="dir-hli-4"> </div> <img src="<?php echo Template::theme_url("images/services/8.jpeg")?>" alt=""> </div>
-									<div class="dir-hli-2">
-										<h4>Sports <span class="dir-ho-cat">Show All (361)</span></h4> </div>
-								</div>
-							</a>
-						</li>
-					</ul>
+						<?php endif;?>
+						<?php endforeach;?>
+						<?php endif;?>
+ 					</ul>
 				</div>
 			</div>
 		</div>
@@ -147,7 +75,7 @@
 		<div class="container dir-hom-pre-tit">
 			<div class="row">
 				<div class="com-title">
-					<h2>Top Trendings for <span>your City</span></h2>
+					<h2>Featured <span>Listings</span></h2>
 					<p>Explore some of the best tips from around the world from our partners and friends.</p>
 				</div>
 				<div class="col-md-6">
