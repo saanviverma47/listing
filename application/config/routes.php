@@ -69,6 +69,15 @@ Route::any('activate', 'users/activate');
 Route::any('activate/(:any)', 'users/activate/$1');
 Route::any('resend_activation', 'users/resend_activation');
 
+Route::prefix(SITE_AREA, function(){
+	Route::context('dashboard');
+    Route::context('content', array('home' => SITE_AREA .'/content/index'));
+    Route::context('financial');
+    Route::context('reports', array('home' => SITE_AREA .'/reports/index'));
+    Route::context('developer');
+    Route::context('settings');
+    Route::context('help');
+});
 
 $route = Route::map($route);
 $route['aboutus.php']			= 'common/about';

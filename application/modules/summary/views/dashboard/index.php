@@ -1,17 +1,4 @@
 <?php
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 $num_columns = 2;
 $can_delete = $this->auth->has_permission ( 'Summary.Dashboard.Delete' );
 $can_edit = $this->auth->has_permission ( 'Summary.Dashboard.Edit' );
@@ -90,6 +77,7 @@ $has_records = isset ( $records ) && is_array ( $records ) && count ( $records )
 			</tbody>
 		</table>
 	</div>
+<?php if(1==2){?>
 	<div class="table-responsive">
 		<h4>
 			<i class="glyphicon glyphicon-picture"></i><?php echo ' '. lang('images'); ?></h4>
@@ -110,6 +98,7 @@ $has_records = isset ( $records ) && is_array ( $records ) && count ( $records )
 			</tbody>
 		</table>
 	</div>
+<?php } ?>
 </div>
 <div class="span4">
 	<div class="table-responsive">
@@ -164,6 +153,7 @@ $has_records = isset ( $records ) && is_array ( $records ) && count ( $records )
 			</tbody>
 		</table>
 	</div>
+	<?php if(1==2){?>
 	<div class="table-responsive">
 		<h4>
 			<i class="glyphicon glyphicon-film"></i><?php echo ' '. lang('videos'); ?></h4>
@@ -184,6 +174,7 @@ $has_records = isset ( $records ) && is_array ( $records ) && count ( $records )
 			</tbody>
 		</table>
 	</div>
+	<?php }?>
 </div>
 
 <div class="span4">
