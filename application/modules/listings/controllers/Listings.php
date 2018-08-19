@@ -1,19 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
 class Listings extends Front_Controller {
 
 	public function __construct()

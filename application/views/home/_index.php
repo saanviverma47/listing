@@ -77,7 +77,7 @@
   <div class="panel-body">    
     <div class="row">
     <?php foreach($featured_listings as $featured_listing):?>
-    	<div class="col-sm-3">
+    <div class="col-sm-3">
 		<div class="fileinput-preview thumbnail table-cell-middle" data-trigger="fileinput" style="max-width: 150px; width: 150px; max-height: 150px; height: 150px;">
 					<?php if($featured_listing['logo_url']) {
 						preg_match('/(?<extension>\.\w+)$/im', $featured_listing['logo_url'], $matches);

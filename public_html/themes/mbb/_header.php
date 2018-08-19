@@ -4,14 +4,14 @@
     if((settings_item('adv.search_blocks') == 2) || (settings_item('adv.search_blocks') == 3 )) {
     	Assets::add_js('ontype_location_search.js');
     } else {
-    	Assets::add_js('default_search.js');
+    	Assets::add_js('default_search.js'); 
     }
 	Assets::add_css( array('bootstrap.min.css', 'font-awesome.min.css', 'selectize.bootstrap3.css', 'famfamfam-flags.css', 'layout.css', 'yellow_theme.css'));
     $inline = '$(".nav-tabs a:first").tab("show")';
 
 	Assets::add_js( $inline, 'inline' );
     // this condition is used to load the different page for home and other
-	if($_SERVER['REQUEST_URI'] != "/" && $_SERVER['REQUEST_URI'] != "/index.php"){
+	if($_SERVER['REQUEST_URI'] != "/"){
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,12 +36,6 @@
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
 	<link href="<?php echo site_url("css/responsive.css")?>" rel="stylesheet">
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-	<script src="<?php echo Template::theme_url("js/html5shiv.js")?>"></script>
-	<script src="<?php echo Template::theme_url("js/respond.min.js")?>"></script>
-	<![endif]-->
 </head>
 
 <body>
@@ -92,14 +86,9 @@
 	<link href="<?php echo Template::theme_url("css/materialize.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/style.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
-	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
-	<link href="css/responsive.css" rel="stylesheet">
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-	<script src="<?php echo Template::theme_url("js/html5shiv.js")?>"></script>
-	<script src="<?php echo Template::theme_url("js/respond.min.js")?>"></script>
-	<![endif]-->
+	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS 
+	<link href="css/responsive.css" rel="stylesheet"> -->
+	
 </head>
 
 <body>
@@ -112,7 +101,7 @@
 					<div class="dir-ho-tl">
 						<ul>
 							<li>
-								<a href="index.php"><img src="<?php echo Template::theme_url("images/logo.png")?>" alt=""> </a>
+								<a href="index.php"><img src="<?= base_url(); ?>assets/images/<?= settings_item('site.logo');?>" alt=""> </a>
 							</li>
 						</ul>
 					</div>
@@ -134,26 +123,85 @@
 			<div class="row">
 				<div class="dir-hr1">
 					<div class="dir-ho-t-tit">
-						<h1>Connect with the right Service Experts</h1> 
+						<h1 style='font-size:40px;'>Connect with the right Service Experts</h1> 
 						<p>Find B2B & B2C businesses contact addresses, phone numbers,<br> user ratings and reviews.</p>
 					</div>
-					<form class="tourz-search-form">
+					<?php if(settings_item('adv.search_blocks') == 1):?>
+						<form class="tourz-search-form" role="search" method="post"	id="search-form" action="<?php echo base_url('listings/search');?>" name="search-form">
+						<input type="hidden" name="<?php echo $this->security->get_csrf_token_name()?>" value="<?php echo $this->security->get_csrf_hash()?>" />
+						<input type="hidden" name="search-country" id="search-country" value="<?php echo $default_country;?>" />
+			    		<input type="hidden" name="search-state" id="search-state" value="<?php echo $default_state; ?>" />
 						<div class="input-field">
-							<input type="text" id="select-city" class="autocomplete">
-							<label for="select-city">Enter city</label>
+							<select name="select-city" id="select-city" class="demo-default span6"	placeholder="<?php echo lang('header_select_city');?>">
+								<option value =""><?php echo lang('header_select_city');?></option>
+								<?php if($cities):?>
+								<?php foreach($cities as $city): ?>
+									<option value ="<?php echo $city->id;?>" <?php echo (isset($default_city) && ($default_city==$city->id)) ? 'selected': ''; ?>><?php echo $city->name;?></option>
+								<?php endforeach; ?>
+								<?php endif;?>
+							</select>
+						</div>
+						
+						<div class="input-field">
+							<select id="select-locality" name="select-locality" class="demo-default span6"	placeholder="<?php echo lang('header_select_locality');?>">
+								<option value ="-1" <?php echo (isset($search_locality) && ($search_locality == -1)) ? 'selected': ''; ?>><?php echo lang('header_select_locality');?></option>
+								<?php if($localities):?>
+								<?php foreach($localities as $locality): ?>
+									<option value ="<?php echo $locality->id;?>" <?php echo (isset($search_locality) && ($search_locality == $locality->id)) ? 'selected': ''; ?>><?php echo $locality->name;?></option>
+								<?php endforeach; ?>
+								<?php endif;?>
+							</select>
 						</div>
 						<div class="input-field">
-							<input type="text" id="select-search" class="autocomplete">
-							<label for="select-search" class="search-hotel-type">Search your services like hotel, resorts, events and more</label>
+							<input type="submit" value="search" id="searchSubmit" name="searchSubmit" class="waves-effect waves-light tourz-sear-btn"> 
 						</div>
-						<div class="input-field">
-							<input type="submit" value="search" class="waves-effect waves-light tourz-sear-btn"> </div>
 					</form>
+					<?php elseif(settings_item('adv.search_blocks') == 3): ?>
+						<form class="tourz-search-form" role="search" method="post"	id="search-form" action="<?php echo base_url('listings/search');?>" name="search-form">
+							<div class="input-field">
+								<input type="text" id="select-city" class="autocomplete1" name="location" value="<?php echo isset($search_location) ? $search_location : '';?>">
+								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name()?>" value="<?php echo $this->security->get_csrf_hash()?>" />
+								<label for="select-city">Enter city</label>
+							</div>
+							<div class="input-field">
+								<input type="text" id="select-search" name="search" value="<?php echo isset($searchterm) ? $searchterm : '';?>" class="autocomplete">
+								<label for="select-search" class="search-hotel-type">Search your services like hotel, resorts, events and more</label>
+							</div>
+							<div class="input-field">
+								<input type="submit" value="search" class="waves-effect waves-light tourz-sear-btn" id="searchSubmit" name="searchSubmit"> 
+							</div>
+						</form>
+					<?php elseif(settings_item('adv.search_blocks') == 2):?>
+							<form class="tourz-search-form" role="search" method="post"	id="search-form" action="<?php echo base_url('listings/search');?>" name="search-form">
+								<div class="input-field">
+									<input type="text" id="select-city" class="autocomplete1" name="location" value="<?php echo isset($search_location) ? $search_location : '';?>">
+									<input type="hidden" name="<?php echo $this->security->get_csrf_token_name()?>" value="<?php echo $this->security->get_csrf_hash()?>" />
+									<label for="select-city">Enter city</label>
+								</div>
+								<div class="input-field">
+									<input type="text" id="select-search" name="search" value="<?php echo isset($searchterm) ? $searchterm : '';?>" class="autocomplete">
+									<label for="select-search" class="search-hotel-type">Search your services like hotel, resorts, events and more</label>
+								</div>
+								<div class="input-field">
+									<input type="submit" value="search" class="waves-effect waves-light tourz-sear-btn" id="searchSubmit" name="searchSubmit"> 
+								</div>
+							</form>
+
+					<?php endif;?>
 				</div>
 			</div>
 		</div>
 	</section>
 	<!--TOP SEARCH SECTION-->
+	<style>
+		.waves-input-wrapper .waves-button-input {
+			position: relative;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			width: 100% !important;
+		}
+	</style>
 	<section id="myID" class="bottomMenu hom-top-menu">
 		<div class="container top-search-main">
 			<div class="row">
@@ -166,26 +214,76 @@
 					<!--SECTION: SEARCH BOX-->
 					<div class="ts-menu-3">
 						<div class="">
-							<form class="tourz-search-form tourz-top-search-form">
+						<?php if(settings_item('adv.search_blocks') == 1):?>
+								<form class="tourz-search-form tourz-top-search-form" role="search" method="post"	id="search-form" action="<?php echo base_url('listings/search');?>" name="search-form">
+								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name()?>" value="<?php echo $this->security->get_csrf_hash()?>" />
+								<input type="hidden" name="search-country" id="search-country" value="<?php echo $default_country;?>" />
+								<input type="hidden" name="search-state" id="search-state" value="<?php echo $default_state; ?>" />
 								<div class="input-field">
-									<input type="text" id="top-select-city" class="autocomplete">
-									<label for="top-select-city">Enter city</label>
+									<select name="select-city" id="select-city" class="demo-default span6"	placeholder="<?php echo lang('header_select_city');?>">
+										<option value =""><?php echo lang('header_select_city');?></option>
+										<?php if($cities):?>
+										<?php foreach($cities as $city): ?>
+											<option value ="<?php echo $city->id;?>" <?php echo (isset($default_city) && ($default_city==$city->id)) ? 'selected': ''; ?>><?php echo $city->name;?></option>
+										<?php endforeach; ?>
+										<?php endif;?>
+									</select>
+								</div>
+								
+								<div class="input-field">
+									<select id="select-locality" name="select-locality" class="demo-default span6"	placeholder="<?php echo lang('header_select_locality');?>">
+										<option value ="-1" <?php echo (isset($search_locality) && ($search_locality == -1)) ? 'selected': ''; ?>><?php echo lang('header_select_locality');?></option>
+										<?php if($localities):?>
+										<?php foreach($localities as $locality): ?>
+											<option value ="<?php echo $locality->id;?>" <?php echo (isset($search_locality) && ($search_locality == $locality->id)) ? 'selected': ''; ?>><?php echo $locality->name;?></option>
+										<?php endforeach; ?>
+										<?php endif;?>
+									</select>
 								</div>
 								<div class="input-field">
-									<input type="text" id="top-select-search" class="autocomplete">
-									<label for="top-select-search" class="search-hotel-type">Search your services like hotel, resorts, events and more</label>
+									<input type="submit" value="search" id="searchSubmit" name="searchSubmit" class="waves-effect waves-light tourz-sear-btn"> 
 								</div>
-								<div class="input-field">
-									<input type="submit" value="" class="waves-effect waves-light tourz-top-sear-btn"> </div>
 							</form>
+							<?php elseif(settings_item('adv.search_blocks') == 3): ?>
+								<form class="tourz-search-form tourz-top-search-form"" role="search" method="post"	id="search-form" action="<?php echo base_url('listings/search');?>" name="search-form">
+									<div class="input-field">
+										<input type="text" id="top-select-city" class="autocomplete1" name="location" value="<?php echo isset($search_location) ? $search_location : '';?>">
+										<input type="hidden" name="<?php echo $this->security->get_csrf_token_name()?>" value="<?php echo $this->security->get_csrf_hash()?>" />
+										<label for="top-select-city">Enter city</label>
+									</div>
+									<div class="input-field">
+										<input type="text" id="top-select-search" name="search" value="<?php echo isset($searchterm) ? $searchterm : '';?>" class="autocomplete1">
+										<label for="top-select-search" class="search-hotel-type">Search your services like hotel, resorts, events and more</label>
+									</div>
+									<div class="input-field">
+										<input type="submit" value="" id="searchSubmit" name="searchSubmit" class="waves-effect waves-light tourz-top-sear-btn"> 
+									</div>
+								</form>
+							<?php elseif(settings_item('adv.search_blocks') == 2):?>
+									<form class="tourz-search-form tourz-top-search-form" role="search" method="post"	id="search-form" action="<?php echo base_url('listings/search');?>" name="search-form">
+										<div class="input-field">
+											<input type="text" id="top-select-city" class="autocomplete1" name="location" value="<?php echo isset($search_location) ? $search_location : '';?>">
+											<input type="hidden" name="<?php echo $this->security->get_csrf_token_name()?>" value="<?php echo $this->security->get_csrf_hash()?>" />
+											<label for="select-city">Enter city</label>
+										</div>
+										<div class="input-field">
+											<input type="text" id="top-select-search" name="search" value="<?php echo isset($searchterm) ? $searchterm : '';?>" class="autocomplete">
+											<label for="top-select-search" class="search-hotel-type">Search your services like hotel, resorts, events and more</label>
+										</div>
+										<div class="input-field">
+											<input type="submit" value="" style='width: 100%;' class="waves-effect waves-light tourz-top-sear-btn" id="searchSubmit" name="searchSubmit"> 
+										</div>
+									</form>
+
+							<?php endif;?>
 						</div>
 					</div>
 					<!--SECTION: REGISTER,SIGNIN AND ADD YOUR BUSINESS-->
 					<div class="ts-menu-4">
 						<div class="v3-top-ri">
 							<ul>
-								<li><a href="login.php" class="v3-menu-sign"><i class="fa fa-sign-in"></i> Sign In</a> </li>
-								<li><a href="db-listing-add.php" class="v3-add-bus"><i class="fa fa-plus" aria-hidden="true"></i> Add Listing</a> </li>
+								<li><a href="login" class="v3-menu-sign"><i class="fa fa-sign-in"></i> Sign In</a> </li>
+								<li><a href="/members/add_business" class="v3-add-bus"><i class="fa fa-plus" aria-hidden="true"></i> Add Listing</a> </li>
 							</ul>
 						</div>
 					</div>

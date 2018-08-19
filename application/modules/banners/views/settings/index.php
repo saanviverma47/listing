@@ -1,17 +1,4 @@
 <?php
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 $num_columns	= 19;
 $can_delete	= $this->auth->has_permission('Banners.Settings.Delete');
 $can_edit		= $this->auth->has_permission('Banners.Settings.Edit');

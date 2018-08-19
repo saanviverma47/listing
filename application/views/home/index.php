@@ -30,7 +30,7 @@
 		</div>
 	</section>
 	<!--FIND YOUR SERVICE-->
-	<section class="com-padd">
+	<section class="com-padd web-app">
 		<div class="container">
 			<div class="row">
 				<div class="com-title">
@@ -51,10 +51,10 @@
 							<a href="list.php">
 								<div class="dir-hli-5">
 									<div class="dir-hli-1">
-										<div class="dir-hli-3"><img src="<?php echo Template::theme_url("images/hci1.png")?>" alt=""> </div>
+										<div class="dir-hli-3"><img src="<?php echo base_url(); ?>assets/images/categories/<?php echo $category->image_url;?>" alt=""> </div>
 										<div class="dir-hli-4"> </div> 
 										<a href="<?php echo site_url('category/' .$category->slug .'-'. $category->id);?>">
-										<img src="<?php echo Template::theme_url("images/services/15.jpg")?>" alt=""></a> </div>
+										<img src="<?php echo base_url(); ?>assets/images/categories/<?php echo $category->image_url;?>" alt=""></a> </div>
 									<div class="dir-hli-2">
 										<h4 style='font-size:12px;'><?php echo $category->name .' ('.$category->counts.')'; ?> </h4> </div>
 								</div>
@@ -73,163 +73,202 @@
 	<!--BEST THINGS-->
 	<section class="">
 		<div class="container dir-hom-pre-tit">
+		<?php if($featured_listings):?>
+		
 			<div class="row">
 				<div class="com-title">
 					<h2>Featured <span>Listings</span></h2>
 					<p>Explore some of the best tips from around the world from our partners and friends.</p>
 				</div>
-				<div class="col-md-6">
-					<div>
 						<!--POPULAR LISTINGS-->
+					<?php $flag = 1;?>
+					<?php foreach($featured_listings as $featured_listing):?>
+					<?php $flag++;?>
+					<?php if($flag%2 == 1){?>
+					<div class="col-md-6">
+						<div>	
 						<div class="home-list-pop">
 							<!--POPULAR LISTINGS IMAGE-->
-							<div class="col-md-3"> <img src="<?php echo Template::theme_url("images/services/tr1.jpg")?>" alt="" /> </div>
-							<!--POPULAR LISTINGS: CONTENT-->
-							<div class="col-md-9 home-list-pop-desc"> <a href="automobile-listing-details.php"><h3>Import Motor America</h3></a>
-								<h4>Express Avenue Mall, Santa Monica</h4>
-								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
-								<div class="hom-list-share">
-									<ul>
-										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
-										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
-										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
-										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
-									</ul>
-								</div>
+							<div class="col-md-3"> 
+							<?php if($featured_listing['logo_url']) {
+								preg_match('/(?<extension>\.\w+)$/im', $featured_listing['logo_url'], $matches);
+								$extension = $matches['extension'];
+								$thumbnail = preg_replace('/(\.\w+)$/im', '', $featured_listing['logo_url']) . '_thumb' . $extension;
+							?>
+								<img src="<?php echo base_url(); ?>assets/images/logo/thumbs/<?php echo $thumbnail;?>" alt="" /> 
+							<?php } else {?>
+								<img src="<?= base_url(); ?>assets/images/no-logo.png" alt="" /> 
+							<?php }?>
 							</div>
-						</div>
-						<!--POPULAR LISTINGS-->
-						<div class="home-list-pop">
-							<!--POPULAR LISTINGS IMAGE-->
-							<div class="col-md-3"> <img src="<?php echo Template::theme_url("images/services/tr2.jpg")?>" alt="" /> </div>
 							<!--POPULAR LISTINGS: CONTENT-->
-							<div class="col-md-9 home-list-pop-desc"> <a href="property-listing-details.php"><h3>Luxury Property</h3></a>
-								<h4>Express Avenue Mall, New York</h4>
-								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+							<div class="col-md-9 home-list-pop-desc"> <a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><h3><?php echo $featured_listing['title'];?></h3></a>
+								<h4 style='display:none;'>Express Avenue Mall, Santa Monica</h4>
+							<?php if($featured_listing['isAddress'] == 1): ?>
+								<p><?php echo $featured_listing['address'].' '.$featured_listing['city']. ' ' .$featured_listing['pincode'].' '.$featured_listing['state'].', ' .ucwords(strtolower($featured_listing['country']));?></p>
+							<?php endif;?>
+							
+								<span class="home-list-pop-rat"><?=sprintf('%0.1f', $featured_listing['average_rating'])?></span>
 								<div class="hom-list-share">
 									<ul>
-										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
-										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
-										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
-										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!--POPULAR LISTINGS-->
-						<div class="home-list-pop">
-							<!--POPULAR LISTINGS IMAGE-->
-							<div class="col-md-3"> <img src="<?php echo Template::theme_url("images/services/tr3.jpg")?>" alt="" /> </div>
-							<!--POPULAR LISTINGS: CONTENT-->
-							<div class="col-md-9 home-list-pop-desc"> <a href="shop-listing-details.php"><h3>Spicy Supermarket Shop</h3></a>
-								<h4>Express Avenue Mall, Chicago</h4>
-								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
-								<div class="hom-list-share">
-									<ul>
-										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
-										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
-										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
-										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!--POPULAR LISTINGS-->
-						<div class="home-list-pop">
-							<!--POPULAR LISTINGS IMAGE-->
-							<div class="col-md-3"> <img src="<?php echo Template::theme_url("images/services/s4.jpeg")?>" alt="" /> </div>
-							<!--POPULAR LISTINGS: CONTENT-->
-							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Packers and Movers</h3></a>
-								<h4>Express Avenue Mall, Toronto</h4>
-								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
-								<div class="hom-list-share">
-									<ul>
-										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
-										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
-										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
-										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+										<li><a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><i class="fa fa-eye" aria-hidden="true"></i> <?=$featured_listing['hits']?$featured_listing['hits']:0?></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><i class="fa fa-globe" aria-hidden="true"></i></a> </li>
 									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+		<?php }else{?>
 				<div class="col-md-6">
 					<div>
 						<!--POPULAR LISTINGS-->
 						<div class="home-list-pop">
 							<!--POPULAR LISTINGS IMAGE-->
-							<div class="col-md-3"> <img src="<?php echo Template::theme_url("images/services/s5.jpeg")?>" alt="" /> </div>
+							<div class="col-md-3"> 
+							<?php if($featured_listing['logo_url']) {
+								preg_match('/(?<extension>\.\w+)$/im', $featured_listing['logo_url'], $matches);
+								$extension = $matches['extension'];
+								$thumbnail = preg_replace('/(\.\w+)$/im', '', $featured_listing['logo_url']) . '_thumb' . $extension;
+							?>
+								<img src="<?php echo base_url(); ?>assets/images/logo/thumbs/<?php echo $thumbnail;?>" alt="" /> 
+							<?php } else {?>
+								<img src="<?= base_url(); ?>assets/images/no-logo.png" alt="" /> 
+							<?php }?>
+							</div>
 							<!--POPULAR LISTINGS: CONTENT-->
-							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Tour and Travels</h3></a>
-								<h4>Express Avenue Mall, Los Angeles</h4>
-								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
+							<div class="col-md-9 home-list-pop-desc"> <a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><h3><?php echo $featured_listing['title'];?></h3></a>
+								<h4 style='display:none;'>Express Avenue Mall, Santa Monica</h4>
+							<?php if($featured_listing['isAddress'] == 1): ?>
+								<p><?php echo $featured_listing['address'].' '.$featured_listing['city']. ' ' .$featured_listing['pincode'].' '.$featured_listing['state'].', ' .ucwords(strtolower($featured_listing['country']));?></p>
+							<?php endif;?>
+							<span class="home-list-pop-rat"><?=sprintf('%0.1f', $featured_listing['average_rating'])?></span>
 								<div class="hom-list-share">
 									<ul>
-										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
-										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
-										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
-										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+										<li><a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><i class="fa fa-eye" aria-hidden="true"></i> <?=$featured_listing['hits']?$featured_listing['hits']:0?></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$featured_listing['slug'] .'-in-'.strtolower(str_replace(" ","-", $featured_listing['city'])).'-'.$featured_listing['id'])?>"><i class="fa fa-globe" aria-hidden="true"></i></a> </li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						<!--POPULAR LISTINGS-->
-						<div class="home-list-pop">
-							<!--POPULAR LISTINGS IMAGE-->
-							<div class="col-md-3"> <img src="<?php echo Template::theme_url("images/services/s6.jpeg")?>" alt="" /> </div>
-							<!--POPULAR LISTINGS: CONTENT-->
-							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Andru Modular Kitchen</h3></a>
-								<h4>Express Avenue Mall, San Diego</h4>
-								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
-								<div class="hom-list-share">
-									<ul>
-										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
-										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
-										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
-										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!--POPULAR LISTINGS-->
-						<div class="home-list-pop">
-							<!--POPULAR LISTINGS IMAGE-->
-							<div class="col-md-3"> <img src="<?php echo Template::theme_url("images/services/s7.jpeg")?>" alt="" /> </div>
-							<!--POPULAR LISTINGS: CONTENT-->
-							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Rute Skin Care & Treatment</h3></a>
-								<h4>Express Avenue Mall, Toronto</h4>
-								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
-								<div class="hom-list-share">
-									<ul>
-										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
-										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
-										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
-										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!--POPULAR LISTINGS-->
-						<div class="home-list-pop mar-bot-red-0">
-							<!--POPULAR LISTINGS IMAGE-->
-							<div class="col-md-3"> <img src="<?php echo Template::theme_url("images/services/s8.jpg")?>" alt="" /> </div>
-							<!--POPULAR LISTINGS: CONTENT-->
-							<div class="col-md-9 home-list-pop-desc"> <a href="list-lead.php"><h3>Health and Fitness</h3></a>
-								<h4>Express Avenue Mall, San Diego</h4>
-								<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A.</p> <span class="home-list-pop-rat">4.2</span>
-								<div class="hom-list-share">
-									<ul>
-										<li><a href="#!"><i class="fa fa-bar-chart" aria-hidden="true"></i> 52</a> </li>
-										<li><a href="#!"><i class="fa fa-heart-o" aria-hidden="true"></i> 32</a> </li>
-										<li><a href="#!"><i class="fa fa-eye" aria-hidden="true"></i> 420</a> </li>
-										<li><a href="#!"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
-									</ul>
-								</div>
-							</div>
-						</div>
+
 					</div>
 				</div>
+			<?php } ?>
+			<?php endforeach;?>
 			</div>
+		<?php endif;?>
+		</div>
+	</section>
+
+	<!--ADD BUSINESS-->
+	<section class="com-padd home-dis">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2><span>30% Off</span> Promote Your Business with us <a href="/members/add_business">Add My Business</a></h2> </div>
+			</div>
+		</div>
+	</section>
+		<!--BEST THINGS-->
+	<section class="com-padd">
+		<div class="container dir-hom-pre-tit">
+		<?php switch(settings_item('lst.popular_location')) {
+				case 1:
+				case 2:
+				case 5:
+				case 6:
+		if($popular_listings):?>
+		
+			<div class="row">
+				<div class="com-title">
+					<h2>Popular <span>Listings</span></h2>
+					<p>Explore some of the best tips from around the world from our partners and friends.</p>
+				</div>
+						<!--POPULAR LISTINGS-->
+					<?php $flag = 1;?>
+					<?php foreach($popular_listings as $popular):?>
+					<?php $flag++;?>
+					<?php if($flag%2 == 1){?>
+					<div class="col-md-6">
+						<div>	
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> 
+							<?php if($popular['logo_url']) {
+								preg_match('/(?<extension>\.\w+)$/im', $popular['logo_url'], $matches);
+								$extension = $matches['extension'];
+								$thumbnail = preg_replace('/(\.\w+)$/im', '', $popular['logo_url']) . '_thumb' . $extension;
+							?>
+								<img src="<?php echo base_url(); ?>assets/images/logo/thumbs/<?php echo $thumbnail;?>" alt="" /> 
+							<?php } else {?>
+								<img src="<?= base_url(); ?>assets/images/no-logo.png" alt="" /> 
+							<?php }?>
+							</div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><h3><?php echo $popular['title'];?></h3></a>
+								<h4 style='display:none;'>Express Avenue Mall, Santa Monica</h4>
+							<?php if($popular['isAddress'] == 1): ?>
+								<p><?php echo $popular['address'].' '.$popular['city']. ' ' .$popular['pincode'].' '.$popular['state'].', ' .ucwords(strtolower($popular['country']));?></p>
+							<?php endif;?>
+							
+								<span class="home-list-pop-rat"><?=sprintf('%0.1f', $popular['average_rating'])?></span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><i class="fa fa-eye" aria-hidden="true"></i> <?=$popular['hits']?$popular['hits']:0?></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><i class="fa fa-globe" aria-hidden="true"></i></a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		<?php }else{?>
+				<div class="col-md-6">
+					<div>
+						<!--POPULAR LISTINGS-->
+						<div class="home-list-pop">
+							<!--POPULAR LISTINGS IMAGE-->
+							<div class="col-md-3"> 
+							<?php if($popular['logo_url']) {
+								preg_match('/(?<extension>\.\w+)$/im', $popular['logo_url'], $matches);
+								$extension = $matches['extension'];
+								$thumbnail = preg_replace('/(\.\w+)$/im', '', $popular['logo_url']) . '_thumb' . $extension;
+							?>
+								<img src="<?php echo base_url(); ?>assets/images/logo/thumbs/<?php echo $thumbnail;?>" alt="" /> 
+							<?php } else {?>
+								<img src="<?= base_url(); ?>assets/images/no-logo.png" alt="" /> 
+							<?php }?>
+							</div>
+							<!--POPULAR LISTINGS: CONTENT-->
+							<div class="col-md-9 home-list-pop-desc"> <a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><h3><?php echo $popular['title'];?></h3></a>
+								<h4 style='display:none;'>Express Avenue Mall, Santa Monica</h4>
+							<?php if($popular['isAddress'] == 1): ?>
+								<p><?php echo $popular['address'].' '.$popular['city']. ' ' .$popular['pincode'].' '.$popular['state'].', ' .ucwords(strtolower($popular['country']));?></p>
+							<?php endif;?>
+							<span class="home-list-pop-rat"><?=sprintf('%0.1f', $popular['average_rating'])?></span>
+								<div class="hom-list-share">
+									<ul>
+										<li><a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><i class="fa fa-eye" aria-hidden="true"></i> <?=$popular['hits']?$popular['hits']:0?></a> </li>
+										<li><a href="<?php echo site_url('detail/' .$popular['slug'] .'-in-'.strtolower(str_replace(" ","-", $popular['city'])).'-'.$popular['id'])?>"><i class="fa fa-globe" aria-hidden="true"></i></a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			<?php } ?>
+			<?php endforeach;?>
+			</div>
+		<?php endif;?>
+		<?php }?>
 		</div>
 	</section>

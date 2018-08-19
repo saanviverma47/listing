@@ -1,32 +1,5 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-/**
- * Bonfire
- *
- * An open source project to allow developers to jumpstart their development of
- * CodeIgniter applications.
- *
- * @package   Bonfire
- * @author    Bonfire Dev Team
- * @copyright Copyright (c) 2011 - 2014, Bonfire Dev Team
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @link      http://cibonfire.com
- * @since     Version 1.0
- * @filesource
- */
-
-/**
- * Home controller
- *
- * The base controller which displays the homepage of the Bonfire site.
- *
- * @package    Bonfire
- * @subpackage Controllers
- * @category   Controllers
- * @author     Bonfire Dev Team
- * @link       http://guides.cibonfire.com/helpers/file_helpers.html
- *
- */
 class Home extends Front_Controller
 {
 	protected $sett = array();
@@ -54,12 +27,11 @@ class Home extends Front_Controller
 		$this->load->model('banners/banners_model');
 		$this->load->model('listings/listings_model');
 		$this->load->model('categories/categories_model');
-		$categories = $this->categories_model->order_by('name')->find_all_by('active', 1);	
+		$categories = $this->categories_model->order_by('counts','DESC')->find_all_by('active', 1);	
 		$banners = $this->banners_model->get_frontend_banners_all(); // retrieve banners
 		$frontend_slider = $this->banners_model->get_frontend_slider();
 		$popular_listings = $this->listings_model->popular_listings(settings_item('lst.popular_count'));
 		$recently_added = $this->listings_model->recently_added(settings_item('lst.recently_added_count'));
-				
 		$this->load->library('users/auth');
 		$this->set_current_user();
 		Template::set(array(
