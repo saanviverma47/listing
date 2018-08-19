@@ -6,7 +6,7 @@
     } else {
     	Assets::add_js('default_search.js'); 
     }
-	Assets::add_css( array('bootstrap.min.css', 'font-awesome.min.css', 'selectize.bootstrap3.css', 'famfamfam-flags.css', 'layout.css', 'yellow_theme.css'));
+	Assets::add_css( array('bootstrap.min.css', 'font-awesome.min.css', 'selectize.bootstrap3.css', 'famfamfam-flags.css', 'layout.css'));
     $inline = '$(".nav-tabs a:first").tab("show")';
 
 	Assets::add_js( $inline, 'inline' );

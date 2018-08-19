@@ -23,27 +23,24 @@ switch ($record->price) {
 		$btn = 'btn-danger';
 }
 ?>
-		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-			<!-- PRICE ITEM -->
-			<div class="panel price panel-<?php echo $color;?>">
-				<div class="panel-heading  text-center">
-					<h3><?php echo ucwords(strtoupper($record->title));?></h3>
-				</div>
-				<div class="panel-body text-center">
-					<p class="lead" style="font-size: 30px">
-						<strong><?php echo ($record->price == 0) ? lang('label_free') : settings_item('site.currency'). $record->price;?> <?php echo ($record->duration == 0) ? $record->subscription : '/ ' .$record->duration .' ' . lang('bf_days');?></strong>
-					</p>
-				</div>
-				<ul class="list-group list-group-flush text-center">
-					<?php echo $record->description; ?>
-				</ul>
-				<div class="panel-footer">
-					<a class="btn btn-lg btn-block <?php echo $btn;?>" href="<?php echo site_url('members/add_business?id=' . $this->encrypt->encode($record->id));?>"><?php echo lang('btn_buy_now');?></a>
-				</div>
-			</div><!-- /PRICE ITEM -->
 
-
+<div class="col-md-4">
+	<div class="v4-pril-inn">
+		<div class="v4-pril-inn-top">
+			<h2><?php echo ucwords(strtoupper($record->title));?></h2>
+			<p class="v4-pril-price">
+				<span class="v4-pril-curr">$</span> <b><?php echo ($record->price == 0) ? lang('label_free') : settings_item('site.currency'). $record->price;?></b> 
+				<span class="v4-pril-mon"><?php echo ($record->duration == 0) ? $record->subscription : '/ ' .$record->duration .' ' . lang('bf_days');?></span>
+			</p>
 		</div>
+		<div class="v4-pril-inn-bot">
+			<ul>
+				<?php echo $record->description; ?>
+			</ul>
+			<a class="waves-effect waves-light btn-large full-btn" href="<?php echo site_url('members/add_business?id=' . $this->encrypt->encode($record->id));?>"><?php echo lang('btn_buy_now');?></a>
+		</div>
+	</div>
+</div>
 <?php endforeach;?>
-	</div><!-- end of row -->
+</div><!-- end of row -->
 <?php endif;?>
