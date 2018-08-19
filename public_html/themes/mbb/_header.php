@@ -34,8 +34,8 @@
 	<link href="<?php echo Template::theme_url("css/materialize.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/style.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
+	<link href="<?php echo Template::theme_url("css/star-rating.min.css")?>" rel="stylesheet" type="text/css" />
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
-	<link href="<?php echo site_url("css/responsive.css")?>" rel="stylesheet">
 </head>
 
 <body>

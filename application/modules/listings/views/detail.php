@@ -1,974 +1,603 @@
-<?php 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-?>
-<!-- row 3: article/aside -->
-<div class="row">
-	<div class="col-lg-8 col-sm-7">
-		<div class="row"><!-- breadcrumb row -->
-			<div class="col-sm-12">
-			<!-- Breadcrumb Navigation -->
-			<ol class="breadcrumb hidden-xs">
-				<li><a href="<?php echo site_url(); ?>"><?php echo lang('detail_home');?></a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
-				<?php if(!empty($categories->parent_id)):?>
-				<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><?php echo '<a href="' . site_url() .'category/' .$categories->parent_slug .'-' .$categories->parent_id . '" itemprop="url"><span itemprop="title">' . $categories->parent_category .'</span></a> <span class="glyphicon glyphicon-circle-arrow-right"></span>'?></li>
-				<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><?php echo '<a href="' . site_url() .'category/' .$categories->sub_slug .'-' .$categories->sub_id . '" itemprop="url"><span itemprop="title">' . $categories->sub_category .'</span></a> <span class="glyphicon glyphicon-circle-arrow-right"></span>'?></li>
-				<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><?php echo '<a href="' . site_url() .'category/' .$categories->subsub_slug .'-' .$categories->subsub_id . '" itemprop="url"><span itemprop="title">' . $categories->subsub_category .'</span></a>'?></li>
-				<?php elseif(!empty($categories->sub_id)):?>
-				<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><?php echo '<a href="' . site_url() .'category/' .$categories->sub_slug .'-' .$categories->sub_id . '" itemprop="url"><span itemprop="title">' . $categories->sub_category .'</span></a> <span class="glyphicon glyphicon-circle-arrow-right"></span>'?></li>
-				<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><?php echo '<a href="' . site_url() .'category/' .$categories->subsub_slug .'-' .$categories->subsub_id . '" itemprop="url"><span itemprop="title">' . $categories->subsub_category .'</span></a>'?></li>
-				<?php else:?>
-				<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><?php echo '<a href="' . site_url() .'category/' .$categories->subsub_slug .'-' .$categories->subsub_id . '" itemprop="url"><span itemprop="title">' . $categories->subsub_category .'</span></a>'?></li>
-				<?php endif;?>				
-			</ol>
-			</div><!-- end of col-sm-12 -->
-		</div><!-- end of breadcrumb -->
-		<!-- End of Breadcrumb Navigation -->
-		<div class="row"><!-- tabs row -->	
-		<div class="col-sm-12"><!-- tabs col-sm-12 -->
-		<?php echo Template::message(); ?>
-		<?php
+	
+	<section>
+		<div class="v3-list-ql">
+			<div class="container">
+				<div class="row">
+					<div class="v3-list-ql-inn">
+						<ul>
+							<li class="active"><a href="#ld-abour"><i class="fa fa-user"></i> About</a>
+							</li>
+							<li><a href="#ld-ser"><i class="fa fa-cog"></i> Services</a>
+							</li>
+							<li><a href="#ld-gal"><i class="fa fa-photo"></i> Gallery</a>
+							</li>
+							<li><a href="#ld-roo"><i class="fa fa-ticket"></i> Room Booking</a>
+							</li>
+							<li><a href="#ld-rew"><i class="fa fa-edit"></i> Write Review</a>
+							</li>
+							<li><a href="#ld-rer"><i class="fa fa-star-half-o"></i> User Review</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--LISTING DETAILS-->
+	<style>
+		.stars span {
+			top: 10px;
+		}
+	</style>
+	<section class="pg-list-1">
+		<div class="container">
+			<div class="row">
+				<div class="pg-list-1-left"> <a href="#"><h3><?php echo $listing->title;?></h3></a>
+					
+					<div id="listing_rating" class="stars" style="width: 35%;">
+						<div class='controls'>
+							<input id="input-ratings" type="number"	value="<?php echo isset($ratings->average_rating) ? sprintf('%0.1f', $ratings->average_rating) : ''; ?>" class="rating" min=0 max=5 step=0.5 data-show-clear="false" data-size="sm" />
+						</div>
+						<div id="rating_feedback"></div>
+					</div>
+					<h4>
+						<?php if($ratings): //rating exist?>
+						<small class="" style='color:#fff;'><span itemprop="rating" itemscope itemtype="" style='color:#fff;'><span itemprop="average" style='color:#fff;'><?php echo sprintf('%0.1f', $ratings->average_rating); ?></span>
+							<?php echo lang('label_ratings');?> <span itemprop="votes" style='color:#fff;'><?php echo $ratings->total_users; ?></span></span>
+							<?php echo lang('label_users_rated');?></small>
+						<?php endif;?>
+					</h4>
+					<?php if(($package->address == 1) && ($listing->address)):?>
+						<p><b>Address: </b><?php echo $listing->address?>,  <?=$listing->city?>, <?=$listing->pincode.', '?> <?=$listing->state?> <?=ucwords(strtolower($listing->country));?></p>
+					<?php endif;?>
+					<div class="list-number pag-p1-phone">
+						<ul>
+						<?php if(($package->phone == 1) && (!empty($listing->mobile_number) || !empty($listing->phone_number))):?>
+							<li style='width:26.33%;'><i class="fa fa-phone" aria-hidden="true"></i> <?=$listing->mobile_number?></li>
+						<?php endif;?>
+						<?php if(($package->email == 1) && ($listing->email)):?>
+							<li style='width:50.33%;'><i class="fa fa-envelope" aria-hidden="true"></i> <?php echo $listing->email;?></li>
+						<?php endif;?>
+						<?php if(($package->person  == 1) && ($listing->contact_person)):?>
+							<li><i class="fa fa-user" aria-hidden="true"></i> <?php echo $listing->contact_person;?></li>
+						<?php endif;?>
+						</ul>
+					</div>
+				</div>
+				<div class="pg-list-1-right">
+					<div class="list-enqu-btn pg-list-1-right-p1">
+						<ul>
+							<li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i> Write Review</a> </li>
+							<li style='display:none;'><a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i> Send SMS</a> </li>
+							<li><a href="tel:<?=$listing->mobile_number?$listing->mobile_number:''?>"><i class="fa fa-phone" aria-hidden="true"></i> Call Now</a> </li>
+							<li><a href="#" data-dismiss="modal" data-toggle="modal" data-target="#list-quo"><i class="fa fa-usd" aria-hidden="true"></i> Get Quotes</a> </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php echo Template::message(); ?>
+	<?php
 		if ($listing) : // listing exist
 			echo form_hidden ( 'listing_id', $listing->id );
-			?>
-		<!-- List navigation for tabs -->
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#home" data-toggle="tab"><span
-					class="glyphicon glyphicon-home"></span><?php echo lang('detail_home');?></a></li>
-			<?php if ($products_count > 0): ?>
-			<li><a href="#products" data-toggle="tab"><span
-					class="glyphicon glyphicon-shopping-cart"></span><?php echo lang('detail_products');?></a></li>
-			
-			<?php endif;
-			if ($services_count > 0) :
-				?>
-			<li><a href="#services" data-toggle="tab"><span
-					class="glyphicon glyphicon-th-large"></span><?php echo lang('detail_services');?></a></li>
-			<?php endif; ?>
-			<?php if($images):?>
-			<li><a href="#gallery" data-toggle="tab"><span
-					class="glyphicon glyphicon-film"></span><?php echo lang('detail_gallery');?></a></li>
-			<?php endif;?>	
-			<?php if($classifieds):?>	
-			<li><a href="#classifieds" data-toggle="tab"><span
-					class="glyphicon glyphicon-bullhorn"></span><?php echo lang('detail_classifieds');?></a></li>
-			<?php endif;?>
-			<li><a href="#query" data-toggle="tab"><span
-					class="glyphicon glyphicon-envelope"></span><?php echo lang('business_query');?></a></li>
-		</ul>
-
-		<!-- Text for each callout -->
-		<!-- Home -->
-		<div class="tab-content">
-			<div class="tab-pane fade active in" id="home">
-			<div itemscope itemtype="http://schema.org/Organization"> 
-			<div itemscope itemtype="http://data-vocabulary.org/Review-aggregate">
-				<div class="row row-spaced">
-					<div class="col-md-6 col-sm-12">
-						<?php if($package->logo == 1):?>
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="max-width: 415px; max-height: 292px;">
-								<?php if($listing->logo_url) {?>
-									<?php $regexp =  "/((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i";
-									if(preg_match($regexp, $listing->logo_url)) {?>
-									<?php if(mb_strimwidth($listing->logo_url, 0, 3, "") == "www") { ?>
-									<img src="<?php echo 'http://'.$listing->logo_url; ?>" alt="<?php echo $listing->title;?>" title="<?php echo $listing->title;?>" />				
-									<?php } else { ?>
-									<img src="<?php echo $listing->logo_url; ?>" alt="<?php echo $listing->title;?>" title="<?php echo $listing->title;?>" />
-									<?php }} else {?>
-									<img src="<?php echo base_url(); ?>assets/images/logo/<?php echo $listing->logo_url; ?>" alt="<?php echo $listing->title;?>" title="<?php echo $listing->title;?>" />
-									<?php }?>
-								<?php } else {?>
-								<img src="<?= base_url(); ?>assets/images/no-logo.png" alt="<?php echo $listing->title;?>" title="<?php echo $listing->title;?>" />
-								<?php }?>							
-								</div>
-							</div>												
-						</div>
-						<?php endif;?>
-						<div class="row">
-							<div class="col-sm-12">
-								<div id="listing_rating" class="stars">
-									<div class='controls'>
-										<input id="input-ratings" type="number"
-											value="<?php echo isset($ratings->average_rating) ? $ratings->average_rating : ''; ?>"
-											class="rating" min=0 max=5 step=0.5 data-show-clear="false"
-											data-size="sm" />
+		?>
+	<?php endif; ?>
+	<section class="list-pg-bg">
+		<div class="container">
+			<div class="row">
+				<div class="com-padd">
+					<div class="list-pg-lt list-page-com-p">
+						<!--LISTING DETAILS: LEFT PART 1-->
+						<div class="pglist-p1 pglist-bg pglist-p-com" id="ld-abour">
+							<div class="pglist-p-com-ti">
+								<h3><span>About</span> <?=$listing->title?$listing->title:''?></h3> </div>
+							<div class="list-pg-inn-sp">
+								<?php if((settings_item('lst.allow_facebook_url') == 1) || (settings_item('lst.allow_twitter_url') == 1) || (settings_item('lst.allow_googleplus_url') == 1)):?>
+									<div class="share-btn">
+										<ul>
+											<?php if(!empty($listing->facebook_url)):?>
+												<li><a href="<?php echo $listing->facebook_url; ?>"><i class="fa fa-facebook fb1"></i> Share On Facebook</a> </li>
+											<?php endif;?>
+											<?php if(!empty($listing->twitter_url)):?>
+												<li><a href="<?php echo $listing->twitter_url; ?>"><i class="fa fa-twitter tw1"></i> Share On Twitter</a> </li>
+											<?php endif;?>
+											<?php if(!empty($listing->googleplus_url)):?>
+												<li><a href="<?php echo $listing->googleplus_url; ?>"><i class="fa fa-google-plus gp1"></i> Share On Google Plus</a> </li>
+											<?php endif;?>
+										</ul>
 									</div>
-									<div id="rating_feedback"></div>
-								</div>
-								<?php if($ratings): //rating exist?>
-								<small class="text-muted"><span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating"><span itemprop="average"><?php echo $ratings->average_rating; ?></span>
-									<?php echo lang('label_ratings');?> <span itemprop="votes"><?php echo $ratings->total_users; ?></span></span>
-									<?php echo lang('label_users_rated');?></small>
+								<?php endif;?>
+								<?php if($listing->description):?>
+									<p><?php echo $listing->description;?></p>
 								<?php endif;?>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-6 col-sm-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<span itemprop="name"><span itemprop="itemreviewed">
-									<h1 class="panel-title"><?php echo $listing->title;?></h1>
-								</span></span>
-							</div>
-
-							<ul class="list-group">
-								<?php if(($package->address == 1) && ($listing->address)):?>
-								<li itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" class="list-group-item"><span itemprop="streetAddress"><?php echo $listing->address . '</span><br /><span itemprop="addressLocality">' . $listing->city . '</span> ' . $listing->pincode . '<br /><span itemprop="addressRegion">' . $listing->state . '</span> ' . ucwords(strtolower($listing->country));?></span></li>
-								<?php endif;?>
-								<?php if(($package->person  == 1) && ($listing->contact_person)):?>
-								<li class="list-group-item"><span
-									class="glyphicon glyphicon glyphicon-user"></span><span>
-										<?php echo $listing->contact_person;?></span></li>
-								<?php endif;?>
-								<?php if(($package->phone == 1) && (!empty($listing->mobile_number) || !empty($listing->phone_number))):?>
-								<li class="list-group-item">								
-									<span class="glyphicon glyphicon-earphone"></span>
-									<span>
-									<?php 
-										 if(isset($listing->mobile_number) && isset($listing->phone_number)) {
-										 	echo $listing->mobile_number . ', <span itemprop="telephone">' . $listing->phone_number .'</span>';
-										} elseif ($listing->mobile_number) {
-											echo '<span itemprop="telephone">' . $listing->mobile_number .'</span>';
-										} else { echo '<span itemprop="telephone">' . $listing->phone_number .'</span>'; }
-									?>
-									</span>
-									</li>
-								<?php endif;?>
-								<?php if(($package->email == 1) && ($listing->email)):?>
-								<li class="list-group-item"><span
-									class="glyphicon glyphicon-envelope"></span><span>
-										<?php echo $listing->email;?></span></li>
-								<?php endif;?>
-								<?php if((($package->website == 1) && ($listing->website)) || ((!empty($listing->facebook_url)) || (!empty($listing->twitter_url)) || (!empty($listing->googleplus_url)))):?>
-								<li class="list-group-item">
-									<?php if(($package->website == 1) && ($listing->website)):?>
-									<span class="glyphicon glyphicon-globe"></span>
-									<?php if(mb_strimwidth($listing->website, 0, 3, "") == "www") { ?>
-									<a href="<?php echo 'http://'.$listing->website;?>" itemprop="url" rel="nofollow" target="_blank"><?php echo $listing->website;?></a>
-									<?php } else {?>
-									<a href="<?php echo $listing->website;?>" itemprop="url" rel="nofollow" target="_blank"><?php echo $listing->website;?></a>
-									<?php } ?>
-									<?php endif;?>
-									<?php if((settings_item('lst.allow_facebook_url') == 1) || (settings_item('lst.allow_twitter_url') == 1) || (settings_item('lst.allow_googleplus_url') == 1)):?>
-									<ul class="social <?php echo (($package->website == 1) && ($listing->website)) ? 'pull-right' : ''; ?>">
-										<?php if(!empty($listing->facebook_url)):?>
-									  	<li class="facebook"><a href="<?php echo $listing->facebook_url; ?>" rel="nofollow" data-toggle="tooltip" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
-									  	<?php endif;?>
-									  	<?php if(!empty($listing->twitter_url)):?>
-			                		    <li class="twitter"><a href="<?php echo $listing->twitter_url; ?>" rel="nofollow" data-toggle="tooltip" title="Twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
-			                		    <?php endif;?>
-			                		    <?php if(!empty($listing->googleplus_url)):?>
-			                		    <li class="gplus"><a href="<?php echo $listing->googleplus_url; ?>" rel="nofollow" data-toggle="tooltip" title="Google Plus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-			                		    <?php endif;?>
-			                		</ul>			
-									<?php endif;?>
-									</li>
-								<?php endif;?>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<?php if($listing->description):?>
-				<!-- Business description -->
-				<div class="row">
-					<div class="col-md-2 col-sm-4">
-						<strong><?php echo lang('detail_description');?>:</strong>
-					</div>
-					<div class="col-md-10 col-sm-8"><span itemprop="description"><?php echo $listing->description;?></span></div>
-				</div>
-				<!-- End of business description -->
-				<?php endif;?>
-				<?php if($listing->tags):?>
-				<!-- Tags -->
-				<div class="row top2">
-					<div class="col-md-2 col-sm-4">
-						<strong><?php echo lang('detail_provides');?>:</strong>
-					</div>
-					<div class="col-md-10 col-sm-8"><?php echo $listing->tags?></div>
-				</div>
-				<!-- End of Tags -->
-				<?php endif;?>
-				<div class="row">
-				<?php if($package->map == 1): ?>
-					<div class="col-sm-12">
-				<?php if($listing->latitude && $listing->longitude): //Map Exist?>
-				<!-- Google Map -->
-				<?php echo $map['js']; ?>
-					<div id="map_canvas" style="width: 100%; height: 300px;"></div>
-				<?php else:?>
-					<address><?php echo $listing->address . ' ' . $listing->city . ', ' . $listing->state . ' ' . $listing->pincode . ' ' . ucwords(strtolower($listing->country)); ?></address>
-				<!-- End of Google Map -->
-				<?php endif; ?>				
-					</div><!-- End of Google Map Column -->
-				<?php endif; ?>					
-				</div>
-			</div>
-			</div>
-			</div><!-- end of home -->
-
-			<!-- Products -->
-			<div class="tab-pane fade" id="products">
-			<?php if(!empty($products)): foreach($products as $product): ?>
-			<?php if($product->type == 'product'): ?>
-			<h3><?php echo $product->title; ?>
-			<?php if($product->price):?>				 
-					<span class="btn btn-primary btn-small pull-right"><span
-						class="glyphicon glyphicon-tag"></span>
-						<?php echo '<strong>Price:</strong> ' .settings_item('site.currency') .$product->price;?>
-					</span>
-					<!-- end of button -->
-					<?php endif;?>				
-			</h3>
-				<hr>
-			<?php if($product->image): ?> 
-				<div class="gallery">
-					<ul class="thumbnails">
-						<li class="col-sm-6"><a class="thumbnail" rel="lightbox[group]"
-							href="<?php echo base_url();?>assets/images/products/<?php echo $product->image; ?>"><img
-								class="group1"
-								src="<?php echo base_url();?>assets/images/products/<?php echo $product->image; ?>"
-								title="<?php echo $product->title;?>"
-								alt="<?php echo $product->title;?>" /></a></li>
-						<!--end thumb -->
-					</ul>
-				</div>
-			<?php endif;?>
-			<?php echo $product->description; ?>
-			<?php endif; endforeach; endif; ?>
-			</div>
-			<!-- End of Products -->
-			<!-- Services -->
-			<div class="tab-pane fade" id="services">
-			<?php if(!empty($products)): foreach($products as $product): ?>
-			<?php if($product->type == 'service'): ?>
-			<h3><?php echo $product->title; ?>
-			<?php if($product->price):?>				 
-					<span class="btn btn-primary btn-small pull-right"><span
-						class="glyphicon glyphicon-tag"></span>
-						<?php echo '<strong>Price:</strong> ' .settings_item('site.currency') .$product->price;?>
-					</span>
-					<!-- end of button -->
-					<?php endif;?>				
-			</h3>
-				<hr>
-			<?php if($product->image): ?> 
-				<div class="gallery">
-					<ul class="thumbnails">
-						<li class="col-sm-6"><a class="thumbnail" rel="lightbox[group]"
-							href="<?php echo base_url();?>assets/images/products/<?php echo $product->image; ?>"><img
-								class="group1"
-								src="<?php echo base_url();?>assets/images/products/<?php echo $product->image; ?>"
-								title="<?php echo $product->title;?>"
-								alt="<?php echo $product->title;?>" /></a></li>
-						<!--end thumb -->
-					</ul>
-				</div>
-			<?php endif;?>
-			<?php echo $product->description; ?>
-			<?php endif; endforeach; endif; ?>
-			</div>
-			<!-- End of Services -->
-			<?php if ((isset($images) && count($images)) || !empty($videos)):?>			
-			<!-- Gallery -->
-			<div class="tab-pane fade" id="gallery">
-				<div class="row">
-					<div class="gallery">
-						<?php if(!empty($images)):?>
-						<ul class="thumbnails">						
-							<?php foreach($images as $image): ?>
-							<li class="col-sm-3 bottom2"><a class="thumbnail" rel="lightbox[group]"
-								href="<?php echo base_url();?>assets/images/photos/<?php echo $image->url; ?>"><img
-									class="group1"
-									src="<?php echo base_url();?>assets/images/photos/<?php echo $image->url; ?>"
-									<?php if(!empty($image->title)): ?>
-									title="<?php echo $image->title;?>"
-									alt="<?php echo $image->title;?>" <?php endif; ?> /></a></li>
-							<!--end thumb -->							
-							<?php endforeach; //end thumbnails?>
-							<!--end thumb -->
-						</ul>
-						<!--end thumbnails -->
-						<?php endif;?>
-						<?php if(!empty($videos)):?>
-						<h2><?php echo lang('label_video_gallery');?></h2>
-						<ul class="thumbnails">						
-									<?php foreach($videos as $video): ?>
-									<li class="col-sm-3"><a class="thumbnail" rel="lightbox[group]"
-								href="https://www.youtube.com/watch?v=<?php echo $video->url;?>"><img
-									class="group1"
-									src="http://img.youtube.com/vi/<?php echo $video->url;?>/0.jpg"
-									title="<?php echo $video->title;?>"
-									alt="<?php echo $video->title;?>" /></a></li>
-							<!--end thumb -->							
-									<?php endforeach; //end thumbnails?>
-									<!--end thumb -->
-						</ul>
-						<!--end thumbnails -->
-					<?php endif; //end video gallery?>
-					</div>
-					<!-- end gallery -->
-				</div>
-				<!-- end row -->
-			</div>							
-			<?php endif; //end image gallery?>
-			<?php if($classifieds):?>
-			<!-- Classifieds -->
-			<div class="tab-pane fade" id="classifieds">
-			<?php foreach($classifieds as $classified): ?>
-			<h3><?php echo $classified->title; ?>
-			<?php if($classified->price):?>				 
-					<span class="btn btn-primary btn-small pull-right"><span
-						class="glyphicon glyphicon-tag"></span>
-						<?php echo '<strong>'.lang('classifieds_price').':</strong> ' .settings_item('site.currency') .$classified->price;?>
-					</span>
-					<!-- end of button -->
-					<?php endif;?>				
-			</h3>
-				<hr>
-				<div class="row">
-					<div class="col-sm-7">
-			<?php if($classified->image): ?> 
-				<div class="gallery">
-							<ul class="thumbnails">
-								<li class="col-sm-12"><a class="thumbnail" rel="lightbox[group]"
-									href="<?php echo base_url();?>assets/images/classifieds/<?php echo $classified->image; ?>"><img
-										class="group1"
-										src="<?php echo base_url();?>assets/images/classifieds/<?php echo $classified->image; ?>"
-										title="<?php echo $classified->title;?>"
-										alt="<?php echo $classified->title;?>" /></a></li>
-								<!--end thumb -->
-							</ul>
-						</div>
-			<?php else:?>
-				<div class="thumbnail">
-							<img src="<?php echo base_url();?>assets/images/no-image.png"
-								title="<?php echo $classified->title;?>"
-								alt="<?php echo $classified->title;?>" />
-						</div>
-			<?php endif;?>
-			</div>
-					<div class="col-sm-5">
-						<h4><?php echo lang('classifieds_overview');?></h4>
-						<hr>
-			<?php if($classified->from) :?>
-				<div>
-							<strong><?php echo lang('classifieds_from');?>: </strong><?php echo $classified->from; ?></div>
-			
-				<?php endif;
-				if ($classified->to) :
-					?>
-				<div>
-							<strong><?php echo lang('classifieds_to');?>: </strong><?php echo $classified->to; ?></div>
-			
-				<?php endif;
-				if ($classified->url) :
-					?>
-				<div>
-							<strong><?php echo lang('classifieds_buy');?>: </strong><?php echo $classified->url; ?></div>
-			<?php endif;?>
-			</div>
-				</div>
-				<h4><?php echo lang('detail_description');?></h4>
-				<hr>
-			<?php echo $classified->description; ?>
-			<?php endforeach; ?>			
-			</div>
-			<!-- end of classifieds -->
-			<?php endif; ?>
-			<!-- Query -->
-			<div class="tab-pane fade" id="query">
-				<div id="contact_form" class="row">
-					<div class="col-12 col-sm-12 col-lg-12">
-						<h2><?php echo lang('query_heading');?></h2>
-						<p><?php echo lang('query_summary');?></p>
-						<div id="businessFormMessage"></div>
-						<form role="form" id="businessQueryForm">
-							<div class="form-group has-feedback">
-								<label class="control-label" for="message"><?php echo lang('label_message');?>*</label>
-								<textarea rows="5" cols="30" class="form-control input-sm"
-									id="message" name="message" placeholder="<?php echo lang('placeholder_message');?>"></textarea>
-								<span class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_message'));?></span>
-							</div>
-							<div class="row">
-								<div class="col-6 col-sm-6 col-lg-6">
-									<div class="form-group has-feedback">
-										<label class="control-label" for="name"><?php echo lang('label_name');?>*</label> <input
-											type="text" class="form-control input-sm" id="name"
-											name="name" placeholder="<?php echo lang('placeholder_name');?>" /> <span
-											class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_name'));?></span>
-									</div>
-								</div>
-								<div class="col-6 col-sm-6 col-lg-6">
-									<div class="form-group has-feedback">
-										<label class="control-label" for="phone"><?php echo lang('label_phone');?></label> <input
-											type="tel" class="form-control input-sm optional" id="phone"
-											name="phone" placeholder="<?php echo lang('placeholder_phone');?>" /> <span
-											class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_phone'));?></span>
-									</div>
+						<!--END LISTING DETAILS: LEFT PART 1-->
+						<!--LISTING DETAILS: LEFT PART 2-->
+						<div class="pglist-p2 pglist-bg pglist-p-com" id="ld-ser">
+							<div class="pglist-p-com-ti">
+								<h3><span>Services</span> Offered</h3> </div>
+							<div class="list-pg-inn-sp">
+								<p>Taj Luxury Hotels & Resorts provide 24-hour Business Centre, Clinic, Internet Access Centre, Babysitting, Butler Service in Villas and Seaview Suite, House Doctor on Call, Airport Butler Service, Lobby Lounge </p>
+								<div class="row pg-list-ser">
+									<ul>
+										<li class="col-md-4">
+											<div class="pg-list-ser-p1"><img src="/assets/images/listing/1.jpg" alt="" /> </div>
+											<div class="pg-list-ser-p2">
+												<h4>Restaurant and Bar</h4> </div>
+										</li>
+										<li class="col-md-4">
+											<div class="pg-list-ser-p1"><img src="/assets/images/listing/1.jpg" alt="" /> </div>
+											<div class="pg-list-ser-p2">
+												<h4>Room Booking</h4> </div>
+										</li>
+										<li class="col-md-4">
+											<div class="pg-list-ser-p1"><img src="/assets/images/listing/1.jpg" alt="" /> </div>
+											<div class="pg-list-ser-p2">
+												<h4>Corporate Events</h4> </div>
+										</li>
+										<li class="col-md-4">
+											<div class="pg-list-ser-p1"><img src="/assets/images/listing/1.jpg" alt="" /> </div>
+											<div class="pg-list-ser-p2">
+												<h4>Wedding Hall</h4> </div>
+										</li>
+										<li class="col-md-4">
+											<div class="pg-list-ser-p1"><img src="/assets/images/listing/1.jpg" alt="" /> </div>
+											<div class="pg-list-ser-p2">
+												<h4>Travel & Transport</h4> </div>
+										</li>
+										<li class="col-md-4">
+											<div class="pg-list-ser-p1"><img src="/assets/images/listing/1.jpg" alt="" /> </div>
+											<div class="pg-list-ser-p2">
+												<h4>All Amenities</h4> </div>
+										</li>
+									</ul>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-6 col-sm-6 col-lg-6">
-									<div class="form-group has-feedback">
-										<label class="control-label" for="email"><?php echo lang('label_email');?></label>
-										<input type="email" class="form-control input-sm" id="email"
-											name="email" placeholder="<?php echo lang('placeholder_email');?>" /> <span
-											class="help-block" style="display: none;"><?php echo lang('error_message_email');?></span>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 2-->
+						<!--LISTING DETAILS: LEFT PART 3-->
+						<div class="pglist-p3 pglist-bg pglist-p-com" id="ld-gal">
+							<div class="pglist-p-com-ti">
+								<h3><span>Photo</span> Gallery</h3> </div>
+							<div class="list-pg-inn-sp">
+								<div id="myCarousel" class="carousel slide" data-ride="carousel">
+									<!-- Indicators -->
+									<ol class="carousel-indicators">
+										<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+										<li data-target="#myCarousel" data-slide-to="1"></li>
+										<li data-target="#myCarousel" data-slide-to="2"></li>
+										<li data-target="#myCarousel" data-slide-to="3"></li>
+									</ol>
+									<!-- Wrapper for slides -->
+									<div class="carousel-inner">
+										<div class="item active"> <img src="/images/slider/1.jpg" alt="Los Angeles"> </div>
+										<div class="item"> <img src="/images/slider/2.jpg" alt="Chicago"> </div>
+										<div class="item"> <img src="/images/slider/3.jpg" alt="New York"> </div>
+										<div class="item"> <img src="/images/slider/4.jpg" alt="New York"> </div>
 									</div>
+									<!-- Left and right controls -->
+									<a class="left carousel-control" href="#myCarousel" data-slide="prev"> <i class="fa fa-angle-left list-slider-nav" aria-hidden="true"></i> </a>
+									<a class="right carousel-control" href="#myCarousel" data-slide="next"> <i class="fa fa-angle-right list-slider-nav list-slider-nav-rp" aria-hidden="true"></i> </a>
 								</div>
-								<div class="col-6 col-sm-6 col-lg-6">
-									<div class="row">
-										<div class="col-7 col-md-7 col-lg-7">
-											<div class="form-group has-feedback">
-												<label class="control-label" for="captcha_code"><?php echo lang('label_captcha');?></label> <input type="text"
-													class="form-control input-sm" name="captcha_code"
-													id="captcha_code" placeholder="<?php echo lang('placeholder_captcha');?>" /> <span
-													class="help-block" style="display: none;"><?php echo lang('error_captcha');?></span>
-											</div>
-											<span class="help-block" style="display: none;"><?php echo lang('error_captcha');?></span>
+							</div>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 3-->
+						<!--LISTING DETAILS: LEFT PART 4-->
+						<div class="pglist-p3 pglist-bg pglist-p-com" id="ld-roo">
+							<div class="pglist-p-com-ti">
+								<h3><span>Room</span> Booking</h3> </div>
+							<div class="list-pg-inn-sp">
+								<div class="home-list-pop list-spac list-spac-1 list-room-mar-o">
+									<!--LISTINGS IMAGE-->
+									<div class="col-md-3"> <img src="/assets/images/listing/1.jpg" alt=""> </div>
+									<!--LISTINGS: CONTENT-->
+									<div class="col-md-9 home-list-pop-desc inn-list-pop-desc list-room-deta"> <a href="#!"><h3>Ultra Deluxe Rooms</h3></a>
+										<div class="list-rat-ch list-room-rati"> <span>5.0</span> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> </div>
+										<div class="list-room-type list-rom-ami">
+											<ul>
+												<li>
+													<p><b>Amenities:</b> </p>
+												</li>
+												<li><img src="/images/icon/a7.png" alt=""> Wi-Fi</li>
+												<li><img src="/images/icon/a4.png" alt=""> Air Conditioner </li>
+												<li><img src="/images/icon/a3.png" alt=""> Swimming Pool</li>
+												<li><img src="/images/icon/a2.png" alt=""> Bar</li>
+												<li><img src="/images/icon/a5.png" alt=""> Bathroom</li>
+												<li><img src="/images/icon/a6.png" alt=""> TV</li>
+												<li><img src="/images/icon/a9.png" alt=""> Spa</li>
+												<li><img src="/images/icon/a10.png" alt=""> Music</li>
+												<li><img src="/images/icon/a11.png" alt=""> Parking</li>
+											</ul>
+										</div> <span class="home-list-pop-rat list-rom-pric">$940</span>
+										<div class="list-enqu-btn">
+											<ul>
+												<li><a href="#!"><i class="fa fa-usd" aria-hidden="true"></i> Get Quotes</a> </li>
+												<li><a href="#!"><i class="fa fa-commenting-o" aria-hidden="true"></i> Send SMS</a> </li>
+												<li><a href="#!"><i class="fa fa-phone" aria-hidden="true"></i> Call Now</a> </li>
+												<li><a href="#!"><i class="fa fa-usd" aria-hidden="true"></i> Book Now</a> </li>
+											</ul>
 										</div>
-										<div class="col-5 col-md-5 col-lg-5">
-											<img class="img-thumbnail" id="captcha"
-												src="<?php echo site_url("securimage"); ?>"
-												alt="CAPTCHA Image" /> <a id="update" href="#"
-												onclick="document.getElementById('captcha').src = '<?php echo site_url("securimage?"); ?>' + Math.random(); return false"><i
-												class="glyphicon glyphicon-refresh"></i></a>
+									</div>
+								</div>
+								<div class="home-list-pop list-spac list-spac-1 list-room-mar-o">
+									<!--LISTINGS IMAGE-->
+									<div class="col-md-3"> <img src="/assets/images/listing/1.jpg" alt=""> </div>
+									<!--LISTINGS: CONTENT-->
+									<div class="col-md-9 home-list-pop-desc inn-list-pop-desc list-room-deta"> <a href="#!"><h3>Premium Rooms(Executive)</h3></a>
+										<div class="list-rat-ch list-room-rati"> <span>4.0</span> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </div>
+										<div class="list-room-type list-rom-ami">
+											<ul>
+												<li>
+													<p><b>Amenities:</b> </p>
+												</li>
+												<li><img src="/images/icon/a7.png" alt=""> Wi-Fi</li>
+												<li><img src="/images/icon/a4.png" alt=""> Air Conditioner </li>
+												<li><img src="/images/icon/a3.png" alt=""> Swimming Pool</li>
+												<li><img src="/images/icon/a2.png" alt=""> Bar</li>
+												<li><img src="/images/icon/a5.png" alt=""> Bathroom</li>
+												<li><img src="/images/icon/a6.png" alt=""> TV</li>
+											</ul>
+										</div> <span class="home-list-pop-rat list-rom-pric">$620</span>
+										<div class="list-enqu-btn">
+											<ul>
+												<li><a href="#!"><i class="fa fa-usd" aria-hidden="true"></i> Get Quotes</a> </li>
+												<li><a href="#!"><i class="fa fa-commenting-o" aria-hidden="true"></i> Send SMS</a> </li>
+												<li><a href="#!"><i class="fa fa-phone" aria-hidden="true"></i> Call Now</a> </li>
+												<li><a href="#!"><i class="fa fa-usd" aria-hidden="true"></i> Book Now</a> </li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="home-list-pop list-spac list-spac-1 list-room-mar-o">
+									<!--LISTINGS IMAGE-->
+									<div class="col-md-3"> <img src="/assets/images/listing/1.jpg" alt=""> </div>
+									<!--LISTINGS: CONTENT-->
+									<div class="col-md-9 home-list-pop-desc inn-list-pop-desc list-room-deta"> <a href="#!"><h3>Normal Rooms(Executive)</h3></a>
+										<div class="list-rat-ch list-room-rati"> <span>3.0</span> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </div>
+										<div class="list-room-type list-rom-ami">
+											<ul>
+												<li>
+													<p><b>Amenities:</b> </p>
+												</li>
+												<li><img src="/images/icon/a7.png" alt=""> Wi-Fi</li>
+												<li><img src="/images/icon/a4.png" alt=""> Air Conditioner </li>
+												<li><img src="/images/icon/a3.png" alt=""> Swimming Pool</li>
+												<li><img src="/images/icon/a2.png" alt=""> Bar</li>
+											</ul>
+										</div> <span class="home-list-pop-rat list-rom-pric">$420</span>
+										<div class="list-enqu-btn">
+											<ul>
+												<li><a href="#!"><i class="fa fa-usd" aria-hidden="true"></i> Get Quotes</a> </li>
+												<li><a href="#!"><i class="fa fa-commenting-o" aria-hidden="true"></i> Send SMS</a> </li>
+												<li><a href="#!"><i class="fa fa-phone" aria-hidden="true"></i> Call Now</a> </li>
+												<li><a href="#!"><i class="fa fa-usd" aria-hidden="true"></i> Book Now</a> </li>
+											</ul>
 										</div>
 									</div>
 								</div>
 							</div>
-							<button type="submit" id="feedbackSubmit"
-								class="btn btn-primary btn-sm" data-loading-text="Sending..."
-								style="display: block; margin-top: 10px;"><?php echo lang('business_query');?></button>
-						</form>
-					</div>
-					<!--/span-->
-				</div>
-				<!--/row-->
-			</div>
-
-		</div>
-<?php else: //listing does not exist?>
-    <div class="alert alert-info"><?php echo lang('error_not_exist');?>
-		</div>
-<?php endif; ?>
-</div><!-- end of tabs col-sm-12 -->
-</div><!-- end of tabs row -->
-<!-- Leaderboard Banner -->		
-		 <?php if($banners): $i = 0;?>
-		 <?php foreach ($banners as $banner):?>
-		 <?php if((($banner['width'] == 728) && ($banner['height'] == 90)) && ($banner['location'] == 'bottom') || ($banner['location'] == 'top')):?>
-		  <?php if(++$i > 1) break; //display only two banners?>
-			<div class="row top2 hidden-xs">
-			<div class="col-sm-12"><!-- leaderboard col-sm-12 -->
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<?php switch ($banner ['type']) {
-							case 'image' : ?>
-			 		<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>"> <img class="img-responsive center-block"
-			 					id="<?php echo $banner['id'];?>" class="banner"
-								src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
-								title="<?php echo $banner['title'];?>"
-								alt="<?php echo $banner['title'];?>" /></a>
-					<?php break; ?>
-					<?php case 'text' :
-								echo htmlspecialchars($banner ['html_text']);
-								break;
-						} ?>
-						</div> <!-- end of panel-body -->
-				</div><!-- end of panel -->
-				</div><!-- end of leaderboard col-sm-12 -->
-			</div><!-- end of row -->
-		<?php endif;?>
-		<?php endforeach; ?>
-		<?php endif; ?>
-		<!-- End of Leaderboard Banner -->
-		<?php if(!empty($listing)): //listing exist; display share and review information?>
-		<?php if((settings_item('lst.allow_email') == 0) && (settings_item('lst.allow_print') == 0)):?>
-		<?php else:?>
-		<!-- Send this information -->
-		<div class="row top2">
-			<div class="col-sm-2 clearfix">
-				<strong><?php echo lang('share_info');?>:</strong>
-			</div>
-			<?php if(settings_item('lst.allow_email') == 1):?>
-			<div class="col-sm-5">
-				<a href="#sendEmailModal" role="button" class="btn btn-info"
-					data-toggle="modal"> <span class="glyphicon glyphicon-envelope"></span>
-					<?php echo lang('send_email');?>
-				</a>
-			</div>
-			<?php endif;?>
-			<?php if(settings_item('lst.allow_print') == 1):?>
-			<div class="col-sm-5">
-			<?php echo anchor('createPDF/'.$listing->slug. '-in-' .strtolower(str_replace(" ","-", $listing->city)) .'-' .$listing->id, '<span class="glyphicon glyphicon-print"></span> '.lang('print_info').'', 'class="btn btn-warning"'); ?>			
-			</div>
-			<?php endif;?>
-		</div>
-		<!-- End of send information -->
-		<?php endif;?>
-		<?php if(settings_item('lst.allow_email') == 1):?>
-		<!-- Send Email Form -->
-		<div class="modal fade" id="sendEmailModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"><?php echo lang('send_email_heading');?></h4>
-					</div>
-					<!-- end modal-header -->
-					<form role="form" id="sendEmailForm">
-					<div class="modal-body">
-						<p>
-							<small class="text-muted"><?php echo lang('form_heading_title');?></small>
-						</p>
-						<div id="emailAlert"></div>
-						<div id="sendEmail_form" class="row">
-							<div class="col-12 col-sm-12 col-lg-12">								
-									<div class="form-group has-feedback">
-										<label class="control-label" for="email_to"><?php echo lang('label_friends_email');?></label> <input
-											type="email" class="form-control input-sm" id="email_to"
-											name="email_to" placeholder="<?php echo lang('placeholder_friends_email');?>" /> <span
-											class="help-block" style="display: none;"><?php echo lang('error_email');?></span>
-									</div>
-									<div class="row">
-										<div class="col-6 col-sm-6 col-lg-6">
-											<div class="form-group has-feedback">
-												<label class="control-label" for="email_from"><?php echo lang('label_your_email');?></label>
-												<input type="email" class="form-control input-sm"
-													id="email_from" name="email_from"
-													placeholder="<?php echo lang('placeholder_email');?>"
-													value="<?php echo $this->session->userdata('user_id') ? $user_info->email : '';?>" />
-												<span class="help-block" style="display: none;"><?php echo lang('error_email');?></span>
-											</div>
-										</div>
-										<div class="col-6 col-sm-6 col-lg-6">
-											<div class="form-group has-feedback">
-												<label class="control-label" for="email_from_name"><?php echo lang('label_name');?></label>
-												<input type="text" class="form-control input-sm"
-													id="email_from_name" name="email_from_name"
-													placeholder="<?php echo lang('placeholder_name');?>"
-													value="<?php echo $this->session->userdata('user_id') ? $user_info->display_name : '';?>" />
-												<span class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_name'));?></span>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-7 col-md-7 col-lg-7">
-											<div class="form-group has-feedback">
-												<label class="control-label" for="email_captcha_code"><?php echo lang('label_captcha');?></label> <input type="text"
-													class="form-control input-sm" name="email_captcha_code"
-													id="email_captcha_code"
-													placeholder="<?php echo lang('placeholder_captcha');?>" /> <span
-													class="help-block" style="display: none;"><?php echo lang('error_captcha');?></span>
-											</div>
-											<span class="help-block" style="display: none;"><?php echo lang('error_captcha');?></span>
-										</div>
-										<div class="col-5 col-md-5 col-lg-5">
-											<img class="img-thumbnail" id="email_captcha"
-												src="<?php echo site_url("securimage"); ?>"
-												alt="CAPTCHA Image" /> <a id="email_update" href="#"
-												onclick="document.getElementById('email_captcha').src = '<?php echo site_url("securimage?"); ?>' + Math.random(); return false"><i
-												class="glyphicon glyphicon-refresh"></i></a>
-										</div>
-									</div>
-							</div>
-							<!--/span-->
 						</div>
-						<!--/row-->
-					</div>
-					<!-- end modal-body -->
-					<div class="modal-footer">
-									<button type="submit" id="sendEmail" class="btn btn-primary"
-											data-loading-text="Sending..." type="button"><?php echo lang('form_submit');?></button>
-									<button class="btn btn-default" data-dismiss="modal" type="button"><?php echo lang('form_close');?></button>
-																			
-					</div><!-- end of modal-footer -->
-				</form>
-				</div><!-- end modal-content -->
-			</div><!-- end modal-dialog -->
-		</div>
-		<!-- end sendEmail -->
-		<!-- End of Send Email Form -->
-		<?php endif;?>
-		<!-- list navigation for tabs -->
-		<div class="row top2 bottom2">
-		<div class="col-sm-12">
-			<ul class="nav nav-tabs">
-				<?php if(settings_item('lst.allow_review') == 1):?>
-				<li class="active"><a href="#reviews" data-toggle="tab"><span
-						class="glyphicon glyphicon-comment"></span><?php echo lang('all_review');?></a></li>
-				<li><a href="#postreview" data-toggle="tab"><span
-						class="glyphicon glyphicon-share"></span><?php echo lang('post_review');?></a></li>
-				<?php endif;?>
-				<li <?php if(settings_item('lst.allow_review') == 0): echo 'class="active"'; endif;?>><a href="#claim" data-toggle="tab"><span
-						class="glyphicon glyphicon-warning-sign"></span><?php echo lang('claim_report');?></a></li>
-			</ul>
-
-			<!-- text for each callout -->
-			<!-- Reviews -->
-			<div class="tab-content">
-				<?php if(settings_item('lst.allow_review') == 1):?>
-				<div class="tab-pane fade active in" id="reviews">
-					<p>
-						<strong><?php echo lang('reviews_of'). $listing->title .' ' .$listing->city;?></strong>
-					</p>						
-					<?php if ($comments) :
-					foreach ( $comments as $comment ) : ?>
-						<div class="row">
-						<div class="col-sm-12">
-							<span class="pull-left"><strong><?php echo $comment->comment_title;?></strong> by <?php echo $comment->username;?></span><span
-								class="pull-right"><small><?php echo $comment->created_on;?></small></span>
-						</div>
-						<!-- end column -->
-					</div>
-					<!-- end row -->
-					<p><?php echo $comment->comment;?></p>
-						<?php endforeach; else : // reviews does not exist		?>
-						    <div class="alert alert-info"><?php echo lang('error_no_review');?></div>
-						<?php endif; ?>
-				</div>
-				<!-- end reviews tab pane -->
-				<!-- Post Review -->
-				<div class="tab-pane fade" id="postreview">
-					<div id="review_form" class="row">
-						<div class="col-12 col-sm-12 col-lg-12">
-						<?php if(!$this->auth->is_logged_in() && settings_item('lst.loggedin_review_only') == 1):?>
-						<?php $this->session->set_userdata('listing_url', $this->uri->segment(2));?>
-						<div class="alert alert-info"><?php echo lang('error_loggedin_review_only') . ' <a href="' .site_url('login') .'"><strong>Click Here</strong></a> to login.';?></div>
-						<?php else:?>
-						<div id="reviewMessage"></div>
-							<form role="form" id="commentForm">
-								<div class="form-group has-feedback">
-									<label class="control-label" for="review_title"><?php echo lang('label_title');?>*</label> <input
-										type="text" class="form-control input-sm" id="review_title"
-										name="review_title" placeholder="<?php echo lang('placeholder_title');?>" maxlength="100"/> <span
-										class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_title'));?></span>
-								</div>
-
-								<div class="form-group has-feedback">
-									<label class="control-label" for="review_message"><?php echo lang('label_review');?>*</label>
-									<textarea rows="5" cols="30" class="form-control input-sm"
-										id="review_message" name="review_message"
-										placeholder="<?php echo lang('placeholder_review');?>" maxlength="2000"></textarea>
-									<span class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_review'));?></span>
-								</div>
-								
-								<?php if($this->session->userdata('user_id')): ?>
-										<input type="hidden" id="user_name" name="user_name"
-									value="<?php echo $this->session->userdata('user_id') ? $user_info->display_name : '';?>"
-									class="optional" />
-								<?php else: ?>
-								<div class="form-group has-feedback">
-									<label class="control-label" for="user_name"><?php echo lang('label_name');?>*</label> <input
-										type="text" class="form-control input-sm" id="user_name"
-										name="user_name" placeholder="<?php echo lang('placeholder_name');?>"
-										value="<?php echo set_value('user_name', $this->session->userdata('user_id') ? $user_info->display_name : ''); ?>" />
-									<span class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_name'));?></span>
-								</div>	
-								<?php ?>
-								<?php endif;?>													
-							
-								<div class="row">
-									<div class="col-7 col-md-7 col-lg-7">
-										<div class="form-group has-feedback">
-											<label class="control-label" for="review_captcha_code"><?php echo lang('label_captcha');?>*</label> 
-											<input type="text"
-												class="form-control input-sm" name="review_captcha_code"
-												id="review_captcha_code"
-												placeholder="<?php echo lang('placeholder_captcha');?>" /> <span
-												class="help-block" style="display: none;"><?php echo lang('error_captcha');?></span>
-										</div>
-										<span class="help-block" style="display: none;"><?php echo lang('error_captcha');?></span>
-									</div>
-									<div class="col-5 col-md-5 col-lg-5">
-										<img class="img-thumbnail" id="review_captcha"
-											src="<?php echo site_url("securimage"); ?>"
-											alt="CAPTCHA Image" /> <a id="review_update" href="#"
-											onclick="document.getElementById('review_captcha').src = '<?php echo site_url("securimage?"); ?>' + Math.random(); return false"><i
-											class="glyphicon glyphicon-refresh"></i></a>
-									</div>
-								</div>
-								<button type="submit" id="commentSubmit"
-									class="btn btn-primary btn-sm" data-loading-text="Sending..."
-									style="display: block; margin-top: 10px;"><?php echo lang('form_submit');?></button>
-							</form>
-							<?php endif;?>
-						</div>
-						<!--/span-->
-					</div>
-					<!--/row-->
-				</div>
-				<?php endif;?>
-				<!-- Claim -->
-				<div class="tab-pane fade <?php if(settings_item('lst.allow_review') == 0): echo 'active in'; endif;?>" id="claim">
-					<div id="claim_report_form" class="row">
-						<div class="col-12 col-sm-12 col-lg-12">
-							<div id="claimMessage"></div>
-							<form role="form" id="claimReportForm">
-								<div class="form-group has-feedback">
-									<label class="control-label" for="claim_report_type"><?php echo lang('claim_report_type');?>*</label> 
-									<select name="claim_report_type"
-										class="form-control input-sm" size="1">
-										<option value="1"><?php echo lang('claim_option_first');?></option>
-										<option value="2"><?php echo lang('claim_option_second');?></option>
-										<option value="3"><?php echo lang('claim_option_third');?></option>
-										<option value="4"><?php echo lang('claim_option_fourth');?></option>
-										<option value="5"><?php echo lang('claim_option_fifth');?></option>
-									</select>
-								</div>
-								<div class="form-group has-feedback">
-									<label class="control-label" for="claim_report_description"><?php echo lang('label_description');?>*</label>
-									<textarea rows="5" cols="s" class="form-control input-sm"
-										id="claim_report_description" name="claim_report_description"
-										placeholder="<?php echo lang('placeholder_description');?>"></textarea>
-									<span class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_description'));?></span>
-								</div>								
-								<?php if($this->session->userdata('user_id')): ?>
-									<input type="hidden" id="claim_report_name"
-									name="claim_report_name"
-									value="<?php echo $this->session->userdata('user_id') ? $user_info->display_name : '';?>"
-									class="optional" /> <input type="hidden"
-									id="claim_report_email" name="claim_report_email"
-									value="<?php echo $this->session->userdata('user_id') ? $user_info->email : '';?>"
-									class="optional" />
-								<?php else :?>
-								<div class="row">
-									<div class="col-6 col-sm-6 col-lg-6">
-										<div class="form-group has-feedback">
-											<label class="control-label" for="claim_report_name"><?php echo lang('label_name');?></label>
-											<input type="text" class="form-control input-sm"
-												id="claim_report_name" name="claim_report_name"
-												placeholder="<?php echo lang('placeholder_name');?>" /> <span class="help-block"
-												style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_name'));?></span>
-										</div>
-									</div>
-									<div class="col-6 col-sm-6 col-lg-6">
-										<div class="form-group has-feedback">
-											<label class="control-label" for="claim_report_email"><?php echo lang('label_email');?></label> <input type="email"
-												class="form-control input-sm" id="claim_report_email"
-												name="claim_report_email" placeholder="<?php echo lang('placeholder_email');?>" />
-											<span class="help-block" style="display: none;"><?php echo sprintf(lang('error_message'), lang('label_email'));?></span>
-										</div>
-									</div>
-								</div>
-								<?php endif;?>
-								<div class="row">
-									<div class="col-6 col-sm-6 col-lg-6">
-										<div class="form-group has-feedback">
-											<label class="control-label" for="claim_report_phone"><?php echo lang('label_phone');?></label>
-											<input type="tel" class="form-control input-sm optional"
-												id="claim_report_phone" name="claim_report_phone"
-												placeholder="<?php echo lang('placeholder_phone');?>" /> <span
-												class="help-block" style="display: none;"><?php echo lang('error_mobile');?></span>
-										</div>
-									</div>
-									<div class="col-6 col-sm-6 col-lg-6">
+						
+						<!--LISTING DETAILS: LEFT PART 6-->
+						<div class="pglist-p3 pglist-bg pglist-p-com" id="ld-rew">
+							<div class="pglist-p-com-ti">
+								<h3><span>Write Your</span> Reviews</h3> </div>
+							<div class="list-pg-inn-sp">
+								<div class="list-pg-write-rev">
+									<form class="col">
+										<p>Writing great reviews may help others discover the places that are just apt for them. Here are a few tips to write a good review:</p>
 										<div class="row">
-											<div class="col-7 col-md-7 col-lg-7">
-												<div class="form-group has-feedback">
-													<label class="control-label"
-														for="claim_report_captcha_code"><?php echo lang('label_captcha');?></label>
-													<input type="text" class="form-control input-sm"
-														name="claim_report_captcha_code"
-														id="claim_report_captcha_code"
-														placeholder="<?php echo lang('placeholder_captcha');?>" /> <span
-														class="help-block" style="display: none;"><?php echo lang('error_captcha');?></span>
-												</div>
-												<span class="help-block" style="display: none;"><?php echo lang('error_captcha');?></span>
+											<div class="col s12">
+												<fieldset class="rating">
+													<input type="radio" id="star5" name="rating" value="5" />
+													<label class="full" for="star5" title="Awesome - 5 stars"></label>
+													<input type="radio" id="star4half" name="rating" value="4 and a half" />
+													<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+													<input type="radio" id="star4" name="rating" value="4" />
+													<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+													<input type="radio" id="star3half" name="rating" value="3 and a half" />
+													<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+													<input type="radio" id="star3" name="rating" value="3" />
+													<label class="full" for="star3" title="Meh - 3 stars"></label>
+													<input type="radio" id="star2half" name="rating" value="2 and a half" />
+													<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+													<input type="radio" id="star2" name="rating" value="2" />
+													<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+													<input type="radio" id="star1half" name="rating" value="1 and a half" />
+													<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+													<input type="radio" id="star1" name="rating" value="1" />
+													<label class="full" for="star1" title="Sucks big time - 1 star"></label>
+													<input type="radio" id="starhalf" name="rating" value="half" />
+													<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+												</fieldset>
 											</div>
-											<div class="col-5 col-md-5 col-lg-5">
-												<img class="img-thumbnail" id="claim_report_captcha"
-													src="<?php echo site_url("securimage"); ?>"
-													alt="CAPTCHA Image" /> <a id="claim_report_update" href="#"
-													onclick="document.getElementById('claim_report_captcha').src = '<?php echo site_url("securimage?"); ?>' + Math.random(); return false"><i
-													class="glyphicon glyphicon-refresh"></i></a>
+										</div>
+										<div class="row">
+											<div class="input-field col s6">
+												<input id="re_name" type="text" class="validate">
+												<label for="re_name">Full Name</label>
+											</div>
+											<div class="input-field col s6">
+												<input id="re_mob" type="number" class="validate">
+												<label for="re_mob">Mobile</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s6">
+												<input id="re_mail" type="email" class="validate">
+												<label for="re_mail">Email id</label>
+											</div>
+											<div class="input-field col s6">
+												<input id="re_city" type="text" class="validate">
+												<label for="re_city">City</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<textarea id="re_msg" class="materialize-textarea"></textarea>
+												<label for="re_msg">Write review</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12"> <a class="waves-effect waves-light btn-large full-btn" href="#!">Submit Review</a> </div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 6-->
+						<!--LISTING DETAILS: LEFT PART 5-->
+						<div class="pglist-p3 pglist-bg pglist-p-com" id="ld-rer">
+							<div class="pglist-p-com-ti">
+								<h3><span>User</span> Reviews</h3> </div>
+							<div class="list-pg-inn-sp">
+								<div class="lp-ur-all">
+									<div class="lp-ur-all-left">
+										<div class="lp-ur-all-left-1">
+											<div class="lp-ur-all-left-11">Excellent</div>
+											<div class="lp-ur-all-left-12">
+												<div class="lp-ur-all-left-13"></div>
+											</div>
+										</div>
+										<div class="lp-ur-all-left-1">
+											<div class="lp-ur-all-left-11">Good</div>
+											<div class="lp-ur-all-left-12">
+												<div class="lp-ur-all-left-13 lp-ur-all-left-Good"></div>
+											</div>
+										</div>
+										<div class="lp-ur-all-left-1">
+											<div class="lp-ur-all-left-11">Satisfactory</div>
+											<div class="lp-ur-all-left-12">
+												<div class="lp-ur-all-left-13 lp-ur-all-left-satis"></div>
+											</div>
+										</div>
+										<div class="lp-ur-all-left-1">
+											<div class="lp-ur-all-left-11">Below Average</div>
+											<div class="lp-ur-all-left-12">
+												<div class="lp-ur-all-left-13 lp-ur-all-left-below"></div>
+											</div>
+										</div>
+										<div class="lp-ur-all-left-1">
+											<div class="lp-ur-all-left-11">Below Average</div>
+											<div class="lp-ur-all-left-12">
+												<div class="lp-ur-all-left-13 lp-ur-all-left-poor"></div>
 											</div>
 										</div>
 									</div>
+									<div class="lp-ur-all-right">
+										<h5>Overall Ratings</h5>
+										<p><span>4.5 <i class="fa fa-star" aria-hidden="true"></i></span> based on 242 reviews</p>
+									</div>
 								</div>
-								<button type="submit" id="claimReportSubmit"
-									class="btn btn-primary btn-sm" data-loading-text="Sending..."
-									style="display: block; margin-top: 10px;"><?php echo lang('form_submit');?></button>
-							</form>
-							<!-- end form -->
+								<div class="lp-ur-all-rat">
+									<h5>Reviews</h5>
+									<ul>
+										<li>
+											<div class="lr-user-wr-img"> <img src="/images/users/2.png" alt=""> </div>
+											<div class="lr-user-wr-con">
+												<h6>Jacob Michael <span>4.5 <i class="fa fa-star" aria-hidden="true"></i></span></h6> <span class="lr-revi-date">19th January, 2017</span>
+												<p>Good service... nice and clean rooms... very good spread of buffet and friendly staffs. Located in heart of city and easy to reach any places in a short distance. </p>
+												<ul>
+													<li><a href="#!"><span>Like</span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Dis-Like</span><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Report</span> <i class="fa fa-flag-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Comments</span> <i class="fa fa-commenting-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Share Now</span>  <i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+												</ul>
+											</div>
+										</li>
+										<li>
+											<div class="lr-user-wr-img"> <img src="/images/users/3.png" alt=""> </div>
+											<div class="lr-user-wr-con">
+												<h6>Gabriel Elijah <span>5.0 <i class="fa fa-star" aria-hidden="true"></i></span></h6> <span class="lr-revi-date">21th July, 2016</span>
+												<p>The hotel is clean, convenient and good value for money. Staff are courteous and helpful. However, they need more training to be efficient.</p>
+												<ul>
+													<li><a href="#!"><span>Like</span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Dis-Like</span><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Report</span> <i class="fa fa-flag-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Comments</span> <i class="fa fa-commenting-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Share Now</span>  <i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+												</ul>
+											</div>
+										</li>
+										<li>
+											<div class="lr-user-wr-img"> <img src="/images/users/4.png" alt=""> </div>
+											<div class="lr-user-wr-con">
+												<h6>Luke Mason <span>4.2 <i class="fa fa-star" aria-hidden="true"></i></span></h6> <span class="lr-revi-date">21th March, 2018</span>
+												<p>Too much good experience with hospitality, cleanliness, facility and privacy and good value for money... To keep mind relaxing... Keep it up... </p>
+												<ul>
+													<li><a href="#!"><span>Like</span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Dis-Like</span><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Report</span> <i class="fa fa-flag-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Comments</span> <i class="fa fa-commenting-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Share Now</span>  <i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+												</ul>
+											</div>
+										</li>
+										<li>
+											<div class="lr-user-wr-img"> <img src="/images/users/5.png" alt=""> </div>
+											<div class="lr-user-wr-con">
+												<h6>Kevin Jack <span>3.6 <i class="fa fa-star" aria-hidden="true"></i></span></h6> <span class="lr-revi-date">21th Aug, 2018</span>
+												<p>I am deaf. Bar is closed and Restaurant is okay ... It should be more decoration as beautiful. I enjoyed swimming top floor and weather is good</p>
+												<ul>
+													<li><a href="#!"><span>Like</span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Dis-Like</span><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Report</span> <i class="fa fa-flag-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Comments</span> <i class="fa fa-commenting-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Share Now</span>  <i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+												</ul>
+											</div>
+										</li>
+										<li>
+											<div class="lr-user-wr-img"> <img src="/images/users/6.png" alt=""> </div>
+											<div class="lr-user-wr-con">
+												<h6>Nicholas Tyler <span>4.4 <i class="fa fa-star" aria-hidden="true"></i></span></h6> <span class="lr-revi-date">21th Aug, 2018</span>
+												<p>Overall, it was good experience. Rooms were spacious and they were kept very clean and tidy. Room service was good.</p>
+												<ul>
+													<li><a href="#!"><span>Like</span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Dis-Like</span><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Report</span> <i class="fa fa-flag-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Comments</span> <i class="fa fa-commenting-o" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><span>Share Now</span>  <i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+													<li><a href="#!"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+												</ul>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
 						</div>
-						<!-- end col span 12 -->
+						<!--END LISTING DETAILS: LEFT PART 5-->
 					</div>
-					<!-- end row -->
+					<div class="list-pg-rt">
+						<!--LISTING DETAILS: LEFT PART 7-->
+						<div class="pglist-p3 pglist-bg pglist-p-com">
+							<div class="pglist-p-com-ti pglist-p-com-ti-right">
+								<h3><span>Listing</span> Guarantee</h3> </div>
+							<div class="list-pg-inn-sp">
+								<div class="list-pg-guar">
+									<ul>
+										<li>
+											<div class="list-pg-guar-img"> <img src="/images/icon/g1.png" alt="" /> </div>
+											<h4>Service Guarantee</h4>
+											<p>Upto 6 month of service</p>
+										</li>
+										<li>
+											<div class="list-pg-guar-img"> <img src="/images/icon/g2.png" alt="" /> </div>
+											<h4>Professionals</h4>
+											<p>100% certified professionals</p>
+										</li>
+										<li>
+											<div class="list-pg-guar-img"> <img src="/images/icon/g3.png" alt="" /> </div>
+											<h4>Insurance</h4>
+											<p>Upto $5,000 against damages</p>
+										</li>
+									</ul> <a class="waves-effect waves-light btn-large full-btn list-pg-btn" href="#!" data-dismiss="modal" data-toggle="modal" data-target="#list-quo">Quick Enquiry</a> </div>
+							</div>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 7-->
+						<!--LISTING DETAILS: LEFT PART 7-->
+						<div class="pglist-p3 pglist-bg pglist-p-com">
+							<div class="pg-list-user-pro"> <img src="/images/users/8.png" alt=""> </div>
+							<div class="list-pg-inn-sp">
+								<div class="list-pg-upro">
+									<h5>Kevin Jack</h5>
+									<p>Member since July 2017</p> <a class="waves-effect waves-light btn-large full-btn list-pg-btn" href="#!">Contact User</a> </div>
+							</div>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 7-->
+						<!--LISTING DETAILS: LEFT PART 8-->
+						<div class="pglist-p3 pglist-bg pglist-p-com">
+							<div class="pglist-p-com-ti pglist-p-com-ti-right">
+								<h3><span>Our</span> Location</h3> </div>
+							<div class="list-pg-inn-sp">
+								<div class="list-pg-map">
+									<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6290413.804893654!2d-93.99620524741552!3d39.66116578737809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880b2d386f6e2619%3A0x7f15825064115956!2sIllinois%2C+USA!5e0!3m2!1sen!2sin!4v1469954001005" allowfullscreen></iframe>
+								</div>
+							</div>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 8-->
+						<!--LISTING DETAILS: LEFT PART 9-->
+						<div class="pglist-p3 pglist-bg pglist-p-com">
+							<div class="pglist-p-com-ti pglist-p-com-ti-right">
+								<h3><span>Other</span> Informations</h3> </div>
+							<div class="list-pg-inn-sp">
+								<div class="list-pg-oth-info">
+									<ul>
+										<li>Today Shop <span class="green-bg">open</span> </li>
+										<li>Experience <span>16</span> </li>
+										<li>Parking <span>yes</span> </li>
+										<li>Smoking <span>yes</span> </li>
+										<li>Pool Table <span>yes</span> </li>
+										<li>Take Out <span>yes</span> </li>
+										<li>Good for Groups <span>yes</span> </li>
+										<li>Accepts All Cards <span>yes</span> </li>
+										<li>Open Time <span>09:00am</span> </li>
+										<li>Close Time <span>10:00pm</span> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 9-->
+						<!--LISTING DETAILS: LEFT PART 10-->
+						<div class="list-mig-like">
+							<div class="list-ri-spec-tit">
+								<h3><span>You might</span> like this</h3> </div>
+							<a href="#!">
+								<div class="list-mig-like-com">
+									<div class="list-mig-lc-img"> <img src="/assets/images/listing/1.jpg" alt="" /> <span class="home-list-pop-rat list-mi-pr">$720</span> </div>
+									<div class="list-mig-lc-con">
+										<div class="list-rat-ch list-room-rati"> <span>4.0</span> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </div>
+										<h5>Holiday Inn Express</h5>
+										<p>Illinois City,</p>
+									</div>
+								</div>
+							</a>
+							<a href="#!">
+								<div class="list-mig-like-com">
+									<div class="list-mig-lc-img"> <img src="/assets/images/listing/2.jpg" alt="" /> <span class="home-list-pop-rat list-mi-pr">$420</span> </div>
+									<div class="list-mig-lc-con">
+										<div class="list-rat-ch list-room-rati"> <span>3.0</span> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </div>
+										<h5>InterContinental</h5>
+										<p>Illinois City,</p>
+									</div>
+								</div>
+							</a>
+							<a href="#!">
+								<div class="list-mig-like-com">
+									<div class="list-mig-lc-img"> <img src="/assets/images/listing/3.jpg" alt="" /> <span class="home-list-pop-rat list-mi-pr">$380</span> </div>
+									<div class="list-mig-lc-con">
+										<div class="list-rat-ch list-room-rati"> <span>5.0</span> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> </div>
+										<h5>Staybridger Suites</h5>
+										<p>Illinois City,</p>
+									</div>
+								</div>
+							</a>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 10-->
+					</div>
 				</div>
-				<!-- end tab pane claim/report -->
 			</div>
-			</div><!-- end of review col-sm-12 -->
 		</div>
-		<!-- end row top2 -->
-<?php endif; ?>
-</div><!-- end of col-lg-8 -->
-		<div class="col-lg-4 col-sm-5 hidden-xs">
-		<?php if($banners): $i = 0;?>
-		 <?php foreach ($banners as $banner):?>
-		 <?php if(((($banner['width'] <= 300) && ($banner['height'] <= 250)) || (($banner['width'] <= 336) && ($banner['height'] <= 280))) && ($banner['location'] == 'right')):?>
-		 <?php if(++$i > 2) break; //display only two banners?>		 
-				<div class="row">
-				<div class="col-sm-12 centered-text">
-					<div class="panel panel-default">
-						<div class="panel-body">
-			 		<?php switch ($banner ['type']) {
-							case 'image' : ?>
-			 		<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>"> <img
-			 					id="<?php echo $banner['id'];?>" class="img-responsive center-block banner"
-								src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
-								title="<?php echo $banner['title'];?>"
-								alt="<?php echo $banner['title'];?>" /></a>
-					<?php break; ?>
-					<?php case 'text' :
-								echo htmlspecialchars($banner ['html_text']);
-								break;
-						} ?>
-						</div> <!-- end of panel-body -->
-					</div> <!-- end of panel -->
-				</div><!-- end of col-sm-12 -->
-				</div> <!-- end of row -->	
-		<?php endif;?>
-		<?php endforeach; ?>
-		<?php endif; ?>
-	<?php switch(settings_item('lst.featured_location')) {
-				case 1:
-				case 4:
-				case 6:
-				case 7:
-				if($featured_listings):?>
-		<div class="row top2"><!-- featured listing -->
-		<div class="col-sm-12">
-		<div class="panel panel-primary">
-		  <div class="panel-heading">
-		    <h3 class="panel-title"><?php echo lang('featured_listings');?></h3>
-		  </div>
-		    <ul class="list-group">
-		  	<?php foreach($featured_listings as $featured):?>
-		  	<li class="list-group-item"><span class="glyphicon glyphicon-map-marker pull-left"></span>  	  
-		    <h5><a href="<?php echo base_url() .'detail/' .$featured['slug']. '-in-'.strtolower(str_replace(" ","-", $featured['city'])).'-'.$featured['id'];?>"><?php echo $featured['title'];?></a></h5>
-		    <?php if($featured['isAddress'] == 1): ?>
-		    <p><?php echo $featured['address'].'<br />'.$featured['city']. ' ' .$featured['pincode']. '<br />' .$featured['state'].', ' .ucwords(strtolower($featured['country']));?></p>
-		    <?php endif;?>
-		    <?php if(!empty($featured['description'])):?>
-		    <div class="wrap">
-				<a class="readmorebtn" onclick="$(this).text($(this).text() == '+<?php echo lang('more_info');?>' ? '-<?php echo lang('less_info');?>' : '+<?php echo lang('more_info');?>').next('#listing_description_<?php echo $featured['id'];?>').slideToggle('fast');">+<?php echo lang('more_info');?></a>
-				<div id ="listing_description_<?php echo $featured['id']; ?>" style="display:none"><?php echo strip_tags(word_limiter($featured['description'], 20));?>...</div>
-			</div><!-- end of wrap -->
-			<?php endif;?>
-			<?php if(($featured['created_on']) != '0000-00-00 00:00:00'):?>
-		    <p class="small"><?php echo lang('added_on');?>: <?php echo $featured['created_on'];?> </p>
-		    <?php endif;?>
-		    </li>
-		    <?php endforeach;?>
-		    </ul>
-		</div>
-		</div>
-		</div><!-- end of featured listing -->
-		<?php endif; }?>
-				<?php switch(settings_item('lst.popular_location')) {
-				case 1:
-				case 4:
-				case 6:
-				case 7:
-				if($popular_listings):?>
-		<div class="row top2"><!-- popular listing -->
-		<div class="col-sm-12">
-		<div class="panel panel-info">
-		  <div class="panel-heading">
-		    <h3 class="panel-title"><?php echo lang('popular_listings');?></h3>
-		  </div>
-		 	<ul class="list-group">
-		  	<?php foreach($popular_listings as $popular):?>
-		  	<li class="list-group-item"><span class="glyphicon glyphicon-map-marker pull-left"></span>  		  
-		    <h5><a href="<?php echo site_url('detail/' .$popular['slug']. '-in-' .strtolower(str_replace(" ","-", $popular['city'])) .'-' .$popular['id']); ?>"><?php echo $popular['title'];?></a></h5>
-		    <?php if($popular['isAddress'] == 1): ?>
-		    <p><?php echo $popular['address'].'<br />'.$popular['city'].' '.$popular['pincode']. '<br />' .$popular['state'].', ' .ucwords(strtolower($popular['country']));?></p>
-		    <?php endif;?>
-		    <?php if(!empty($popular['description'])):?>
-		    <div class="wrap">
-				<a class="readmorebtn" onclick="$(this).text($(this).text() == '+<?php echo lang('more_info');?>' ? '-<?php echo lang('less_info');?>' : '+<?php echo lang('more_info');?>').next('#listing_description_<?php echo $popular['id'];?>').slideToggle('fast');">+<?php echo lang('more_info');?></a>
-				<div id ="listing_description_<?php echo $popular['id']; ?>" style="display:none"><?php echo strip_tags(word_limiter($popular['description'], 10));?></div>
-			</div><!-- end of wrap -->
-			<?php endif;?>
-			<?php if(($popular['created_on']) != '0000-00-00 00:00:00'):?>
-			<p class="small"><?php echo lang('added_on');?>: <?php echo $popular['created_on'];?> </p>
-			<?php endif;?>
-		    </li>
-		    </ul>
-		    <?php endforeach;?>
-		</div>
-		</div>
-		</div><!-- end of popular listing -->
-		<?php endif; }?>
-		<?php switch(settings_item('lst.recently_added_location')) {
-				case 1:
-				case 4:
-				case 6:
-				case 7:
-				if($recently_added):?>
-		<div class="row top2"><!-- recently added listing -->
-		<div class="col-sm-12">
-		<div class="panel panel-info">
-		  <div class="panel-heading">
-		    <h3 class="panel-title"><?php echo lang('recently_added_listings');?></h3>
-		  </div>
-		  <ul class="list-group">
-		  	<?php foreach($recently_added as $latest):?>
-		  	<li class="list-group-item"><span class="glyphicon glyphicon-map-marker pull-left"></span> 		  
-		    <h5><a href="<?php echo site_url('detail/' .$latest['slug']. '-in-' .strtolower(str_replace(" ","-", $latest['city'])) .'-' .$latest['id']); ?>"><?php echo $latest['title'];?></a></h5>
-		    <?php if($latest['isAddress'] == 1): ?>
-		    <p><?php echo $latest['address'].'<br />'.$latest['city'].' '.$latest['pincode']. '<br />' .$latest['state'].', ' .ucwords(strtolower($latest['country']));?></p>
-		    <?php endif;?>
-		    <?php if(!empty($latest['description'])):?>
-		    <div class="wrap">
-				<a class="readmorebtn" onclick="$(this).text($(this).text() == '+<?php echo lang('more_info');?>' ? '-<?php echo lang('less_info');?>' : '+<?php echo lang('more_info');?>').next('#listing_description_<?php echo $latest['id'];?>').slideToggle('fast');">+<?php echo lang('more_info');?></a>
-				<div id ="listing_description_<?php echo $latest['id']; ?>" style="display:none"><?php echo strip_tags(word_limiter($latest['description'], 10));?></div>
-			</div><!-- end of wrap -->
-			<?php endif;?>
-			<?php if(($latest['created_on']) != '0000-00-00 00:00:00'):?>
-		    <p class="small"><?php echo lang('added_on');?>: <?php echo $latest['created_on'];?> </p>
-		    <?php endif;?>		    
-		    </li>
-		    <?php endforeach;?>
-		    </ul>
-		</div>
-		</div>
-		</div><!-- end of recently added -->
-		<?php endif; }?>
-		<?php switch(settings_item('lst.related_links_location')) {
-				case 1:
-				if($related_links):?>
-		<div class="row top2"><!-- related listing -->
-		<div class="col-sm-12">
-		<div class="panel panel-info">
-		  <div class="panel-heading">
-		    <h3 class="panel-title"><?php echo lang('related_listings');?></h3>
-		  </div>
-		  	 <ul class="list-group">
-		  	<?php foreach($related_links as $related_link):?>	
-		  	<li class="list-group-item">	  
-			    <h5><a href="<?php echo site_url('detail/' .$related_link['slug']. '-in-' .strtolower(str_replace(" ","-", $related_link['city'])) .'-' .$related_link['id']); ?>"><?php echo $related_link['title'] . lang('related_listings_text');?></a></h5>
-			</li>
-		    <?php endforeach;?>
-		    </ul>		    
-		</div>
-		</div>
-		</div><!-- end of recently added -->
-		<?php endif; }?>
-	</div> <!-- end of right column -->
-</div><!-- end row 3 -->
+	</section>

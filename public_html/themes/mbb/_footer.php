@@ -141,6 +141,7 @@
 	<script src="<?php echo Template::theme_url("js/bootstrap.js")?>" type="text/javascript"></script>
 	<script src="<?php echo Template::theme_url("js/materialize.min.js")?>" type="text/javascript"></script>
 	<script src="<?php echo Template::theme_url("js/custom.js")?>"></script>
+	<?php echo Assets::js(); ?>
 </body>
 
 </html>
