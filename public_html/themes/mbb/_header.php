@@ -1,16 +1,4 @@
 <?php
-	// get last selected theme from user
-    Assets::add_js( array('bootstrap.min.js', 'selectize.min.js', 'theme-switcher.js', 'metisMenu.js', 'jquery.cookie.js', 'bootstrap-typeahead.min.js', 'jquery.redirect.js', 'custom.js') );
-    if((settings_item('adv.search_blocks') == 2) || (settings_item('adv.search_blocks') == 3 )) {
-    	Assets::add_js('ontype_location_search.js');
-    } else {
-    	Assets::add_js('default_search.js'); 
-    }
-	Assets::add_css( array('bootstrap.min.css', 'font-awesome.min.css', 'selectize.bootstrap3.css', 'famfamfam-flags.css', 'layout.css'));
-    $inline = '$(".nav-tabs a:first").tab("show")';
-
-	Assets::add_js( $inline, 'inline' );
-    // this condition is used to load the different page for home and other
 	if($_SERVER['REQUEST_URI'] != "/"){
 ?>
 <!DOCTYPE html>
@@ -34,6 +22,7 @@
 	<link href="<?php echo Template::theme_url("css/materialize.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/style.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
+	<link href="<?php echo Template::theme_url("css/responsive.css")?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo Template::theme_url("css/star-rating.min.css")?>" rel="stylesheet" type="text/css" />
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
 </head>
@@ -48,11 +37,11 @@
 							<a href="index.php" style="passing-top:3px;"><img src="<?php echo Template::theme_url("images/logo2.png"); ?>" alt=""> </a>
 							<div class="dir-ho-tr" style="float: right; ">
 								<ul >
-									<li><a href="aboutus.php" style="color: #000;">About Us</a> </li>
-									<li><a href="register.php" style="color: #000;">Register</a> </li>
+									<li><a href="/aboutus.php" style="color: #000;">About Us</a> </li>
+									<li><a href="/register.php" style="color: #000;">Register</a> </li>
 									<li><a href="/members/add_business" ><i class="fa fa-plus" aria-hidden="true"></i> Add Listing</a> </li>
-									<li><a href="login" style="color: #000;">Sign In</a> </li>
-									<li><a href="contactus.php" style="color: #000;">Contact Us</a> </li>
+									<li><a href="/login" style="color: #000;">Sign In</a> </li>
+									<li><a href="/contactus.php" style="color: #000;">Contact Us</a> </li>
 								</ul>
 							</div>
 						</div>
@@ -86,6 +75,8 @@
 	<link href="<?php echo Template::theme_url("css/materialize.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/style.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
+	<link href="<?php echo Template::theme_url("css/responsive.css")?>" rel="stylesheet" type="text/css" />
+	<link href="<?php echo Template::theme_url("css/star-rating.min.css")?>" rel="stylesheet" type="text/css" />
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS 
 	<link href="css/responsive.css" rel="stylesheet"> -->
 	
@@ -109,11 +100,11 @@
 				<div class="col-md-6 col-sm-6">
 					<div class="dir-ho-tr">
 						<ul>
-							<li><a href="aboutus.php">About Us</a> </li>
-							<li><a href="register.php">Register</a> </li>
+							<li><a href="/aboutus.php">About Us</a> </li>
+							<li><a href="/register.php">Register</a> </li>
 							<li><a href="/members/add_business"><i class="fa fa-plus" aria-hidden="true"></i> Add Listing</a> </li>
-							<li><a href="login">Sign In</a> </li>
-							<li><a href="contactus.php">Contact Us</a> </li>
+							<li><a href="/login">Sign In</a> </li>
+							<li><a href="/contactus.php">Contact Us</a> </li>
 						</ul>
 					</div>
 				</div>

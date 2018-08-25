@@ -953,7 +953,7 @@ a:hover {
     border-right: 0px solid #eaeaea;
 }
 .dir-ho-t-sp {
-    padding: 75px 0px 70px 0px;
+    padding: 75px 0px 125px 0px;
 }
 .dir1-home-head:before {
     content: '';
@@ -4681,7 +4681,7 @@ textarea {
 }
 .tz-2 {
     float: left;
-    width: 78%;
+    width: 58%;
     position: relative;
     overflow: hidden;
     background: #fff;

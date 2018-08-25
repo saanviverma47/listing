@@ -236,6 +236,9 @@
 			<?php endif; endforeach; endif; ?>
 			</div>
 			<!-- End of Products -->
+
+
+
 			<!-- Services -->
 			<div class="tab-pane fade" id="services">
 			<?php if(!empty($products)): foreach($products as $product): ?>
@@ -631,7 +634,7 @@
 				<!-- Post Review -->
 				<div class="tab-pane fade" id="postreview">
 					<div id="review_form" class="row">
-						<div class="col-12 col-sm-12 col-lg-12">
+					<div class="col-12 col-sm-12 col-lg-12">
 						<?php if(!$this->auth->is_logged_in() && settings_item('lst.loggedin_review_only') == 1):?>
 						<?php $this->session->set_userdata('listing_url', $this->uri->segment(2));?>
 						<div class="alert alert-info"><?php echo lang('error_loggedin_review_only') . ' <a href="' .site_url('login') .'"><strong>Click Here</strong></a> to login.';?></div>

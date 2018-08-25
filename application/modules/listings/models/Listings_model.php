@@ -947,12 +947,14 @@ class Listings_model extends BF_Model {
 	 */
 	public function featured_listings($limit) {
 		$count_featured = $this->listings_model->count_by(array('featured' => 1));
-		$sql = "SELECT L.id, L.title, L.slug, L.pincode, L.address, L.description, L.logo_url, P.address AS isAddress, P.phone As isPhone, P.email AS isEmail,";
+		$sql = "SELECT L.id, L.title, L.slug, L.pincode, L.address, L.description, L.logo_url, P.address AS isAddress, P.phone As isPhone, P.email AS isEmail,R.average_rating, R.total_ratings, R.total_users,I.url,";
 		$sql .= " L.created_on, CO.name as country, S.name as state, CT.name as city FROM " . $this->db->dbprefix . "listings L";
 		$sql .= " INNER JOIN " . $this->db->dbprefix . "countries CO ON L.country_iso = CO.iso";
 		$sql .= " INNER JOIN " . $this->db->dbprefix . "states S ON L.state_id = S.id";
 		$sql .= " INNER JOIN " . $this->db->dbprefix . "cities CT ON L.city_id = CT.id";
 		$sql .= " LEFT JOIN " . $this->db->dbprefix . "packages P ON L.package_id = P.id";
+		$sql .= " LEFT JOIN " . $this->db->dbprefix . "ratings R ON L.id = R.listing_id";
+		$sql .= " LEFT JOIN " . $this->db->dbprefix . "images I ON I.listing_id = L.id AND I.id = (select id from ".$this->db->dbprefix ."images T where T.listing_id = L.id LIMIT 1)";
 		$sql .= " WHERE L.deleted = 0 AND L.spammed = 0 AND L.active = 1 AND L.featured = 1 LIMIT " . $limit;
 		if($limit < $count_featured) {
 			$rand = rand(0,$count_featured - $limit);
@@ -969,7 +971,7 @@ class Listings_model extends BF_Model {
 	 * @return object
 	 */
 	public function popular_listings($limit) {
-		$sql = "SELECT L.id, L.title, L.slug, L.address, L.pincode,  L.description, L.logo_url, L.created_on, L.hits, CO.name AS country, S.name AS state, CT.name AS city, P.address AS isAddress, P.phone As isPhone, P.email AS isEmail,R.average_rating, R.total_ratings, R.total_users";
+		$sql = "SELECT L.id, L.title, L.slug, L.address, L.pincode,  L.description, L.logo_url, L.created_on, L.hits, CO.name AS country, S.name AS state, CT.name AS city, P.address AS isAddress, P.phone As isPhone, P.email AS isEmail,R.average_rating, R.total_ratings, R.total_users,I.url";
 		$sql .= " FROM ( SELECT id, package_id, title, slug, address, pincode, description, logo_url, created_on, country_iso, state_id, city_id, hits FROM " . $this->db->dbprefix . "listings WHERE deleted =0 AND spammed =0 AND active =1 ORDER BY hits DESC";
 		$sql .= " LIMIT " . $limit . ")L";
 		$sql .= " LEFT JOIN " . $this->db->dbprefix . "countries CO ON L.country_iso = CO.iso";
@@ -977,6 +979,7 @@ class Listings_model extends BF_Model {
 		$sql .= " LEFT JOIN " . $this->db->dbprefix . "cities CT ON L.city_id = CT.id";
 		$sql .= " LEFT JOIN " . $this->db->dbprefix . "packages P ON L.package_id = P.id";
 		$sql .= " LEFT JOIN " . $this->db->dbprefix . "ratings R ON L.id = R.listing_id";
+		$sql .= " LEFT JOIN " . $this->db->dbprefix . "images I ON I.listing_id = L.id AND I.id = (select id from ".$this->db->dbprefix ."images T where T.listing_id = L.id LIMIT 1)";
 		$query = $this->db->query ( $sql );
 		$result = $query->result_array ();
 		return $result;
