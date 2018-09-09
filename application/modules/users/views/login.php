@@ -52,63 +52,55 @@ $fieldData = array(
 					<?php echo form_close(); ?>
 				</div>
 				
-				<div id="passwordresetbox" style="display: none; margin-top: 10px"
-		class="mainbox col-md-8 col-md-offset-2 col-sm-12">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-				<div class="panel-title"><?php echo lang('us_reset_password'); ?></div>
-				<div
-					style="float: right; font-size: 85%; position: relative; top: -10px">
-					<a id="signin_box" href="#"><?php echo lang('label_sign_in');?></a>
-				</div>
-			</div>
-			<div class="panel-body">
-			<?php if(isset($_POST['send'])):?>
-			<?php echo Template::message(); ?>
-			<?php if (validation_errors()) : ?>
-					<div id="passwordresetalert"
-						class="alert alert-danger">
-						<p><?php echo validation_errors(); ?></p>
-						<span></span>
+		<div id="passwordresetbox" style="display: none; margin-top: 10px" class="mainbox col-md-8 col-md-offset-2 col-sm-12">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title"><?php echo lang('us_reset_password'); ?></div>
+					<div
+						style="float: right; font-size: 85%; position: relative; top: -10px">
+						<a id="signin_box" href="#"><?php echo lang('label_sign_in');?></a>
 					</div>
-				<?php endif; ?>
-				<?php endif; ?>
-				<?php echo form_open(site_url('forgot_password'), array('class' => "form-horizontal", 'autocomplete' => 'off')); ?>				
-				<div class="alert alert-info fade in">
-					<?php echo lang('us_reset_note'); ?>
 				</div>
-				
-					<div class="form-group <?php echo iif( form_error('email') , 'error'); ?>">
-						<label for="email" class="col-md-3 control-label required"><?php echo lang('bf_email'); ?></label>
-						<div class="col-md-9">
-							<input type="text" class="form-control" name="email" id="email" value="<?php echo set_value('email') ?>"
-								placeholder="<?php echo lang('placeholder_email');?>">
+				<div class="panel-body">
+				<?php if(isset($_POST['send'])):?>
+				<?php echo Template::message(); ?>
+				<?php if (validation_errors()) : ?>
+						<div id="passwordresetalert"
+							class="alert alert-danger">
+							<p><?php echo validation_errors(); ?></p>
+							<span></span>
 						</div>
-					</div>
-					<div class="form-group">
-						<!-- Button -->
-						<div class="col-md-offset-3 col-md-9">
-							<input class="btn btn-primary" type="submit" name="send" value="<?php e(lang('us_send_password')); ?>" />
-						</div>
+					<?php endif; ?>
+					<?php endif; ?>
+					<?php echo form_open(site_url('forgot_password'), array('class' => "form-horizontal", 'autocomplete' => 'off')); ?>				
+					<div class="alert alert-info fade in">
+						<?php echo lang('us_reset_note'); ?>
 					</div>
 					
-				<?php echo form_close(); ?>
+						<div class="form-group <?php echo iif( form_error('email') , 'error'); ?>">
+							<label for="email" class="col-md-3 control-label required"><?php echo lang('bf_email'); ?></label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="email" id="email" value="<?php echo set_value('email') ?>"
+									placeholder="<?php echo lang('placeholder_email');?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<!-- Button -->
+							<div class="col-md-offset-3 col-md-9">
+								<input class="btn btn-primary" type="submit" name="send" value="<?php e(lang('us_send_password')); ?>" />
+							</div>
+						</div>
+						
+					<?php echo form_close(); ?>
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div id="signupbox" style="display: none; margin-top: 10px"
-	class="mainbox col-md-8 col-md-offset-2 col-sm-12">
-	<div class="panel panel-info">
-		<div class="panel-heading">
-			<div class="panel-title"><?php echo lang('us_sign_up'); ?></div>			
-			<div
-				style="float: right; font-size: 85%; position: relative; top: -10px">
-				<a id="signin_box" href="#"><?php echo lang('label_sign_in');?></a>
-			</div>
-		</div>
-		<div class="panel-body">
-			<?php echo Template::message(); ?>
+
+		<div class="log-in-pop-right" style='width:100% !important;'>
+		<a href="#" class="pop-close" data-dismiss="modal"><img src="images/cancel.png" alt=""></a>
+		<h4>Create an Account</h4>
+		<p>Already have an account? <a href='#' id='signin_box'>Login.</a></p>
+		<?php echo Template::message(); ?>
 			<?php if(isset($_POST['register'])):?>			
 			<?php if ($validation_errors) : ?>
 				<div id="signupalert"
@@ -122,17 +114,13 @@ $fieldData = array(
         		<span class="alert-heading"><?php echo lang('bf_required_note'); ?></span>
         		<?php if (isset($password_hints)) { echo $password_hints; } ?>
     		</div>
-    		<?php echo form_open( site_url(REGISTER_URL), array('class' => "form-horizontal", 'autocomplete' => 'off')); ?>
-				<?php Template::block('user_fields', 'user_fields', $fieldData); ?>
+		<form class="s12 ng-pristine ng-valid">
+			<?php Template::block('user_fields', 'user_fields', $fieldData); ?>
                 <?php
                 // Allow modules to render custom fields
                 Events::trigger('render_user_form');
                 ?>
-                <!-- Start of User Meta -->
-                <?php //$this->load->view('users/user_meta', array('frontend_only' => true)); ?>
-                <!-- End of User Meta -->
-
-				<div class="form-group">
+			<div class="form-group">
 					<!-- Button -->
 					<div class="col-md-offset-4 col-md-9">
 						<button id="signup" type="submit" class="btn btn-info" name="register">
@@ -141,9 +129,9 @@ $fieldData = array(
 					</div>
 				</div>
 			<?php echo form_hidden('mobile_country_iso', $mobile_country_iso, 'mobile_country_iso');?>
-			<?php echo form_close(); ?>
-		</div>
+		</form>
 	</div>
+	
+
 </div>
-			</div>
 	</section>
