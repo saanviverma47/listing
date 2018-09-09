@@ -1,17 +1,4 @@
 <?php
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 $num_columns	= 7;
 $can_delete	= $this->auth->restrict();
 $can_edit		= $this->auth->restrict();

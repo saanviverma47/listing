@@ -1,18 +1,5 @@
 <?php
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-echo form_open_multipart($this->uri->uri_string.'?'.$_SERVER['QUERY_STRING'], 'class="form-horizontal"'); ?>
+ echo form_open_multipart($this->uri->uri_string.'?'.$_SERVER['QUERY_STRING'], 'class="form-horizontal"'); ?>
 <div class="col-sm-6 top2 bottom2 v-center">
 	<div class="table-cell-middle">
 		<div class="input-group">

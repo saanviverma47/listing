@@ -1,7 +1,7 @@
 <?php
 $num_columns	= 24;
-$can_delete	= $this->auth->restrict();;
-$can_edit		= $this->auth->restrict();;
+$can_delete	= $this->auth->restrict();
+$can_edit		= $this->auth->restrict();
 $has_records	= isset($records) && is_array($records) && count($records);
 
 ?>

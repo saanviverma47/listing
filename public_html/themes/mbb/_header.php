@@ -19,7 +19,7 @@
 	<!-- FONTAWESOME ICONS -->
 	<link rel="stylesheet" href="<?php echo Template::theme_url("css/font-awesome.min.css")?>">
 	<!-- ALL CSS FILES -->
-	<link rel='stylesheet' type='text/css' href='<?php echo Template::theme_url("css/intlTelInput.css")?>' media='screen' />
+	<link href='<?php echo Template::theme_url("css/intlTelInput.css")?>' media='screen' rel='stylesheet' type='text/css' />
 	<link href="<?php echo Template::theme_url("css/materialize.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/style.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
@@ -28,9 +28,8 @@
 	<link href="<?php echo Template::theme_url("css/flags.css")?>" rel="stylesheet">
 	
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
-</head>
-
-<style>
+	
+	<style>
 	.alert-error {
 		background-color: #f2dede;
 		border-color: #ebccd1;
@@ -58,6 +57,7 @@
 	#options>button>.caret{display:none;}
 	#options>button{margin-top: -8px !important;}
 </style>
+</head>
 
 <body>
 	<section>
