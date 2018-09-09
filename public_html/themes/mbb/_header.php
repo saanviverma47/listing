@@ -25,6 +25,8 @@
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo Template::theme_url("css/responsive.css")?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo Template::theme_url("css/star-rating.min.css")?>" rel="stylesheet" type="text/css" />
+	<link href="<?php echo Template::theme_url("css/flags.css")?>" rel="stylesheet">
+	
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
 </head>
 
@@ -52,6 +54,8 @@
 	.help-block>p {
 		font-size: 11px !important;
 	}
+	#options>.select-wrapper{display:none;}
+	#options>button>.caret{display:none;}
 </style>
 
 <body>
@@ -69,7 +73,13 @@
 									<li><a href="/members/add_business" ><i class="fa fa-plus" aria-hidden="true"></i> Add Listing</a> </li>
 									<li><a href="/login" style="color: #000;">Sign In</a> </li>
 									<li><a href="/contact" style="color: #000;">Contact Us</a> </li>
+									<li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+									<li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+									<li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+									<li><div id="options" data-input-name="country2" data-selected-country="US"></div></li>
+									
 								</ul>
+
 							</div>
 						</div>
 					</div>
@@ -104,6 +114,7 @@
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo Template::theme_url("css/responsive.css")?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo Template::theme_url("css/star-rating.min.css")?>" rel="stylesheet" type="text/css" />
+	<link href="<?php echo Template::theme_url("css/flags.css")?>" rel="stylesheet">
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS 
 	<link href="css/responsive.css" rel="stylesheet"> -->
 	
@@ -115,7 +126,7 @@
 	<section id="background" class="dir1-home-head">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="col-md-3 col-sm-3 col-xs-12">
 					<div class="dir-ho-tl">
 						<ul>
 							<li>
@@ -124,7 +135,7 @@
 						</ul>
 					</div>
 				</div>
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-9 col-sm-9">
 					<div class="dir-ho-tr">
 						<ul>
 							<li><a href="/aboutus.php">About Us</a> </li>
@@ -132,6 +143,10 @@
 							<li><a href="/members/add_business"><i class="fa fa-plus" aria-hidden="true"></i> Add Listing</a> </li>
 							<li><a href="/login">Sign In</a> </li>
 							<li><a href="/contactus.php">Contact Us</a> </li>
+							<li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+									<li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+									<li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+									<li><div id="options" data-input-name="country2" data-selected-country="US"></div></li>
 						</ul>
 					</div>
 				</div>

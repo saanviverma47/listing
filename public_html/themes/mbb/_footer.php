@@ -99,7 +99,7 @@
 	<script src="<?php echo Template::theme_url("js/bootstrap-typeahead.js")?>"></script>-->
 	<script src='<?php echo Template::theme_url("js/intlTelInput.min.js")?>' type='text/javascript'></script>
 	<script src='<?php echo Template::theme_url("js/ontype_location_search.js")?>' type='text/javascript'></script>
-	
+	<script src="<?php echo Template::theme_url("js/jquery.flagstrap.js")?>"></script>
 	<?php echo Assets::js(); ?>
 
 	<script>
@@ -108,6 +108,16 @@
 			elementsPerPage: 12,
 			effect: 'climb'
 		});
+
+		$('#options').flagStrap();
+
+	$('#options').click(function(){
+		return false;
+	})
+
+	$(document).ready(function(){
+		$('#options>.select-wrapper').remove();
+	})
 	</script>
 	
 </body>
