@@ -82,25 +82,22 @@
 	</section>
 	<!--QUOTS POPUP-->
 	<!--SCRIPT FILES-->
-
-	<?php echo Assets::js(); ?>
-	
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script>window.jQuery || document.write('<script src="<?php echo Template::theme_url("js/jquery-latest.min.js")?>"><\/script>')</script>
-	
 	<script src="<?php echo Template::theme_url("js/bootstrap.js")?>" type="text/javascript"></script>
 	<script src="<?php echo Template::theme_url("js/materialize.min.js")?>" type="text/javascript"></script>
 	<script src="<?php echo Template::theme_url("js/jquery.cookie.js")?>"></script>
 	<script src="<?php echo Template::theme_url("js/selectize.min.js")?>"></script>
 	<script src="<?php echo Template::theme_url("js/bootstrap-typeahead.js")?>"></script>
 	<script src="<?php echo Template::theme_url("js/jquery.easyPaginate.js")?>"></script>
-	<!--<script src="<?php //echo Template::theme_url("js/jquery.cookie.js")?>"></script>
-	<script src="<?php //echo Template::theme_url("js/selectize.min.js")?>"></script>
-	<script src="<?php //echo Template::theme_url("js/bootstrap-typeahead.js")?>"></script>-->
+	<script src="<?php echo Template::theme_url("js/jquery.cookie.js")?>"></script>
+	<script src="<?php echo Template::theme_url("js/selectize.min.js")?>"></script>
+	<script src="<?php echo Template::theme_url("js/bootstrap-typeahead.js")?>"></script>
 	<script src='<?php echo Template::theme_url("js/intlTelInput.min.js")?>' type='text/javascript'></script>
 	<script src='<?php echo Template::theme_url("js/ontype_location_search.js")?>' type='text/javascript'></script>
 	<script src="<?php echo Template::theme_url("js/custom.js")?>"></script>
-	
+	-----------
+	<?php echo Assets::js(); ?>
 	<script>
 		$('#easyPaginate').easyPaginate({
 			paginateElement: 'li',
