@@ -56,6 +56,7 @@
 	}
 	#options>.select-wrapper{display:none;}
 	#options>button>.caret{display:none;}
+	#options>button{margin-top: -8px !important;}
 </style>
 
 <body>
