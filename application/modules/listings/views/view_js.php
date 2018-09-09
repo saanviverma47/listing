@@ -17,6 +17,7 @@ $('.query').click(function(){
     .after('<span class="glyphicon glyphicon-asterisk form-control-feedback"></span>');
 
   $("#sendQuerySubmit").click(function() {
+ 
     var $btn = $(this);
     $btn.button('loading');
     contactForm.clearErrors();
@@ -29,6 +30,7 @@ $('.query').click(function(){
         contactForm.addError($(this));        
       }
     });
+	
     $('#name, #captcha_code').not('.optional').each(function() {
       var $this = $(this);
       if (($this.is(':checkbox') && !$this.is(':checked')) || !$this.val()) {
@@ -36,6 +38,7 @@ $('.query').click(function(){
         contactForm.addError($(this));        
       }
     });
+	
     $('#captcha_code').each(function() {
       var $this = $(this);
       if (($this.is(':checkbox') && !$this.is(':checked')) || !$this.val()) {
@@ -48,13 +51,13 @@ $('.query').click(function(){
       hasErrors = true;
       contactForm.addError($email);
     }
-
+	
     var $phone = $('#phone');
     if ($phone.val() && $phone.intlTelInput && !$phone.intlTelInput("isValidNumber")) {
       hasErrors = true;
       contactForm.addError($phone.parent());
     }
-
+	
     if (hasErrors) {
       $btn.button('reset');
       return false;
@@ -62,6 +65,7 @@ $('.query').click(function(){
 
     var sendQueryData = $("#sendQueryForm").serialize();
     var listing_id = $('#listing_value').val();
+	 
     $.ajax({
       type: "POST",
       url: "<?php echo site_url('businessQuery');?>",

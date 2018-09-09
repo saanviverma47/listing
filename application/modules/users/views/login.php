@@ -11,21 +11,9 @@ $fieldData = array(
 
 
 <section class="tz-register">
-			<div class="log-in-pop">
-				<div class="log-in-pop-left">
-					<h1>Hello... </h1>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
-					<h4>Login with social media</h4>
-					<ul>
-						<li><a href="#"><i class="fa fa-facebook"></i> Facebook</a>
-						</li>
-						<li><a href="#"><i class="fa fa-google"></i> Google+</a>
-						</li>
-						<li><a href="#"><i class="fa fa-twitter"></i> Twitter</a>
-						</li>
-					</ul>
-				</div>
-				<div id="loginbox" class="log-in-pop-right">
+			<div class="log-in-pop" style='width:50% !important;'>
+				
+				<div id="loginbox" class="log-in-pop-right" style='width:100% !important;'>
 					<?php echo Template::message(); ?>
 					<?php if(isset($_POST['log-me-in'])):?>
 					<?php if (validation_errors ()) : ?>
@@ -37,7 +25,7 @@ $fieldData = array(
 					<?php endif; ?>
 					<?php endif;?>
 						<h4>Login</h4>
-					<p>Don't have an account? Create your account. It's take less then a minutes</p>
+					<p>Don't have an account? <a href="#" id="signup_box">Create your account.</a> It's take less then a minutes</p>
 					<?php echo form_open(LOGIN_URL, array('id' => 'loginform', 'class' => 'form-horizontal', 'autocomplete' => 'off')); ?>
 						<div >
 							<div class="input-field s12" class="<?php echo iif( form_error('login') , 'error') ;?>">

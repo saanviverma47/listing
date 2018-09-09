@@ -1,529 +1,539 @@
-<?php 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-?>
-<!-- main row -->
-<div class="row">
-	<div class="col-sm-2"> 
-	<div class="row">
-	<div class="col-sm-12">
-	<!-- Leftside Banner -->		
-		 <?php if($banners): $i = 0;?>
-		 <?php foreach ($banners as $banner):?>
-		 <?php if((($banner['width'] == 190) && ($banner['height'] == 90)) && $banner['location'] == 'left'):?>
-		  <?php if(++$i > 2) break; //display only two banners?>
-			<div class="row">
-			<div class="col-sm-12"><!-- leaderboard col-sm-12 -->
-						<?php switch ($banner ['type']) {
-							case 'image' : ?>
-			 		<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>"> <img
-			 					id="<?php echo $banner['id'];?>" class="banner thumbnail img-responsive"
-								src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
-								title="<?php echo $banner['title'];?>"
-								alt="<?php echo $banner['title'];?>" /></a><br />
-					<?php break; ?>
-					<?php case 'text' :
-								echo htmlspecialchars($banner ['html_text']);
-								break;
-						} ?>
-				</div><!-- end of leaderboard col-sm-12 -->
-			</div><!-- end of row -->
-		<?php endif;?>
-		<?php endforeach; ?>
-		<?php endif; ?>
-		<!-- End of Leftside Banner -->
-		<div class="panel-group" id="accordion">
-		<?php if(isset($child_categories)):?>
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><?php echo $category_heading;?></a>
-                </h4>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse in">
-                <ul class="list-group">
-                	<?php foreach ($child_categories as $category):?>
-                  	<li class="list-group-item"><a href="<?php echo site_url('category/' .$category->slug .'-' .$category->id)?>"><?php echo $category->name .' (' . $category->counts .')'; ?></a></li>
-                  	<?php endforeach;?>
-                </ul>
-              </div>
-            </div>
-          <?php endif;?>
-          <?php if($categories):?>
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><span class="glyphicon glyphicon-th-list">
-                    </span><?php echo lang('header_select_category');?></a>
-                </h4>
-              </div>              
-              <div id="collapseFive" class="panel-collapse collapse <?php if(!isset($child_categories)): echo 'in'; endif;?>">              
-              <ul class="list-group">
-                	<?php foreach ($categories as $category):?>
-                  	<li class="list-group-item"><a href="<?php echo site_url('category/' .$category->slug .'-' .$category->id)?>"><?php echo $category->name .' (' . $category->counts .')'; ?></a></li>
-                  	<?php endforeach;?>
-              </ul>               
-              </div>              
-            </div>
-            <?php endif;?>
-          </div><!-- end of accordion -->
-	</div>
-	</div>
-	</div><!-- end of left -->
-	<div class="col-sm-7 bottom2">	
-	<!-- Leaderboard Banner -->		
-		 <?php if($banners): $i = 0;?>
-		 <?php foreach ($banners as $banner):?>
-		 <?php if((($banner['width'] == 728) && ($banner['height'] == 90)) && $banner['location'] == 'top'):?>
-		  <?php if(++$i > 1) break; //display only two banners?>
-			<div class="row">
-			<div class="col-sm-12"><!-- leaderboard col-sm-12 -->
-						<?php switch ($banner ['type']) {
-							case 'image' : ?>
-			 		<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>"> <img
-			 					id="<?php echo $banner['id'];?>" class="banner img-responsive"
-								src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
-								title="<?php echo $banner['title'];?>"
-								alt="<?php echo $banner['title'];?>" /></a>
-					<?php break; ?>
-					<?php case 'text' :
-								echo htmlspecialchars($banner ['html_text']);
-								break;
-						} ?>
-				</div><!-- end of leaderboard col-sm-12 -->
-			</div><!-- end of row -->
-		<?php endif;?>
-		<?php endforeach; ?>
-		<?php endif; ?>
-		<!-- End of Leaderboard Banner -->
-		<!-- Category and Location Description -->
+	<style>
+		.pg-list-1 {
+			margin-top: 0px;
+			background: none !important; 
+			background-size: cover;
+			position: relative;
+			padding: 107px 0px 46px 0px !important;
+			width: 100%;
+			box-sizing: content-box;
+		}
+		.rating-xs {
+			font-size: 2.2em !important;
+		}
+		.list-room-rati {
+			padding: 0px 0px 0px 0px !important;;
+		}
+	</style>
+	<section style='display:none;'>
+		<div class="v3-list-ql">
+			<div class="container">
+				<div class="row">
+					<div class="v3-list-ql-inn">
+						<ul>
+							<li class="active"><a href="#ld-abour"><i class="fa fa-user"></i> About</a>
+							</li>
+						<?php if ($products_count > 0): ?>
+							<li><a href="#ld-ser"><i class="fa fa-cog"></i> Services</a>
+						<?php endif; ?>
+							</li>
+						<?php if($images):?>
+							<li><a href="#ld-gal"><i class="fa fa-photo"></i> Gallery</a>
+							</li>
+						<?php endif; ?>
+							<li style='display:none;'><a href="#ld-roo"><i class="fa fa-ticket"></i> Room Booking</a>
+							</li>
+							<?php if(settings_item('lst.allow_review') == 1):?>
+							<li><a href="#ld-rew"><i class="fa fa-edit"></i> <?php echo lang('post_review');?></a>
+							</li>
+							<li><a href="#ld-rer"><i class="fa fa-star-half-o"></i> <?php echo lang('all_review');?></a>
+							</li>
+							<?php endif; ?>
+							<li><a href="#claim"><i class="fa fa-star-half-o"></i> <?php echo lang('claim_report');?></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--LISTING DETAILS-->
+	<style>
+		.stars span {
+			top: 10px;
+		}
+	</style>
+	<section class="pg-list-1">
+		<div class="container">
 		<?php if (isset($title)):?>
-		<div class="row">
-			<div class="col-sm-12">
-			<h1><?php echo $title;?></h1>
-			<?php if(isset($description)):?>
-			<?php echo $description;?>
-			<?php endif;?>
-			</div>
-		</div>
-		<?php endif;?>
-		
-		<div class ="row"><!-- content row -->
-			<div class="col-sm-12"><!-- content col-sm-12 -->
-			<?php if(settings_item('lst.top_advertisement') == 1):?>
-			<div class="row top2">
-			<div class="col-sm-12">				
-				<div class="alert alert-warning" role="alert">
-					<a href="#" class="close" data-dismiss="alert">&times;</a><?php echo sprintf(lang('top_advertisement'), '<a href="' .site_url('pages/' .settings_item('lst.advertisement_page')).'">'.lang('ads_click').'</a>');?>
-				</div><!-- end of alert box -->
-			</div><!-- end of column -->
-			</div><!-- end of message -->
-			<?php endif;?>
-			<?php if($listings): $i=0;?>
-			<div class="row top2">	
-				<div class="col-sm-12 alert alert-info" role="alert">
-					<?php echo form_open()?>			
-						<div class="pull-left">			
-						<label class="control-label" for="selectRows"><?php echo lang('show_limit');?></label>
-						 <select name="selectRows" id="selectRows" onchange="this.form.submit()">
-							<option value="10" <?php echo isset($limit) && ($limit == 10) ? 'selected' : ''?>>10</option>
-							<option value="15" <?php echo isset($limit) && ($limit == 15)  ? 'selected' : ''?>>15</option>
-							<option value="20" <?php echo isset($limit) && ($limit == 20)  ? 'selected' : ''?>>20</option>
-						</select>
-						</div>
-						<div class="pull-right">			
-						<label class="control-label" for="sortBy"><?php echo lang('label_sort_by');?></label>
-						 <select name="sortBy" id="sortBy" onchange="this.form.submit()">
-						 	<option value="rating_default" <?php echo isset($sort_by) && ($sort_by == 'rating_default') ? 'selected' : ''?>><?php echo lang('label_sort_by_default');?></option>
-							<option value="rating_highest" <?php echo isset($sort_by) && ($sort_by == 'rating_highest') ? 'selected' : ''?>><?php echo lang('label_sort_by_rating_high');?></option>
-							<option value="rating_lowest" <?php echo isset($sort_by) && ($sort_by == 'rating_lowest') ? 'selected' : ''?>><?php echo lang('label_sort_by_rating_low');?></option>
-						</select>
-						</div>
-					<?php echo form_close();?>
-				</div><!-- end of dropdown column -->
-			</div><!-- end of dropdown row -->			
-			<div class="row hidden-xs hidden-sm">
-				<div class="col-md-2"><strong><?php echo lang('heading_logo');?></strong></div>
-				<div class="col-md-4"><strong><?php echo lang('heading_title');?></strong></div>
-				<div class="col-md-2"><strong><?php echo lang('heading_area');?></strong></div>
-				<div class="col-md-4"><strong><?php echo lang('heading_address');?></strong></div>
-			</div><!-- end of header row -->
-			<?php if($top_featured):?>			
-			<?php foreach($top_featured as $sponsor):?>
-			<hr>
-			<div class="row alert alert-info" style="background-color: #<?php echo $sponsor['color_scheme'];?>; border-color: #<?php echo $sponsor['border_color'];?>;" role="alert">
-			<div class="col-sm-12">
-			<div class="row"><!-- content row -->
-				<div class="col-md-2">
-					<div class="fileinput-preview thumbnail" data-trigger="fileinput">
-						<?php if(!empty($sponsor['logo_url'])) { ?>
-							<?php $regexp =  "/((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i";
-								if(preg_match($regexp, $sponsor['logo_url'])) {?>
-									<?php if(mb_strimwidth($sponsor['logo_url'], 0, 3, "") == "www") { ?>
-									<img src="<?php echo 'http://'.$sponsor['logo_url']; ?>" class="img-responsive" alt="<?php echo $sponsor['title'];?>" title="<?php echo $sponsor['title'];?>" />	<?php } else { ?>
-									<img src="<?php echo $sponsor['logo_url']; ?>" class="img-responsive" alt="<?php echo $sponsor['title'];?>" title="<?php echo $sponsor['title'];?>" />
-									<?php } ?>
-								<?php } else { ?>
-								<?php preg_match('/(?<extension>\.\w+)$/im', $sponsor['logo_url'], $matches);
-								$extension = $matches['extension'];
-								$thumbnail = preg_replace('/(\.\w+)$/im', '', $sponsor['logo_url']) . '_thumb' . $extension; ?>
-								<img src="<?php echo base_url(); ?>assets/images/logo/thumbs/<?php echo $thumbnail; ?>" class="img-responsive" alt="<?php echo $sponsor['title']?>" title="<?php echo $sponsor['title']?>" />
-							<?php }?>
-						<?php } else {?>
-							<img src="<?= base_url(); ?>assets/images/logo/no-logo.png" alt="<?php echo $sponsor['title']?>" title="<?php echo $sponsor['title']?>" />
-						<?php }?>
-					</div>
-					<?php if(isset($sponsor['average_rating'])):?>
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="listing_rating" class="stars">
-								<div class='controls'>
-									<input id="input-ratings" type="number" data-disabled="true" data-show-caption="false"
-										value="<?php echo $sponsor['average_rating'];?>"
-										class="rating" min=0 max=5 step=0.5 data-show-clear="false"
-										data-size="xs" />
-								</div>
-							</div>
-						</div>
-					</div>
-				<?php endif;?>
-				</div>
-				<div class="col-md-4">
-				<div class="row col-sm-12">
-				<a href="<?php echo site_url('detail/' .$sponsor['slug']. '-in-' .strtolower(str_replace(" ","-", $sponsor['city'])) .'-' .$sponsor['listing_id']); ?>"><?php echo $sponsor['title']; ?></a>
-				</div>
-				<div class="row col-sm-12">
-				<button type="button" class="query btn btn-sm btn-primary" data-toggle="modal" data-target="#query-modal" id="<?php echo $sponsor['listing_id'];?>">
-				<?php echo lang('business_query');?></button>							
-				</div><!-- end of ask query -->
-				</div>
-				<div class="col-md-2">
-				<?php if((isset($search_locality) && ($search_locality == $sponsor['locality_id'])) || (!empty($search_locality))):?>
-					<strong><?php echo $sponsor['locality']; ?></strong>
-				<?php else:?>
-					<strong><?php echo $sponsor['city'];?></strong>
-				<?php endif;?><br />
-				<span class="glyphicon glyphicon-thumbs-up"></span>
-				</div>
-				<div class="col-md-4"><?php echo $sponsor['address'] .'<br />' .$sponsor['city'] .', '.$sponsor['state'] . ' ' .$sponsor['pincode']. '<br />' . ucwords(strtolower($sponsor['country'])); ?>
-				<?php if(!empty($sponsor['mobile_number']) && !empty($sponsor['phone_number'])):?>
-				<br /><strong><?php echo lang('heading_phone');?>: </strong><?php echo $sponsor['mobile_number'] .', '.$sponsor['phone_number']; ?>
-				<?php elseif(!empty($sponsor['mobile_number'])):?>
-				<br /><strong><?php echo lang('heading_phone');?>: </strong><?php echo $sponsor['mobile_number']; ?>
-				<?php elseif(!empty($sponsor['phones_number'])):?>
-				<br /><strong><?php echo lang('heading_phone');?>: </strong><?php echo $sponsor['phone_number']; ?>
-				<?php endif;?>
-				</div>
-			</div><!-- end of content row -->
-			<?php if($sponsor['tags']):?>
-			<div class="row top2"><!-- tag and business query -->	
-				<div class="col-sm-2"></div>			
-				<div class="col-sm-10"><?php echo $sponsor['tags']. ', ' ; ?> <a href="<?php echo site_url('detail/' .$sponsor['slug']. '-in-' .strtolower(str_replace(" ","-", $sponsor['city'])) .'-' .$sponsor['listing_id']); ?>"><?php echo lang('more_info');?>...</a></div>
-			</div><!-- end of tag and business query -->
-			<?php endif;?>
-			<?php if($sponsor['description']):?>
-			<div class="row"><!-- description -->
-				<div class="col-sm-12">
-					<div class="wrap">
-						<a class="readmorebtn" onclick="$(this).text($(this).text() == '+<?php echo lang('more_info');?>' ? '-<?php echo lang('less_info');?>' : '+<?php echo lang('more_info');?>').next('#listing_description_<?php echo $sponsor['listing_id'];?>').slideToggle('fast');">+<?php echo lang('more_info');?></a>
-						<div id ="listing_description_<?php echo $sponsor['listing_id']; ?>" style="display:none"><?php echo $sponsor['description']; ?></div>
-					</div><!-- end of wrap -->
-				</div><!-- end of col-sm-12 -->
-			</div><!-- end of description -->
-			<?php endif;?>
-			</div>
-			</div>
-			<?php endforeach;?>
-			<?php endif;?><!-- end of top featured -->
-			<?php foreach($listings as $listing):?>
-			<hr>
-			<div class="row"><!-- content row -->
-				<div class="col-md-2">
-					<div class="fileinput-preview thumbnail" data-trigger="fileinput">
-						<?php if(!empty($listing['logo_url'])) { ?>
-							<?php $regexp =  "/((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i";
-								if(preg_match($regexp, $listing['logo_url'])) {?>
-									<?php if(mb_strimwidth($listing['logo_url'], 0, 3, "") == "www") { ?>
-									<img src="<?php echo 'http://'.$listing['logo_url']; ?>" class="img-responsive" alt="<?php echo $listing['title'];?>" title="<?php echo $listing['title'];?>" />	<?php } else { ?>
-									<img src="<?php echo $listing['logo_url']; ?>" class="img-responsive" alt="<?php echo $listing['title'];?>" title="<?php echo $listing['title'];?>" />
-									<?php } ?>
-								<?php } else { ?>
-								<?php preg_match('/(?<extension>\.\w+)$/im', $listing['logo_url'], $matches);
-								$extension = $matches['extension'];
-								$thumbnail = preg_replace('/(\.\w+)$/im', '', $listing['logo_url']) . '_thumb' . $extension; ?>
-								<img src="<?php echo base_url(); ?>assets/images/logo/thumbs/<?php echo $thumbnail; ?>" class="img-responsive" alt="<?php echo $listing['title']?>" title="<?php echo $listing['title']?>" />
-							<?php }?>
-						<?php } else {?>
-							<img src="<?= base_url(); ?>assets/images/logo/no-logo.png" alt="<?php echo $listing['title']?>" title="<?php echo $listing['title']?>" />
-						<?php }?>						
-					</div>
-					<?php if(isset($listing['average_rating'])):?>
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="listing_rating" class="stars">
-								<div class='controls'>
-									<input id="input-ratings" type="number" data-disabled="true" data-show-caption="false"
-										value="<?php echo $listing['average_rating'];?>"
-										class="rating" min=0 max=5 step=0.5 data-show-clear="false"
-										data-size="xs" />
-									<small class="text-muted"><span>Rating: <?php echo $listing['average_rating']; ?></span>
-									- <span><?php echo $listing['total_users']; ?> reviews</span>
-									</small>
-								</div>
-							</div>
-						</div>
-					</div>
+			<div class="row">
+				<div class="pg-list-1-left" style='width:80%;'> <a href="#"><h3><?php echo $title;?></h3></a>
+					
+					<h4 style='display:none;'>
+						<?php if($ratings): //rating exist?>
+						<small class="" style='color:#fff;'><span itemprop="rating" itemscope itemtype="" style='color:#fff;'><span itemprop="average" style='color:#fff;'><?php echo sprintf('%0.1f', $ratings->average_rating); ?></span>
+							<?php echo lang('label_ratings');?> <span itemprop="votes" style='color:#fff;'><?php echo $ratings->total_users; ?></span></span>
+							<?php echo lang('label_users_rated');?></small>
+						<?php endif;?>
+					</h4>
+					<?php if(($package->address == 1) && ($listing->address)):?>
+						<p><b>Address: </b><?php echo $listing->address?>,  <?=$listing->city?>, <?=$listing->pincode.', '?> <?=$listing->state?> <?=ucwords(strtolower($listing->country));?></p>
 					<?php endif;?>
+					<div class="list-number pag-p1-phone" style='display:none;'>
+						<ul>
+						<?php if(($package->phone == 1) && (!empty($listing->mobile_number) || !empty($listing->phone_number))):?>
+							<li style='width:26.33%;'><i class="fa fa-phone" aria-hidden="true"></i> <?=$listing->mobile_number?></li>
+						<?php endif;?>
+						<?php if(($package->email == 1) && ($listing->email)):?>
+							<li style='width:50.33%;'><i class="fa fa-envelope" aria-hidden="true"></i> <?php echo $listing->email;?></li>
+						<?php endif;?>
+						<?php if(($package->person  == 1) && ($listing->contact_person)):?>
+							<li><i class="fa fa-user" aria-hidden="true"></i> <?php echo $listing->contact_person;?></li>
+						<?php endif;?>
+						</ul>
+					</div>
 				</div>
-				<div class="col-md-4">
-				<div class="row col-sm-12">
-				<a href="<?php echo site_url('detail/' .$listing['slug']. '-in-' .strtolower(str_replace(" ","-", $listing['city'])) .'-' .$listing['listing_id']); ?>"><?php echo $listing['title']; ?></a>
+				<div class="pg-list-1-right" style='display:none;'>
+					<div class="list-enqu-btn pg-list-1-right-p1">
+						<ul>
+							<li><a href="#ld-rew"><i class="fa fa-star-o" aria-hidden="true"></i> Write Review</a> </li>
+							<li style='display:none;'><a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i> Send SMS</a> </li>
+							<li><a href="tel:<?=$listing->mobile_number?$listing->mobile_number:''?>"><i class="fa fa-phone" aria-hidden="true"></i> Call Now</a> </li>
+							<li><a href="#" data-dismiss="modal" data-toggle="modal" data-target="#list-quo"><i class="fa fa-usd" aria-hidden="true"></i> Get Quotes</a> </li>
+						</ul>
+					</div>
 				</div>
-				<div class="row col-sm-12">
-				<button type="button" class="query btn btn-sm btn-primary" data-toggle="modal" data-target="#query-modal" id="<?php echo $listing['listing_id'];?>">
-				<?php echo lang('business_query');?></button>							
-				</div><!-- end of ask query -->
-				</div>
-				<?php if((isset($search_locality) && ($search_locality == $listing['locality_id'])) || (!empty($search_locality))):?>
-					<div class="col-md-2"><strong><?php echo $listing['locality']; ?></strong></div>
-				<?php else:?>
-					<div class="col-md-2"><strong><?php echo $listing['city'];?></strong></div>
-				<?php endif;?>
-				<div class="col-md-4"><?php echo $listing['address'] .'<br />' .$listing['city'] .', '.$listing['state'] .'<br />'.ucwords(strtolower($listing['country'])); ?>
-				<?php if(!empty($listing['mobile_number']) && !empty($listing['phone_number'])):?>
-				<br /><strong><?php echo lang('heading_phone');?>: </strong><?php echo $listing['mobile_number'] .', '.$listing['phone_number']; ?>
-				<?php elseif(!empty($listing['mobile_number'])):?>
-				<br /><strong><?php echo lang('heading_phone');?>: </strong><?php echo $listing['mobile_number']; ?>
-				<?php elseif(!empty($listing['phone_number'])):?>
-				<br /><strong><?php echo lang('heading_phone');?>: </strong><?php echo $listing['phone_number']; ?>
-				<?php endif;?>
-				</div>
-			</div><!-- end of content row -->
-			<?php if($listing['tags']):?>
-			<div class="row top2"><!-- tag and business query -->	
-				<div class="col-sm-2"></div>			
-				<div class="col-sm-10"><?php echo $listing['tags']. ', ' ; ?> <a href="<?php echo site_url('detail/' .$listing['slug']. '-in-' .strtolower(str_replace(" ","-", $listing['city'])) .'-' .$listing['listing_id']); ?>"><?php echo lang('more_info');?>...</a></div>
-			</div><!-- end of tag and business query -->
-			<?php endif;?>
-			<?php if($listing['description']):?>
-			<div class="row"><!-- description -->
-				<div class="col-sm-12">
-					<div class="wrap">
-						<a class="readmorebtn" onclick="$(this).text($(this).text() == '+<?php echo lang('more_info');?>' ? '-<?php echo lang('less_info');?>' : '+<?php echo lang('more_info');?>').next('#listing_description_<?php echo $listing['listing_id'];?>').slideToggle('fast');">+<?php echo lang('more_info');?></a>
-						<div id ="listing_description_<?php echo $listing['listing_id']; ?>" style="display:none"><?php echo $listing['description']; ?></div>
-					</div><!-- end of wrap -->
-				</div><!-- end of col-sm-12 -->
-			</div><!-- end of description -->
-			<?php endif;?>
-			<?php $i++;?>
-			<?php if($i == 2): //get first four results?><!-- Advertisements -->			
-			<?php if($banners): $j = 0;?>
-			<?php foreach ($banners as $banner):?>
-			<?php if((($banner['width'] <= 180) && ($banner['height'] <= 90)) && ($banner['location'] == 'middle')):?>
-			<hr>
-			<div class="row">
-			<?php $j++; ?>
-			 <?php if($j > 2) break; //display only two banners?>		
-					<div class="col-sm-4">
-				 		<?php switch ($banner ['type']) {
-								case 'image' : ?>
-				 		<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>"> <img
-				 					id="<?php echo $banner['id'];?>" class="banner img-responsive"
-									src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
-									title="<?php echo $banner['title'];?>"
-									alt="<?php echo $banner['title'];?>" /></a>
-						<?php break; ?>
-						<?php case 'text' :
-									echo htmlspecialchars($banner ['html_text']);
-									break;
-							} ?>
-					</div><!-- end of col-sm-12 -->
-			<?php if($j == 1):?>
-				<div class="col-sm-4"></div>
-			<?php endif;?><!-- middle space of no use -->
-			</div><!-- end of banner row -->
-			<?php endif;?><!-- end of banner statement -->
-			<?php endforeach; ?><!-- end of banner foreach -->
-			<?php endif; ?><!-- end of banner if code -->
-			<?php endif;?><!-- end of advertisement -->	
-			<?php endforeach;?>
-			 <?php else:?>
-		     <div class="alert alert-info"><?php echo lang('error_not_exist');?></div>
-		    <?php endif;?>
-			</div><!-- end of content col-sm-12 -->
-			</div><!-- end of content row -->			
-			<div class="row top2">
-			<?php if($banners): $k = 0;?>
-			 <?php foreach ($banners as $banner):?>
-			 <?php if((($banner['width'] <= 468) && ($banner['height'] <= 15)) && ($banner['location'] == 'bottom')):?>
-			 <?php if(++$k > 2) break; //display only two banners?>		
-					<div class="col-sm-12 centered-text">
-				 		<?php switch ($banner ['type']) {
-								case 'image' : ?>
-				 		<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>"> <img
-				 					id="<?php echo $banner['id'];?>" class="banner img-responsive"
-									src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
-									title="<?php echo $banner['title'];?>"
-									alt="<?php echo $banner['title'];?>" /></a>
-						<?php break; ?>
-						<?php case 'text' :
-									echo htmlspecialchars($banner ['html_text']);
-									break;
-							} ?>
-					</div><!-- end of col-sm-12 -->			
-			<?php endif;?><!-- end of banner statement -->
-			<?php endforeach; ?><!-- end of banner foreach -->
-			<?php endif; ?><!-- end of banner if code -->
-			</div><!-- banner bottom -->
-			<div class="row">
-				<div class="col-sm-12 centered-text">
-					<?php echo $this->pagination->create_links(); ?>
-				</div><!-- end of pagination column -->
-			</div><!-- end of pagination row -->		
-	</div><!-- end of middle -->
-	<div class="col-sm-3">
-	<?php if($banners): $i = 0;?>
-		 <?php foreach ($banners as $banner):?>
-		 <?php if(((($banner['width'] <= 300) && ($banner['height'] <= 250))) && ($banner['location'] == 'right')):?>
-		 <?php if(++$i > 2) break; //display only two banners?>
-				<div class="row top2">
-				<div class="col-sm-12">
-			 		<?php switch ($banner ['type']) {
-							case 'image' : ?>
-			 		<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>"> <img
-			 					id="<?php echo $banner['id'];?>" class="banner img-responsive"
-								src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
-								title="<?php echo $banner['title'];?>"
-								alt="<?php echo $banner['title'];?>" /></a>
-					<?php break; ?>
-					<?php case 'text' :
-								echo htmlspecialchars($banner ['html_text']);
-								break;
-						} ?>
-				</div><!-- end of col-sm-12 -->
-			</div> <!-- end of row -->	
+			</div>
 		<?php endif;?>
-		<?php endforeach; ?>
-		<?php endif; ?>
-		<?php switch(settings_item('lst.featured_location')) {
-				case 1:
-				case 3:
-				case 5:
-				case 7:
-				if($featured_listings):?>
-		<div class="row top2"><!-- featured listing -->
-		<div class="col-sm-12">
-		<div class="panel panel-primary">
-		  <div class="panel-heading">
-		    <h3 class="panel-title"><?php echo lang('featured_listings');?></h3>
-		  </div>
-		  	<ul class="list-group">		  
-		  	<?php foreach($featured_listings as $featured):?>
-		  	<li class="list-group-item"><span class="glyphicon glyphicon-map-marker pull-left"></span>  		  
-		    <h5><a href="<?php echo site_url('detail/' .$featured['slug']. '-in-' .strtolower(str_replace(" ","-", $featured['city'])) .'-' .$featured['listing_id']); ?>"><?php echo $featured['title'];?></a></h5>
-		    <?php if($featured['isAddress'] == 1): ?>
-		    <p><?php echo $featured['address'].'<br />'.$featured['city']. ' ' .$featured['pincode']. '<br />' .$featured['state'].', ' .ucwords(strtolower($featured['country']));?></p>
-		    <?php endif;?>
-		    <?php if(!empty($featured['description'])):?>
-		    <div class="wrap">
-				<a class="readmorebtn" onclick="$(this).text($(this).text() == '+<?php echo lang('more_info');?>' ? '-<?php echo lang('less_info');?>' : '+<?php echo lang('more_info');?>').next('#listing_description_<?php echo $featured['listing_id'];?>').slideToggle('fast');">+<?php echo lang('more_info');?></a>
-				<div id ="listing_description_<?php echo $featured['listing_id']; ?>" style="display:none"><?php echo strip_tags(word_limiter($featured['description'], 20));?>...</div>
-			</div><!-- end of wrap -->
-			<?php endif;?>
-			<?php if(($featured['created_on']) != '0000-00-00 00:00:00'):?>
-		    <p class="small"><?php echo lang('added_on');?>: <?php echo $featured['created_on'];?> </p>
-		    <?php endif;?>
-		    </li>
-		    <?php endforeach;?>
-		    </ul>
 		</div>
+	</section>
+
+	<!--advertize--->
+	<section class="list-pg-bg">
+			<div class="container" style='width:100%'>
+				<div class="col-sm-12"><!-- leaderboard col-sm-12 -->
+				<?php if($banners): $i = 0;?>
+				 <?php foreach ($banners as $banner):?>
+				 <?php if((($banner['width'] == 728) && ($banner['height'] == 90)) && $banner['location'] == 'top' ):?>
+				  <?php if(++$i > 1) break; //display only two banners?>
+					
+								<?php switch ($banner ['type']) {
+									case 'image' : ?>
+							<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>" style='float:left; padding:10px;'> <img
+										id="<?php echo $banner['id'];?>" class="banner img-responsive"
+										src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
+										title="<?php echo $banner['title'];?>"
+										alt="<?php echo $banner['title'];?>" /></a>
+							<?php break; ?>
+							<?php case 'text' :
+										echo htmlspecialchars($banner ['html_text']);
+										break;
+								} ?>
+						
+				<?php endif;?>
+				<?php endforeach; ?>
+				<?php endif; ?>
+
+				<?php if($banners): $i = 0;?>
+				 <?php foreach ($banners as $banner):?>
+				 <?php if((($banner['width'] == 190) && ($banner['height'] == 90)) && $banner['location'] == 'left'):?>
+				  <?php if(++$i > 2) break; //display only two banners?>
+								<?php switch ($banner ['type']) {
+									case 'image' : ?>
+							<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>" style='float:right;padding:10px;'> <img
+										id="<?php echo $banner['id'];?>" class="banner thumbnail img-responsive"
+										src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
+										title="<?php echo $banner['title'];?>"
+										alt="<?php echo $banner['title'];?>" /></a>
+							<?php break; ?>
+							<?php case 'text' :
+										echo htmlspecialchars($banner ['html_text']);
+										break;
+								} ?>
+				<?php endif;?>
+				<?php endforeach; ?>
+				<?php endif; ?>
+			</div>
+	</section>
+	<!--advertize--->
+	
+	<section class="list-pg-bg">
+		<div class="container">
+			<div class="row">
+				<div class="com-padd" style='padding: 0px 0px !important;'>
+					<div class="list-pg-lt list-page-com-p">
+						<!--LISTING DETAILS: LEFT PART 1-->
+						<div class="pglist-p1 pglist-bg pglist-p-com" id="ld-abour">
+							<div class="pglist-p-com-ti">
+							<?php if (isset($title)):?>
+								<h3><span>About</span> <?php echo $title;?></h3>
+							<?php endif;?>
+							</div>
+							<div class="list-pg-inn-sp">
+								<?php if(isset($description)):?>
+									<p><?php echo $description;?></p>
+								<?php endif;?>
+							</div>
+						</div>
+						<!--END LISTING DETAILS: LEFT PART 1-->
+						<!--LISTING DETAILS: LEFT PART 2-->
+					<?php if(settings_item('lst.top_advertisement') == 1):?>
+						<div class="row top2">
+						<div class="col-sm-12">				
+							<div class="alert alert-warning" role="alert">
+								<a href="#" class="close" data-dismiss="alert">&times;</a><?php echo sprintf(lang('top_advertisement'), '<a href="' .site_url('pages/' .settings_item('lst.advertisement_page')).'">'.lang('ads_click').'</a>');?>
+							</div><!-- end of alert box -->
+						</div><!-- end of column -->
+						</div><!-- end of message -->
+					<?php endif;?>
+
+
+				<?php if($listings): $i=0;?>	
+					<!--LISTING DETAILS: LEFT PART 4-->
+						<div class="pglist-p3 pglist-bg pglist-p-com" id="ld-roo">
+							<div class="pglist-p-com-ti">
+								<h3><span>Top</span> Listings</h3> 
+							</div>
+
+							<div class="list-pg-inn-sp">
+							<?php if($top_featured):?>			
+							<?php foreach($top_featured as $sponsor):?>
+								<div class="home-list-pop list-spac list-spac-1 list-room-mar-o" style="background-color: #<?php echo $sponsor['color_scheme'];?>; border-color: #<?php echo $sponsor['border_color'];?>;">
+									<!--LISTINGS IMAGE-->
+									<div class="col-md-3"> 
+											<?php if(!empty($sponsor['logo_url'])) { ?>
+											<?php $regexp =  "/((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i";
+												if(preg_match($regexp, $sponsor['logo_url'])) {?>
+													<?php if(mb_strimwidth($sponsor['logo_url'], 0, 3, "") == "www") { ?>
+													<img src="<?php echo 'http://'.$sponsor['logo_url']; ?>" class="img-responsive" alt="<?php echo $sponsor['title'];?>" title="<?php echo $sponsor['title'];?>" />	<?php } else { ?>
+													<img src="<?php echo $sponsor['logo_url']; ?>" class="img-responsive" alt="<?php echo $sponsor['title'];?>" title="<?php echo $sponsor['title'];?>" />
+													<?php } ?>
+												<?php } else { ?>
+												<?php preg_match('/(?<extension>\.\w+)$/im', $sponsor['logo_url'], $matches);
+												$extension = $matches['extension'];
+												$thumbnail = preg_replace('/(\.\w+)$/im', '', $sponsor['logo_url']) . '_thumb' . $extension; ?>
+												<img src="<?php echo base_url(); ?>assets/images/logo/thumbs/<?php echo $thumbnail; ?>" class="img-responsive" alt="<?php echo $sponsor['title']?>" title="<?php echo $sponsor['title']?>" />
+											<?php }?>
+										<?php } else {?>
+											<img src="<?= base_url(); ?>assets/images/logo/no-logo.png" alt="<?php echo $sponsor['title']?>" title="<?php echo $sponsor['title']?>" />
+										<?php }?>
+									</div>
+									<!--LISTINGS: CONTENT-->
+									<div class="col-md-9 home-list-pop-desc inn-list-pop-desc list-room-deta"> 
+										<a href="<?php echo site_url('detail/' .$sponsor['slug']. '-in-' .strtolower(str_replace(" ","-", $sponsor['city'])) .'-' .$sponsor['listing_id']); ?>"><h3><?php echo $sponsor['title']?></h3></a>
+										<?php if(isset($sponsor['average_rating'])):?>
+										<div class="list-rat-ch list-room-rati"> <span style='float:left;'><?php echo $sponsor['average_rating'];?></span> 
+											<div id="listing_rating" class="stars" style='top: -4px !important;'>
+												<div class='controls'>
+													<input id="input-ratings" type="number" data-disabled="true" data-show-caption="false"
+														value="<?php echo $sponsor['average_rating'];?>"
+														class="rating" min=0 max=5 step=0.5 data-show-clear="false"
+														data-size="xs" />
+												</div>
+											</div>
+										</div>
+										<?php endif;?>
+										<div class="list-room-type list-rom-ami">
+											<ul>
+												<li>
+													<p><b>Address:</b> </p>
+												</li>
+												<li><img src="/images/icon/a7.png" alt=""> <?php echo $sponsor['address'];?></li>
+												<li><img src="/images/icon/a4.png" alt=""> <?php echo $sponsor['city'];?> </li>
+												<li><img src="/images/icon/a3.png" alt=""> <?php echo $sponsor['state'];?></li>
+												<li><img src="/images/icon/a2.png" alt=""> <?php echo $sponsor['pincode'];?></li>
+												<li><img src="/images/icon/a5.png" alt=""> <?php echo ucwords(strtolower($sponsor['country']));?></li>
+											
+												<li>
+													<?php if(!empty($sponsor['mobile_number']) && !empty($sponsor['phone_number'])):?>
+													<strong><?php echo lang('heading_phone');?>: </strong><?php echo $sponsor['mobile_number'] .', '.$sponsor['phone_number']; ?>
+													<?php elseif(!empty($sponsor['mobile_number'])):?>
+													<strong><?php echo lang('heading_phone');?>: </strong><?php echo $sponsor['mobile_number']; ?>
+													<?php elseif(!empty($sponsor['phones_number'])):?>
+													<strong><?php echo lang('heading_phone');?>: </strong><?php echo $sponsor['phone_number']; ?>
+													<?php endif;?>
+												</li>
+											
+											<?php if($sponsor['tags']):?>
+												<li><img src="/images/icon/a7.png" alt=""> <?php echo $sponsor['tags']. ', ' ; ?></li>
+											<?php endif;?>
+											</ul>
+
+										</div> <span class="home-list-pop-rat list-rom-pric" style='background: transparent !important;'><span class="glyphicon glyphicon-thumbs-up" style='font-size: 30px;'></span></span>
+										<div class="list-enqu-btn">
+											<ul>
+												<li>
+													<a href="#!" class='query'  data-toggle="modal" data-target="#query-modal" id="<?php echo $sponsor['listing_id'];?>">
+														<?php echo lang('business_query');?>
+													</a> 
+												</li>
+												<?php if($sponsor['tags']):?>
+													<li>
+														<a href="<?php echo site_url('detail/' .$sponsor['slug']. '-in-' .strtolower(str_replace(" ","-", $sponsor['city'])) .'-' .$sponsor['listing_id']); ?>">
+															<?php echo lang('more_info');?>...
+														</a> 
+													</li>
+												<?php endif;?>
+												
+											</ul>
+										</div>
+									</div>
+								</div>
+							<?php endforeach;?>
+							<?php endif;?>
+							</div>
+							</div>
+							<hr>
+							<div class="pglist-p3 pglist-bg pglist-p-com" id="ld-roo" style='background-color:#ededed;'>
+							<div class="pglist-p-com-ti">
+								<h3><span>Other</span> Listings</h3> 
+							</div>
+
+							<div class="list-pg-inn-sp">
+							
+							<?php foreach($listings as $listing):?>
+								<div class="home-list-pop list-spac list-spac-1 list-room-mar-o">
+									<!--LISTINGS IMAGE-->
+									<div class="col-md-3"> 
+										<?php if(!empty($listing['logo_url'])) { ?>
+											<?php $regexp =  "/((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)/i";
+												if(preg_match($regexp, $listing['logo_url'])) {?>
+													<?php if(mb_strimwidth($listing['logo_url'], 0, 3, "") == "www") { ?>
+													<img src="<?php echo 'http://'.$listing['logo_url']; ?>" class="img-responsive" alt="<?php echo $listing['title'];?>" title="<?php echo $listing['title'];?>" />	<?php } else { ?>
+													<img src="<?php echo $listing['logo_url']; ?>" class="img-responsive" alt="<?php echo $listing['title'];?>" title="<?php echo $listing['title'];?>" />
+													<?php } ?>
+												<?php } else { ?>
+												<?php preg_match('/(?<extension>\.\w+)$/im', $listing['logo_url'], $matches);
+												$extension = $matches['extension'];
+												$thumbnail = preg_replace('/(\.\w+)$/im', '', $listing['logo_url']) . '_thumb' . $extension; ?>
+												<img src="<?php echo base_url(); ?>assets/images/logo/thumbs/<?php echo $thumbnail; ?>" class="img-responsive" alt="<?php echo $listing['title']?>" title="<?php echo $listing['title']?>" />
+											<?php }?>
+										<?php } else {?>
+											<img src="<?= base_url(); ?>assets/images/logo/no-logo.png" alt="<?php echo $listing['title']?>" title="<?php echo $listing['title']?>" />
+										<?php }?>
+									</div>
+									<!--LISTINGS: CONTENT-->
+									<div class="col-md-9 home-list-pop-desc inn-list-pop-desc list-room-deta"> 
+										<a href="<?php echo site_url('detail/' .$listing['slug']. '-in-' .strtolower(str_replace(" ","-", $listing['city'])) .'-' .$listing['listing_id']); ?>"><h3><?php echo $listing['title']; ?></h3></a>
+
+										<?php if(isset($listing['average_rating'])):?>
+										<div class="list-rat-ch list-room-rati"> <span style='float:left !important;'><?php echo $listing['average_rating'];?></span> 
+											<div id="listing_rating" class="stars" style='top: -4px !important;'>
+												<div class='controls'>
+													<input id="input-ratings" type="number" data-disabled="true" data-show-caption="false"
+														value="<?php echo $listing['average_rating'];?>"
+														class="rating" min=0 max=5 step=0.5 data-show-clear="false"
+														data-size="xs" />
+												</div>
+											</div>
+										</div>
+										<?php endif;?>
+										<div class="list-room-type list-rom-ami">
+											<ul>
+												<li>
+													<p><b>Address:</b> </p>
+												</li>
+												<li><img src="/images/icon/a7.png" alt=""> <?php echo $listing['address'];?></li>
+												<li><img src="/images/icon/a4.png" alt=""> <?php echo $listing['city'];?> </li>
+												<li><img src="/images/icon/a3.png" alt=""> <?php echo $listing['state'];?></li>
+												<li><img src="/images/icon/a2.png" alt=""> <?php echo $listing['pincode'];?></li>
+												<li><img src="/images/icon/a5.png" alt=""> <?php echo ucwords(strtolower($listing['country']));?></li>
+											
+												<li>
+													<?php if(!empty($listing['mobile_number']) && !empty($listing['phone_number'])):?>
+													<strong><?php echo lang('heading_phone');?>: </strong><?php echo $listing['mobile_number'] .', '.$listing['phone_number']; ?>
+													<?php elseif(!empty($listing['mobile_number'])):?>
+													<strong><?php echo lang('heading_phone');?>: </strong><?php echo $listing['mobile_number']; ?>
+													<?php elseif(!empty($listing['phones_number'])):?>
+													<strong><?php echo lang('heading_phone');?>: </strong><?php echo $listing['phone_number']; ?>
+													<?php endif;?>
+												</li>
+											
+											<?php if($listing['tags']):?>
+												<li><img src="/images/icon/a7.png" alt=""> <?php echo $listing['tags']. ', ' ; ?></li>
+											<?php endif;?>
+											</ul>
+										</div> <span class="home-list-pop-rat list-rom-pric" style='background: transparent !important;'><span class="glyphicon glyphicon-thumbs-up" style='font-size: 30px;'></span></span>
+										<div class="list-enqu-btn">
+											<ul>
+												<li>
+													<a href="#!" class='query'  data-toggle="modal" data-target="#query-modal" id="<?php echo $sponsor['listing_id'];?>">
+														<?php echo lang('business_query');?>
+													</a> 
+												</li>
+												<?php if($sponsor['tags']):?>
+													<li>
+														<a href="<?php echo site_url('detail/' .$sponsor['slug']. '-in-' .strtolower(str_replace(" ","-", $sponsor['city'])) .'-' .$sponsor['listing_id']); ?>">
+															<?php echo lang('more_info');?>...
+														</a> 
+													</li>
+												<?php endif;?>
+												
+											</ul>
+										</div>
+									</div>
+								</div>
+							<?php endforeach;?>	
+							</div>
+						</div>
+				<?php endif;?>
+			</div>
+
+				
+
+					<div class="list-pg-rt">
+						<?php if($banners): $i = 0;?>
+							 <?php foreach ($banners as $banner):?>
+							 <?php if(((($banner['width'] <= 300) && ($banner['height'] <= 250)) || (($banner['width'] <= 336) && ($banner['height'] <= 280))) && ($banner['location'] == 'right')):?>
+							 <?php if(++$i > 3) break; //display only two banners?>		 
+									<div class="row">
+									<div class="col-sm-12 centered-text">
+										<div class="panel panel-default">
+											<div class="panel-body">
+										<?php switch ($banner ['type']) {
+												case 'image' : ?>
+										<a href="<?php echo $banner['url']; ?>" target="<?php echo $banner['target']; ?>"> <img
+													id="<?php echo $banner['id'];?>" class="img-responsive center-block banner"
+													src="<?php echo base_url();?>assets/images/banners/<?php echo $banner['image']; ?>"
+													title="<?php echo $banner['title'];?>"
+													alt="<?php echo $banner['title'];?>" /></a>
+										<?php break; ?>
+										<?php case 'text' :
+													echo htmlspecialchars($banner ['html_text']);
+													break;
+											} ?>
+											</div> <!-- end of panel-body -->
+										</div> <!-- end of panel -->
+									</div><!-- end of col-sm-12 -->
+									</div> <!-- end of row -->	
+							<?php endif;?>
+							<?php endforeach; ?>
+							<?php endif; ?>
+						<!--END LISTING DETAILS: LEFT PART 7-->
+					
+					<?php switch(settings_item('lst.featured_location')) {
+					case 1:
+					case 4:
+					case 6:
+					case 7:
+					if($featured_listings):?>
+						
+						<!--LISTING DETAILS: LEFT PART 10-->
+						<div class="list-mig-like">
+							<div class="list-ri-spec-tit">
+								<h3><?php echo lang('featured_listings');?></h3> 
+							</div>
+							<?php foreach($featured_listings as $featured):?>
+							
+							<a href="<?php echo base_url() .'detail/' .$featured['slug']. '-in-'.strtolower(str_replace(" ","-", $featured['city'])).'-'.$featured['id'];?>">
+								<div class="list-mig-like-com">
+									<div class="list-mig-lc-img"> 
+										<?php if($featured['url']) {
+											preg_match('/(?<extension>\.\w+)$/im', $featured['url'], $matches);
+											$extension = $matches['extension'];
+											$thumbnail = preg_replace('/(\.\w+)$/im', '', $featured['url']) . $extension;
+										?>
+										<img src="<?php echo base_url(); ?>assets/images/photos/<?php echo $thumbnail;?>" alt="" /> 
+										<?php } else {?>
+
+										<img src="/assets/images/listing/1.jpg" alt="" /> 
+										<?php }?>
+									</div>
+									<div class="list-mig-lc-con">
+										<div class="list-rat-ch list-room-rati"> <span><?=sprintf('%0.1f', $featured['average_rating'])?></span></div>
+										<h5><?php echo $featured['title'];?></h5>
+										<?php if($featured['isAddress'] == 1): ?>
+										<p><?php echo $featured['city']. ' ' .$featured['pincode']. ' ' .$featured['state'];?></p>
+										<?php endif;?>
+									</div>
+								</div>
+							</a>
+							<?php endforeach;?>
+						</div>
+					<?php endif; }?>
+						<!--END LISTING DETAILS: LEFT PART 10-->
+
+					<?php switch(settings_item('lst.popular_location')) {
+						case 1:
+						case 4:
+						case 6:
+						case 7:
+					if($popular_listings):?>
+						
+						<!--LISTING DETAILS: LEFT PART 10-->
+						<div class="list-mig-like">
+							<div class="list-ri-spec-tit">
+								<h3><?php echo lang('popular_listings');?></h3> 
+							</div>
+							<?php foreach($popular_listings as $featured):?>
+							
+							<a href="<?php echo base_url() .'detail/' .$featured['slug']. '-in-'.strtolower(str_replace(" ","-", $featured['city'])).'-'.$featured['id'];?>">
+								<div class="list-mig-like-com">
+									<div class="list-mig-lc-img"> 
+										<?php if($featured['url']) {
+											preg_match('/(?<extension>\.\w+)$/im', $featured['url'], $matches);
+											$extension = $matches['extension'];
+											$thumbnail = preg_replace('/(\.\w+)$/im', '', $featured['url']) . $extension;
+										?>
+										<img src="<?php echo base_url(); ?>assets/images/photos/<?php echo $thumbnail;?>" alt="" /> 
+										<?php } else {?>
+
+										<img src="/assets/images/listing/1.jpg" alt="" /> 
+										<?php }?>
+									</div>
+									<div class="list-mig-lc-con">
+										<div class="list-rat-ch list-room-rati"> <span><?=sprintf('%0.1f', $featured['average_rating'])?></span></div>
+										<h5><?php echo $featured['title'];?></h5>
+										<?php if($featured['isAddress'] == 1): ?>
+										<p><?php echo $featured['city']. ' ' .$featured['pincode']. ' ' .$featured['state'];?></p>
+										<?php endif;?>
+									</div>
+								</div>
+							</a>
+							<?php endforeach;?>
+						</div>
+					<?php endif; }?>
+
+						<?php switch(settings_item('lst.recently_added_location')) {
+						case 1:
+						case 4:
+						case 6:
+						case 7:
+					if($recently_added):?>
+						
+						<!--LISTING DETAILS: LEFT PART 10-->
+						<div class="list-mig-like">
+							<div class="list-ri-spec-tit">
+								<h3><?php echo lang('recently_added_listings');?></h3> 
+							</div>
+							<?php foreach($recently_added as $featured):?>
+							
+							<a href="<?php echo base_url() .'detail/' .$featured['slug']. '-in-'.strtolower(str_replace(" ","-", $featured['city'])).'-'.$featured['id'];?>">
+								<div class="list-mig-like-com">
+									<div class="list-mig-lc-img"> 
+										<?php if($featured['url']) {
+											preg_match('/(?<extension>\.\w+)$/im', $featured['url'], $matches);
+											$extension = $matches['extension'];
+											$thumbnail = preg_replace('/(\.\w+)$/im', '', $featured['url']) . $extension;
+										?>
+										<img src="<?php echo base_url(); ?>assets/images/photos/<?php echo $thumbnail;?>" alt="" /> 
+										<?php } else {?>
+
+										<img src="/assets/images/listing/1.jpg" alt="" /> 
+										<?php }?>
+									</div>
+									<div class="list-mig-lc-con">
+										<div class="list-rat-ch list-room-rati"> <span><?=sprintf('%0.1f', $featured['average_rating'])?></span></div>
+										<h5><?php echo $featured['title'];?></h5>
+										<?php if($featured['isAddress'] == 1): ?>
+										<p><?php echo $featured['city']. ' ' .$featured['pincode']. ' ' .$featured['state'];?></p>
+										<?php endif;?>
+									</div>
+								</div>
+							</a>
+							<?php endforeach;?>
+						</div>
+					<?php endif; }?>
+
+
+					</div>
+				</div>
+			</div>
 		</div>
-		</div><!-- end of featured listing -->
-		<?php endif; }?>
-		<?php switch(settings_item('lst.popular_location')) {
-				case 1:
-				case 3:
-				case 5:
-				case 7:
-				if($popular_listings):?>
-		<div class="row top2"><!-- popular listing -->
-		<div class="col-sm-12">
-		<div class="panel panel-info">
-		  <div class="panel-heading">
-		    <h3 class="panel-title"><?php echo lang('popular_listings');?></h3>
-		  </div>
-		 	<ul class="list-group">
-		  	<?php foreach($popular_listings as $popular):?>
-		  	<li class="list-group-item"><span class="glyphicon glyphicon-map-marker pull-left"></span> 	  
-		    <h5><a href="<?php echo site_url('detail/' .$popular['slug']. '-in-' .strtolower(str_replace(" ","-", $popular['city'])) .'-' .$popular['id']); ?>"><?php echo $popular['title'];?></a></h5>
-		    <?php if($popular['isAddress'] == 1): ?>
-		    <p><?php echo $popular['address'].'<br />'.$popular['city'].' '.$popular['pincode']. '<br />' .$popular['state'].', ' .ucwords(strtolower($popular['country']));?></p>
-		    <?php endif; ?>
-		    <?php if(!empty($popular['description'])):?>
-		    <div class="wrap">
-				<a class="readmorebtn" onclick="$(this).text($(this).text() == '+<?php echo lang('more_info');?>' ? '-<?php echo lang('less_info');?>' : '+<?php echo lang('more_info');?>').next('#listing_description_<?php echo $popular['id'];?>').slideToggle('fast');">+<?php echo lang('more_info');?></a>
-				<div id ="listing_description_<?php echo $popular['id']; ?>" style="display:none"><?php echo strip_tags(word_limiter($popular['description'], 10));?></div>
-			</div><!-- end of wrap -->
-			<?php endif;?>
-			<?php if(($popular['created_on']) != '0000-00-00 00:00:00'):?>
-			<p class="small"><?php echo lang('added_on');?>: <?php echo $popular['created_on'];?> </p>
-			<?php endif;?>
-		    </li>
-		    <?php endforeach;?>
-		    </ul>
-		</div>
-		</div>
-		</div><!-- end of popular listing -->
-		<?php endif; }?>
-		<?php switch(settings_item('lst.recently_added_location')) {
-				case 1:
-				case 3:
-				case 5:
-				case 7:
-				if($recently_added):?>
-		<div class="row top2"><!-- recently added listing -->
-		<div class="col-sm-12">
-		<div class="panel panel-info">
-		  <div class="panel-heading">
-		    <h3 class="panel-title"><?php echo lang('recently_added_listings');?></h3>
-		  </div>
-		  	<ul class="list-group">
-		  	<?php foreach($recently_added as $latest):?>
-		  	<li class="list-group-item"><span class="glyphicon glyphicon-map-marker pull-left"></span>		  
-		    <h5><a href="<?php echo site_url('detail/' .$latest['slug']. '-in-' .strtolower(str_replace(" ","-", $latest['city'])) .'-' .$latest['id']); ?>"><?php echo $latest['title'];?></a></h5>
-		    <?php if($latest['isAddress'] == 1): ?>
-		    <p><?php echo $latest['address'].'<br />'.$latest['city'].' '.$latest['pincode']. '<br />' .$latest['state'].', ' .ucwords(strtolower($latest['country']));?></p>
-		    <?php endif;?>
-		    <?php if(!empty($latest['description'])):?>
-		    <div class="wrap">
-				<a class="readmorebtn" onclick="$(this).text($(this).text() == '+<?php echo lang('more_info');?>' ? '-<?php echo lang('less_info');?>' : '+<?php echo lang('more_info');?>').next('#listing_description_<?php echo $latest['id'];?>').slideToggle('fast');">+<?php echo lang('more_info');?></a>
-				<div id ="listing_description_<?php echo $latest['id']; ?>" style="display:none"><?php echo strip_tags(word_limiter($latest['description'], 10));?></div>
-			</div><!-- end of wrap -->
-			<?php endif;?>
-			<?php if(($latest['created_on']) != '0000-00-00 00:00:00'):?>
-		    <p class="small"><?php echo lang('added_on');?>: <?php echo $latest['created_on'];?> </p>
-		    <?php endif;?>
-		    </li>
-		    <?php endforeach;?>
-		    </ul>
-		</div>
-		</div>
-		</div><!-- end of recently added -->
-		<?php endif; }?>
-		</div> <!-- end of column -->
-		
-		<input id="listing_value" type="hidden" value=""/>
+	</section>
+
+
+	<input id="listing_value" type="hidden" value=""/>
 		<div class="modal fade" id="query-modal" tabindex="-1" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -595,12 +605,10 @@
 								</div><!--end of contact-form row-->
 							</div><!-- end of modal-body -->
 							<div class="modal-footer">
-							<button type="submit" id="sendQuerySubmit"
-												class="btn btn-primary" data-loading-text="Sending..."><?php echo lang('form_submit');?></button>
-								<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('form_close');?></button>								
+								<button type="submit" id="sendQuerySubmit" class="btn btn-primary" data-loading-text="Sending..."><?php echo lang('form_submit');?></button>
+								<button type="button" class="btn btn-default" data-dismiss="modal" style='float:left;'><?php echo lang('form_close');?></button>								
 							</div><!-- end of modal-footer -->
 							</form>
 						</div><!-- end of modal-content -->
 					</div><!-- end of modal-dialog -->
 				</div><!-- end of query-modal -->
-</div><!-- end of main row -->

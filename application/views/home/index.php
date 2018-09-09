@@ -1,4 +1,26 @@
 <!--HOME PROJECTS-->
+<style>
+	.easyPaginateNav a.current {
+		background-color: #ee6e73;
+		color: #fff;
+	}
+	.easyPaginateNav a {
+		display: inline-block;
+		border-radius: 2px;
+		text-align: center;
+		vertical-align: top;
+		height: 30px;
+		font-size: 16px;
+		line-height: 24px;
+		font-family: 'Poppins', sans-serif;
+		font-weight: 400;
+		color: #343c42;
+		display: inline-block;
+    font-size: 1.2rem;
+    padding: 0 10px;
+    line-height: 30px;
+	}
+</style>
 	<section class="proj mar-bot-red-m30" style='display:none;'>
 		<div class="container">
 			<div class="row">
@@ -38,14 +60,14 @@
 					<p>Explore some of the best business from around the world from our partners and friends.</p>
 				</div>
 				<div class="dir-hli">
-					<ul>
+					<ul id="easyPaginate">
 						<!--=====LISTINGS======-->
 						<?php $counter = 1;?>
 						<?php if($categories):?>
 						<?php foreach($categories as $category):?>  	  	
 						<?php  if($category->parent_id == 0): ?>
 						<?php $counter++; if($counter >= 14){
-							continue;
+							//continue;
 						}?>
 						<li class="col-md-3 col-sm-6">
 							<a href="list.php">
