@@ -13,40 +13,29 @@
 							<!-- end col-sm-2 navigation -->
 								<div class="row">
 									<?php if(settings_item('site.footer_text') != ""):?>
-									<div class="col-sm-4 col-md-3 foot-logo"> <img src="<?php echo Template::theme_url("images/foot-logo.png")?>" alt="logo">
+									<div class="col-sm-2 col-md-2 foot-logo"> <img src="<?php echo Template::theme_url("images/foot-logo.png")?>" alt="logo">
 										<?php if(settings_item('site.footer_text') != ""):?>
 										<?php endif;?>
 									</div>
 									<?php endif;?>
 									<?php if($menu_links):?>
-									<div class="col-sm-4 col-md-6">
+									<div class="col-sm-3 col-md-3">
 										<h4><?php echo lang('footer_navigation');?></h4>
-										<ul class="two-columns">
-											<li><a href="aboutus.php">About Us</a> </li>
-											<li><a href="register.php">Register</a> </li>
+										<ul class="one-columns">
+											<li><a href="/aboutus.php">About Us</a> </li>
 											<li><a href="/members/add_business" >Add Listing</a> </li>
-											<li><a href="login">Sign In</a> </li>
-											<li><a href="contactus.php" >Contact Us</a> </li>
+											<li><a href="/login">Sign In</a> </li>
+											<li><a href="/contact" >Contact Us</a> </li>
 										</ul>
 										</ul>
 									</div>
 									<?php endif;?>
-								</div>
-							</div>
-						</div>
-						<div data-section="section" class="foot-sec2">
-							<div class="container">
-								<div class="row">
-									<div class="col-sm-3">
-										<h4>Payment Options</h4>
-										<p class="hasimg"> <img src="images/payment.png" alt="payment"> </p>
-									</div>
 									<div class="col-sm-4">
 										<h4>Address</h4>
-										<p>28800 Orchard Lake Road, Suite 180 Farmington Hills, U.S.A. Landmark : Next To Airport</p>
+										<p>28800 Orchard Lake Road, U.S.A. Landmark : Next To Airport</p>
 										<p> <span class="strong">Phone: </span> <span class="highlighted">+01 1245 2541</span> </p>
 									</div>
-									<div class="col-sm-5 foot-social">
+									<div class="col-sm-3 foot-social">
 										<h4><?php echo lang('footer_social');?></h4>
 										<p>Join the thousands of other There are many variations of passages of Lorem Ipsum available</p>
 										<ul>
@@ -76,6 +65,7 @@
 								</div>
 							</div>
 						</div>
+						
 					</div>
 				</div>
 				<!-- .widget-area -->

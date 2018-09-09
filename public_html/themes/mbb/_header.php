@@ -19,6 +19,7 @@
 	<!-- FONTAWESOME ICONS -->
 	<link rel="stylesheet" href="<?php echo Template::theme_url("css/font-awesome.min.css")?>">
 	<!-- ALL CSS FILES -->
+	<link rel='stylesheet' type='text/css' href='<?php echo Template::theme_url("css/intlTelInput.css")?>' media='screen' />
 	<link href="<?php echo Template::theme_url("css/materialize.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/style.css")?>" rel="stylesheet">
 	<link href="<?php echo Template::theme_url("css/bootstrap.css")?>" rel="stylesheet" type="text/css" />
@@ -27,6 +28,32 @@
 	<!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
 </head>
 
+<style>
+	.alert-error {
+		background-color: #f2dede;
+		border-color: #ebccd1;
+		color: #a94442;
+	}
+	.alert-dismissable, .alert-dismissible {
+		padding-right: 35px;
+	}
+	.alert {
+		padding: 15px;
+		margin-bottom: 20px;
+		border: 1px solid transparent;
+		border-radius: 4px;
+	}
+	.help-block>p {
+		display: block;
+		margin-top: 5px;
+		margin-bottom: 10px;
+		color: #FF523F;
+	}
+	.help-block>p {
+		font-size: 11px !important;
+	}
+</style>
+
 <body>
 	<section>
 		<div class="v3-top-menu">
@@ -34,14 +61,14 @@
 				<div class="row">
 					<div class="v12-menu">
 						<div class="v12-m-1">
-							<a href="index.php" style="passing-top:3px;"><img src="<?php echo Template::theme_url("images/logo2.png"); ?>" alt=""> </a>
+							<a href="/" style="passing-top:3px;"><img src="<?php echo Template::theme_url("images/logo2.png"); ?>" alt=""> </a>
 							<div class="dir-ho-tr" style="float: right; ">
 								<ul >
 									<li><a href="/aboutus.php" style="color: #000;">About Us</a> </li>
-									<li><a href="/register.php" style="color: #000;">Register</a> </li>
+									<li></li>
 									<li><a href="/members/add_business" ><i class="fa fa-plus" aria-hidden="true"></i> Add Listing</a> </li>
 									<li><a href="/login" style="color: #000;">Sign In</a> </li>
-									<li><a href="/contactus.php" style="color: #000;">Contact Us</a> </li>
+									<li><a href="/contact" style="color: #000;">Contact Us</a> </li>
 								</ul>
 							</div>
 						</div>
@@ -92,7 +119,7 @@
 					<div class="dir-ho-tl">
 						<ul>
 							<li>
-								<a href="index.php"><img src="<?= base_url(); ?>assets/images/<?= settings_item('site.logo');?>" alt=""> </a>
+								<a href="/"><img src="<?= base_url(); ?>assets/images/<?= settings_item('site.logo');?>" alt=""> </a>
 							</li>
 						</ul>
 					</div>
@@ -199,7 +226,7 @@
 				<div class="ts-menu">
 					<!--SECTION: LOGO-->
 					<div class="ts-menu-1">
-						<a href="index.php"><img src="<?php echo Template::theme_url("images/aff-logo.png")?>" alt=""> </a>
+						<a href="/"><img src="<?php echo Template::theme_url("images/aff-logo.png")?>" alt=""> </a>
 					</div>
 					<!--SECTION: BROWSE CATEGORY(NOTE:IT'S HIDE ON MOBILE & TABLET VIEW)-->
 					<!--SECTION: SEARCH BOX-->
