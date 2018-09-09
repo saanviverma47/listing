@@ -6,7 +6,6 @@ $has_records	= isset($records) && is_array($records) && count($records);
 
 ?>
 <?php echo form_open($this->uri->uri_string.'?'.$_SERVER['QUERY_STRING']); ?>
-
 <table class="responsive-table bordered">
 	<thead>
 		<tr>

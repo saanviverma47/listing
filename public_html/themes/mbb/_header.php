@@ -56,6 +56,10 @@
 	#options>.select-wrapper{display:none;}
 	#options>button>.caret{display:none;}
 	#options>button{margin-top: -8px !important;}
+	.tz-2 {
+		float: left;
+		width: 75% !important;
+	}
 </style>
 </head>
 

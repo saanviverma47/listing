@@ -29,7 +29,7 @@ switch ($record->price) {
 		<div class="v4-pril-inn-top">
 			<h2><?php echo ucwords(strtoupper($record->title));?></h2>
 			<p class="v4-pril-price">
-				<span class="v4-pril-curr">$</span> <b><?php echo ($record->price == 0) ? lang('label_free') : settings_item('site.currency'). $record->price;?></b> 
+				<b><?php echo ($record->price == 0) ? lang('label_free') : settings_item('site.currency'). $record->price;?></b> 
 				<span class="v4-pril-mon"><?php echo ($record->duration == 0) ? $record->subscription : '/ ' .$record->duration .' ' . lang('bf_days');?></span>
 			</p>
 		</div>
